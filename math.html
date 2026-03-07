@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>َ مَسَار </title>
+    <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300&family=Mynerve&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/581e5f415a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary:#06B6D4;
+            --secondary: #7a8eac;
+            --basic-math: #b4aae0; 
+            --advanced-math: #63cea5; 
+            --light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --footer: #cee2df;
+
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 75px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .animated-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Math Courses Section */
+        .math-section {
+            padding: 4rem 0;
+            position: relative;
+        }
+        
+        .math-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 7rem;
+            margin-top: 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .math-box {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .math-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .math-box:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .math-box:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Basic Math Box */
+        .basic-math-box {
+            border-top: 4px solid var(--basic-math);
+        }
+        
+        .basic-math-box:hover {
+            box-shadow: 
+                0 20px 40px rgba(30, 64, 175, 0.15),
+                var(--shadow-hover);
+        }
+        
+        /* Advanced Math Box */
+        .advanced-math-box {
+            border-top: 4px solid var(--advanced-math);
+        }
+        
+        .advanced-math-box:hover {
+            box-shadow: 
+                0 20px 40px rgba(13, 148, 136, 0.15),
+                var(--shadow-hover);
+        }
+        
+        .math-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: iconFloat 3s ease-in-out infinite;
+            position: relative;
+            color: white;
+        }
+        
+        .basic-math-icon {
+            background: linear-gradient(135deg, var(--basic-math), #1e3a8a);
+        }
+        
+        .advanced-math-icon {
+            background: linear-gradient(135deg, var(--advanced-math), #0f766e);
+        }
+        
+        @keyframes iconFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-8px) rotate(3deg);
+            }
+        }
+        
+        .math-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .basic-math-title {
+            color: var(--basic-math);
+        }
+        
+        .advanced-math-title {
+            color: var(--advanced-math);
+        }      
+        
+        .math-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        
+        .start-btn {
+            background: transparent;
+            color: var(--text-dark);
+            border: 2px solid #e2e8f0;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: auto;
+        }
+        
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.05);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .start-btn:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .start-btn span {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .start-btn i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .start-btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        .basic-btn:hover {
+            border-color: var(--basic-math);
+            color: var(--basic-math);
+            box-shadow: 0 5px 15px rgba(30, 64, 175, 0.1);
+        }
+        
+        .advanced-btn:hover {
+            border-color: var(--advanced-math);
+            color: var(--advanced-math);
+            box-shadow: 0 5px 15px rgba(13, 148, 136, 0.1);
+        }
+        
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            pointer-events: none;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            animation: float3D 8s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .element-1 {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: rgba(30, 64, 175, 0.1);
+            animation-delay: 0s;
+        }
+        
+        .element-2 {
+            width: 40px;
+            height: 40px;
+            bottom: 30%;
+            left: 10%;
+            border-radius: 50%;
+            background: rgba(13, 148, 136, 0.1);
+            animation-delay: -2s;
+        }
+        
+        .element-3 {
+            width: 70px;
+            height: 70px;
+            top: 60%;
+            left: 15%;
+            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+            background: rgba(30, 64, 175, 0.05);
+            animation-delay: -4s;
+        }
+        
+        .element-4 {
+            width: 50px;
+            height: 50px;
+            top: 40%;
+            right: 20%;
+            border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+            background: rgba(13, 148, 136, 0.05);
+            animation-delay: -6s;
+        }
+        
+        @keyframes float3D {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate3d(10px, -10px, 8px) rotate(60deg);
+            }
+            66% {
+                transform: translate3d(-8px, 8px, -8px) rotate(120deg);
+            }
+        }
+
+        /* Add at the end of style tag - Math page */
+@media screen and (max-width: 768px) {
+    .hero {
+        min-height: 30vh;
+        margin-top: 60px;
+    }
+
+    .animated-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    .math-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        padding: 0 15px;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .math-box {
+        padding: 2rem 1.5rem;
+    }
+
+    .math-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .math-title {
+        font-size: 1.6rem;
+    }
+
+    .math-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .start-btn {
+        padding: 0.7rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .floating-element {
+        opacity: 0.3;
+        width: 40px !important;
+        height: 40px !important;
+    }
+}
+        
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        <div class="floating-element element-3"></div>
+        <div class="floating-element element-4"></div>
+        
+        <!-- Math Symbols -->
+        <div class="math-symbols symbol-1">∫</div>
+        <div class="math-symbols symbol-2">∑</div>
+        <div class="math-symbols symbol-3">π</div>
+        <div class="math-symbols symbol-4">∞</div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animated-title">الرياضيات </h1>
+                <p class="hero-subtitle">رياضيات صف الحادي عشر [ الأساسي و المتقدم ]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Math Courses Section -->
+    <section class="math-section">
+        <div class="container">
+            <div class="math-grid">
+                
+                <!-- Basic Math Box -->
+                <div class="math-box basic-math-box" onclick="navigateTo('basic.html')">
+                    <div class="math-icon basic-math-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h2 class="math-title basic-math-title">الرياضيات الأساسية</h2>
+                    <p class="math-description"> المستوى الأساسي للرياضيات - الصف الحادي عشر </p>
+                    <button class="start-btn basic-btn">
+                        <span>ابدأ الآن</span>
+                    </button>
+                </div>
+
+                <!-- Advanced Math Box -->
+                <div class="math-box advanced-math-box" onclick="navigateTo('advanced.html')">
+                    <div class="math-icon advanced-math-icon">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <h2 class="math-title advanced-math-title">الرياضيات المتقدمة</h2>
+                    <p class="math-description"> المستوى المتقدم للرياضيات - الصف الحادي عشر </p>
+                    <button class="start-btn advanced-btn">
+                        <span>ابدأ الآن</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Chatbot -->
+<iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+<button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>    
+
+    <!-- JavaScript for navigation and effects -->
+    <script>
+        // Navigation function
+        function navigateTo(page) {
+            // Add loading animation
+            const box = event.currentTarget;
+            box.style.transform = 'scale(0.95)';
+            box.style.transition = 'transform 0.2s';
+            
+            setTimeout(() => {
+                // Redirect to the target page
+                window.location.href = page;
+            }, 300);
+        }
+        
+        // Add click effects to math boxes
+        document.querySelectorAll('.math-box').forEach(box => {
+            box.addEventListener('click', function(e) {
+                // Add ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(0, 0, 0, 0.05)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                // Set position and size
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${rect.left}px`;
+                ripple.style.top = `${rect.top}px`;
+                
+                document.body.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2.5);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+</body>
+</html>

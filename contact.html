@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>َ مَسَار </title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300&family=Mynerve&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/581e5f415a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        :root {
+            --primary: #6a1b9a;
+            --secondary: #2196f3;
+            --accent: #7de0cb;
+            --light: #f5f5f5;
+            --dark: #333;
+            --success: #4caf50;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --footer: #dacee2;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: block;
+            padding: 0;
+             margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-top: 100px;
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to left, var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 17px;
+            margin-bottom: 20px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .info-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .info-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .info-item i:not(.map-inline-icon) {
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .info-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            padding: 40px;
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+            background-color: white;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to left, var(--secondary), var(--primary));
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .btn i {
+            margin-left: 8px;
+        }
+
+.address-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.map-icon-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.map-icon-link i {
+  cursor: pointer;
+  color: var(--accent);
+}
+
+.map-icon-link i:hover{
+    color: var(--secondary);
+    transform: scale(1.7);
+}
+
+
+
+        .creators-section {
+            margin-top: 50px;
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .creators-section h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .creators-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to left, var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .creators-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .creator-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .creator-card:hover {
+            transform: translateY(-10px);
+        }
+
+.creator-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    background: purple;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.creator-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* ensures image fills the circle perfectly */
+}
+
+
+        .creator-name {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .creator-role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .creator-desc {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .creator-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .creator-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .creator-social a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* تأثيرات متقدمة */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+        }
+
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+/* Add this at the end of your style tag */
+
+/* Mobile fixes for Contact Us page */
+@media screen and (max-width: 768px) {
+    /* Fix header */
+    header h1 {
+        font-size: 2rem;
+        margin-top: 80px;
+        margin-bottom: 5px;
+    }
+
+    header p {
+        font-size: 1rem;
+        padding: 0 15px;
+        margin-bottom: 15px;
+    }
+
+    /* Make contact container stack vertically */
+    .contact-container {
+        grid-template-columns: 1fr !important;
+        gap: 0;
+        margin: 0 15px;
+        border-radius: 12px;
+    }
+
+    /* Fix contact info section */
+    .contact-info {
+        padding: 25px 20px;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .info-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .info-item {
+        margin-bottom: 20px;
+    }
+
+    .info-item i:not(.map-inline-icon) {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .info-text h3 {
+        font-size: 1rem;
+        margin-bottom: 3px;
+    }
+
+    .info-text p {
+        font-size: 0.9rem;
+    }
+
+    /* Fix address line with map icon */
+    .address-line {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .map-icon-link i {
+        font-size: 1.1rem;
+    }
+
+    /* Fix social section */
+    .social-section h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .social-links {
+        gap: 12px;
+    }
+
+    .social-links a {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    /* Fix contact form */
+    .contact-form {
+        padding: 25px 20px;
+        border-radius: 0 0 12px 12px;
+    }
+
+    .form-header h2 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+    }
+
+    .form-header p {
+        font-size: 0.9rem;
+    }
+
+    /* Make form row stack on mobile */
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 0.95rem;
+        margin-bottom: 5px;
+    }
+
+    input, textarea, select {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    /* Fix submit button */
+    .btn {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+
+    .btn i {
+        margin-left: 5px;
+    }
+
+    /* Fix success message */
+    .success-message {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    /* Fix creators section */
+    .creators-section {
+        margin-top: 40px;
+        margin-bottom: 60px;
+        padding: 0 15px;
+    }
+
+    .creators-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .creators-container {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    .creator-card {
+        padding: 25px 20px;
+    }
+
+    .creator-img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .creator-name {
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+    }
+
+    .creator-role {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .creator-desc {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .creator-social a {
+        width: 35px;
+        height: 35px;
+        font-size: 0.95rem;
+    }
+
+    /* Fix floating animations on mobile - reduce intensity */
+    .floating {
+        animation: none;
+    }
+
+    .pulse {
+        animation: none;
+        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div class="container">
+        <header>
+            <h1>اتصل بنا</h1>
+            <p>يسعدنا تواصلك معنا. نحن هنا للإجابة على استفساراتك ومساعدتك في أي وقت</p>
+        </header>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-section">
+                    <h2>معلومات التواصل</h2>
+                    
+<div class="info-item">
+    <i class="fas fa-map-marker-alt info-main-icon"></i>
+
+    <div class="info-text">
+        <h3>العنوان</h3>
+
+        <p class="address-line">
+            شاطئ القرم، مسقط، سلطنة عمان
+            <a
+              href="https://www.google.com/maps/place/JC3R%2BPHM+Shati+Al+Qurum+Girl+School,+Muscat/data=!4m2!3m1!1s0x3e91ff3ff456fa81:0x82f680cd5ed58335"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="فتح الموقع على خرائط جوجل"
+              class="map-icon-link">
+                <i class="fas fa-map-marked-alt map-inline-icon"></i>
+            </a>
+        </p>
+    </div>
+</div>
+
+
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="info-text">
+                            <h3>الهاتف</h3>
+                            <p>5186 9278 968+</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="info-text">
+                            <h3>البريد الإلكتروني</h3>
+                            <p>masarplatform@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="info-text">
+                            <h3>ساعات العمل</h3>
+                            <p>الأحد - الخميس: 8 ص - 5 م</p>
+                            <p>الجمعة - السبت: مغلق</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="social-section">
+                    <h3>تابعنا على</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <div class="form-header">
+                    <h2>أرسل رسالة</h2>
+                    <p>املأ النموذج أدناه وسنرد عليك في أقرب وقت ممكن</p>
+                </div>
+                
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">الاسم الأول</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">اسم العائلة</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">الموضوع</label>
+                        <input type="text" id="subject" placeholder="اكتب موضوع رسالتك هنا" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">الرسالة</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn pulse">
+                        <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                    </button>
+                    
+                    <div class="success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i> تم إرسال رسالتك بنجاح. سنرد عليك قريبًا!
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        
+        <div class="creators-section">
+            <h2>مصممي الموقع</h2>
+            <div class="creators-container">
+                <div class="creator-card">
+<div class="creator-img">
+    <img src="pdfs/pfp2.jpg" alt="Creator">
+</div>
+                    <h3 class="creator-name">أفراح محمد فهد</h3>
+                    <p class="creator-role">المصممة والمطورة</p>
+                    <p class="creator-desc">مصممة-مطورة تركز على تحويل الأفكار <br> إلى ميزات عملية وتجربة استخدام سلسة.</p>
+                    <div class="creator-social">
+                        <a href="https://wa.me/96878285186"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/bint._fahad"><i class="fab fa-instagram"></i></a>
+                        <a href="https://discord.com/invite/aHQnqsp4"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+<div class="creator-img">
+    <img src="pdfs/pfp1.jpg" alt="Creator">
+</div>
+                    <h3 class="creator-name">رقية قاسم الشامي</h3>
+                    <p class="creator-role">المصممة والمطورة</p>
+                    <p class="creator-desc">مطورة ومصممة ذات خبرة في البرمجة والتصميم،<br> تسعى لجعل الدراسة أسهل وأكثر تنظيماً.</p>
+                    <div class="creator-social">
+                        <a href="https://wa.me/96892787703"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/eartye_qasim"><i class="fab fa-instagram"></i></a>
+                        <a href="https://discord.com/invite/roca8550"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Chatbot -->
+<iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+<button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<!-- JavaScript to handle form submission and show success message -->
+<script>
+ document.getElementById('contactForm').addEventListener('submit', function(e) {
+e.preventDefault();
+// في التطبيق الحقيقي، هنا سيتم إرسال البيانات إلى الخادم
+// نحن فقط نعرض رسالة النجاح للمستخدم
+ document.getElementById('successMessage').style.display = 'block';      
+// إعادة تعيين النموذج
+setTimeout(function() {
+document.getElementById('contactForm').reset();
+document.getElementById('successMessage').style.display = 'none';
+}, 5000);
+});
+</script>
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+</body>
+</html>

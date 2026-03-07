@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَسَار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    
+    <style>
+        
+        :root {
+            --primary: #483d8b;
+            --secondary: #c2b6d4;
+            --accent: #FF6584;
+            --light: #F8F9FA;
+            --light-bg: #FFFFFF;
+            --medium: #E9ECEF;
+            --dark: #343A40;
+            --text: #495057;
+            --text-light: #6C757D;
+            --success: #36D1DC;
+            --footer: #cecee2;
+            --youtube: #ff0000;
+            --website: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-bottom: 50px;
+        }
+
+        .links-header {
+            margin-top: 75px;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 2px 4px rgba(72, 61, 139, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            background: var(--light-bg);
+            color: var(--text);
+            border: 2px solid var(--secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(72, 61, 139, 0.2);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .link-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid var(--medium);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(72, 61, 139, 0.15);
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--medium);
+        }
+
+        .platform-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .youtube-bg {
+            background: var(--youtube);
+        }
+
+        .website-bg {
+            background: var(--website);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card-description {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background: var(--medium);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .visit-btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(72, 61, 139, 0.2);
+        }
+
+        .visit-btn:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(255, 101, 132, 0.3);
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(72, 61, 139, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .link-card:hover .glow {
+            opacity: 1;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div class="container">
+        <header class="links-header">
+            <h1>مركز الروابط</h1>
+            <p class="subtitle">مجموعة مختارة من أفضل المصادر عبر الويب واليوتيوب</p> 
+            <div class="filter-buttons">
+
+                <button class="filter-btn active" data-filter="website">
+                    <i class="fas fa-globe"></i> مواقع ويب 
+                </button>
+                <button class="filter-btn" data-filter="youtube">
+                    <i class="fab fa-youtube"></i> يوتيوب 
+                </button>
+            </div>
+        </header>
+        
+<main>
+<div class="links-grid">               
+<!-- بطاقات مواقع ويب (٧) -->
+<div class="link-card" data-category="website">
+                    <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon website-bg">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="card-title">منصى أفدني التعليمية</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">منصة تعليمية تقدم شروحات وملاحظات دراسية وموارد تعليمية في مواد متعددة لمساعدة الطلاب على فهم الدروس بسهولة.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://afidni.com/" target="_blank" class="visit-btn">
+                            <i class="fas fa-external-link-alt"></i> زيارة الموقع
+                        </a>
+                    </div>                   
+</div>
+
+<div class="link-card" data-category="website">
+    <div class="glow"></div>
+    <div class="card-header">
+        <div class="platform-icon website-bg">
+            <i class="fas fa-globe"></i>
+        </div>
+        <h3 class="card-title"> تقنيات التعليم</h3>
+    </div>
+    <div class="card-body">
+        <p class="card-description">الصفحة الرسمية لوزارة التربية والتعليم في عمان الخاصة بتكنولوجيا المعلومات والتعلم الرقمي — تحتوي على إرشادات وأدوات ودعم تعليمي.</p>
+
+    </div>
+    <div class="card-footer">
+        <a href="https://ict.moe.gov.om/" target="_blank" class="visit-btn">
+            <i class="fas fa-external-link-alt"></i> زيارة الموقع
+        </a>
+    </div>
+</div>
+
+<div class="link-card" data-category="website">
+    <div class="glow"></div>
+    <div class="card-header">
+        <div class="platform-icon website-bg">
+            <i class="fas fa-globe"></i>
+        </div>
+        <h3 class="card-title">موضوع</h3>
+    </div>
+    <div class="card-body">
+        <p class="card-description">موقع عربي ضخم يحتوي على مقالات في موضوعات مختلفة، بما في ذلك المواد الدراسية والعلوم والمعرفة العامة — مفيد للبحث والتعلم.</p>
+
+    </div>
+    <div class="card-footer">
+        <a href="https://mawdoo3.com/" target="_blank" class="visit-btn">
+            <i class="fas fa-external-link-alt"></i> زيارة الموقع
+        </a>
+
+    </div>
+</div>
+
+<div class="link-card" data-category="website">
+    <div class="glow"></div>
+    <div class="card-header">
+        <div class="platform-icon website-bg">
+            <i class="fas fa-globe"></i>
+        </div>
+        <h3 class="card-title">القاموس الإنجليزي-العربي</h3>
+    </div>
+    <div class="card-body">
+        <p class="card-description">قاموس إنجليزي-عربي يسمح للطلاب بالبحث عن معاني الكلمات، النطق والترجمة — مفيد لتعلم اللغة والواجبات.</p>
+
+    </div>
+    <div class="card-footer">
+        <a href="https://dictionary.cambridge.org/dictionary/english-arabic/" target="_blank" class="visit-btn">
+            <i class="fas fa-external-link-alt"></i> زيارة الموقع
+        </a>
+    </div>
+</div>
+
+<div class="link-card" data-category="website">
+    <div class="glow"></div>
+    <div class="card-header">
+        <div class="platform-icon website-bg">
+            <i class="fas fa-globe"></i>
+        </div>
+        <h3 class="card-title">موقع سيمبولاب</h3>
+    </div>
+    <div class="card-body">
+        <p class="card-description">أداة لحل مسائل الرياضيات تعرض الحل خطوة بخطوة في الجبر والتفاضل والتكامل وغيرها — مفيدة في الواجبات والممارسة.</p>
+
+    </div>
+    <div class="card-footer">
+        <a href="https://ar.symbolab.com/solver" target="_blank" class="visit-btn">
+            <i class="fas fa-external-link-alt"></i> زيارة الموقع
+        </a>
+    </div>
+</div>
+
+<div class="link-card" data-category="website">
+    <div class="glow"></div>
+    <div class="card-header">
+        <div class="platform-icon website-bg">
+            <i class="fas fa-globe"></i>
+        </div>
+        <h3 class="card-title">منصة عمان سكول</h3>
+    </div>
+    <div class="card-body">
+        <p class="card-description">مجموعة من كتب ومناهج الصف الحادي عشر بصيغة PDF في سلطنة عمان — يمكنك تحميلها بسهولة للدراسة.</p>
+
+    </div>
+    <div class="card-footer">
+        <a href="https://oman-school.com/%D9%85%D9%86%D8%A7%D9%87%D8%AC-%D8%A7%D9%84%D8%B5%D9%81-%D8%A7%D9%84%D8%AD%D8%A7%D8%AF%D9%8A-%D8%B9%D8%B4%D8%B1-pdf/" target="_blank" class="visit-btn">
+            <i class="fas fa-external-link-alt"></i> زيارة الموقع
+        </a>
+    </div>
+</div>             
+<!-- بطاقات يوتيوب (٧) -->
+<div class="link-card" data-category="youtube">
+                 <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon youtube-bg">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="card-title">اكاديمية تعليم بلا حدود</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">قناة تعليمية تحتوي على دروس في الرياضيات والعلوم ومواد أخرى — ممتازة لشرح إضافي والمراجعة.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.youtube.com/@infinityLearn" target="_blank" class="visit-btn">
+                            <i class="fab fa-youtube"></i> زيارة القناة
+                        </a>
+
+                    </div>
+</div>
+                
+<div class="link-card" data-category="youtube">
+                    <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon youtube-bg">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="card-title">عمر الحمادي</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">قناة تعليمية شخصية يشرح فيها المعلم المواضيع وتقنيات لتحسين الدراسة وحل المسائل.</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.youtube.com/@Omaralhammadi" target="_blank" class="visit-btn">
+                            <i class="fab fa-youtube"></i> زيارة القناة
+                        </a>
+                    </div>
+</div>
+                
+<div class="link-card" data-category="youtube">
+                    <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon youtube-bg">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="card-title">قناة المناهج الدراسية</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">قناة تعليمية رسمية من عمان تنشر محتوى تعليمي وإرشادات وتحديثات — مفيدة للطلاب وأولياء الأمور.</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.youtube.com/@omanedu" target="_blank" class="visit-btn">
+                            <i class="fab fa-youtube"></i> زيارة القناة
+                        </a>
+                    </div>
+</div>
+                
+<div class="link-card" data-category="youtube">
+                    <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon youtube-bg">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="card-title">فينول</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">قناة علمية تشرح الكيمياء ومواضيع أخرى بأمثلة بسيطة ورسومات واضحة — مفيدة لفهم الدروس الصعبة.</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.youtube.com/@phenol_20" target="_blank" class="visit-btn">
+                            <i class="fab fa-youtube"></i> زيارة القناة
+                        </a>
+                    </div>
+</div>
+                
+<div class="link-card" data-category="youtube">
+                    <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon youtube-bg">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="card-title">إيهاب السيد</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">قناة تركّز على الرياضيات حيث يشرح المدرّس المسائل خطوة بخطوة — رائعة لمساعدة الواجبات والتحضير للامتحان.</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.youtube.com/@EhabElsayedMath" target="_blank" class="visit-btn">
+                            <i class="fab fa-youtube"></i> زيارة القناة
+                        </a>
+                    </div>
+</div>
+                
+<div class="link-card" data-category="youtube">
+                    <div class="glow"></div>
+                    <div class="card-header">
+                        <div class="platform-icon youtube-bg">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h3 class="card-title">خليفة العنقودي</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">قناة تعليمية تغطي موضوعات مثل العلوم والرياضيات والتحفيز — مفيدة لبناء عادات دراسية قوية.</p>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="https://www.youtube.com/@khalifaalanqodi" target="_blank" class="visit-btn">
+                            <i class="fab fa-youtube"></i> زيارة القناة
+                        </a>
+                    </div>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+    // وظيفة التصفية
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const linkCards = document.querySelectorAll('.link-card');
+        
+        // إخفاء جميع البطاقات أولاً
+        linkCards.forEach(card => {
+            card.style.display = 'none';
+        });
+        
+        // إظهار بطاقات الروابط فقط عند تحميل الصفحة
+        linkCards.forEach(card => {
+            if (card.getAttribute('data-category') === 'website') {
+                card.style.display = 'flex';
+            }
+        });
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // إزالة الصنف النشط من جميع الأزرار
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // إضافة الصنف النشط للزر المختار
+                button.classList.add('active');
+                
+                const filterValue = button.getAttribute('data-filter');
+                
+                // إظهار/إخفاء البطاقات حسب التصفية
+                linkCards.forEach(card => {
+                    if (card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+    
+  <!-- Chatbot -->
+    <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+</body>
+</html>

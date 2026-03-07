@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَسَار</title>
+        <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300&family=Mynerve&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/581e5f415a.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+  /* 🌍 COLOR VARIABLES */
+  :root {
+    --primary: #f08989;
+    --secondary: #47925a;
+    --light: #ffffff;
+    --light-bg: #f5f7fa;
+    --dark: #333333;
+    --gray: #5a5a5a;
+    --muted: #64748b;
+    --accent: #453e7a;
+    --footer: #d0e2ce;
+  }
+
+  /* 🌍 SOCIAL STUDIES PAGE STYLES */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .social-page {
+    padding: 20px;
+    background-color: var(--light-bg);
+    color: var(--dark);
+    line-height: 1.6;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  /* Container */
+  .social-page .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 65px;
+  }
+
+  /* Page Header */
+  .social-page .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: 
+      linear-gradient(  to right,
+        rgba(247, 112, 112, 0.637) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(115, 245, 115, 0.514) 100%  ),
+      url('pdfs/ss/banner1.jpg'); /* 🔹 your image path */
+    background-size: cover;
+    background-position: center;
+    color: var(--light);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .social-page .page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: #00000080 2px 2px 4px;
+  }
+
+  .social-page .page-header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    text-shadow: #5a575780 2px 2px 4px;
+  }
+
+/* Tab Button Container */
+.social-page .tab-btn-container {
+  margin-top: 20px;
+  padding: 8px 15px;
+  border-radius: 50px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position: relative;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 15px;
+}
+
+/* Term Switch Styles */
+.social-page .term-switch {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  padding: 3px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 100;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.social-page .term-label {
+  margin-right: 8px;
+  color: var(--dark);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+  padding-left: 5px;
+}
+
+.social-page .term-btn {
+  padding: 6px 18px;
+  border: none;
+  border-radius: 20px;
+  background: transparent;
+  color: var(--dark);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  margin: 0 2px;
+  white-space: nowrap;
+}
+
+.social-page .term-btn.active {
+  background: var(--secondary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(69, 62, 122, 0.3);
+}
+
+.social-page .term-btn:hover:not(.active) {
+  background: rgba(69, 62, 122, 0.2);
+  color: var(--primary);
+}
+
+/* Earth button inside tab container */
+.social-page .tab-btn-container .earth-btn {
+  margin: 0; 
+  padding: 8px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-shadow: #00000080 2px 2px 4px;
+  color: var(--light);
+  background: #00000050;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap; 
+  flex-shrink: 0; 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-page .tab-btn-container .earth-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+
+/* Hide content by term */
+.social-page[data-current-term="1"] [data-term="2"],
+.social-page[data-current-term="2"] [data-term="1"] {
+  display: none !important;
+}
+
+/* Ensure units with no visible cards are hidden */
+.social-page .unit {
+  transition: opacity 0.3s ease;
+}
+
+.social-page .unit[style*="display: none"] {
+  display: none !important;
+}
+
+  /* Units */
+  .social-page .unit {
+    margin-bottom: 50px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .social-page .unit-title {
+    font-size: 1.8rem;
+    color: var(--gray);
+    margin-bottom: 25px;
+    margin-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #e2e8f000;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Cards Grid */
+  .social-page .cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  .social-page .cards-container-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* ===== Card ===== */
+  .social-page .card {
+    position: relative;
+    height: 220px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Small Card */
+  .social-page .card-small { height: 180px; }
+
+  /* Hover effect */
+  .social-page .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+
+  /* Card Background */
+  .social-page .card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px) brightness(0.7);
+    transition: filter 0.3s ease;
+    z-index: 1;
+  }
+
+  .social-page .card:hover .card-bg {
+    filter: blur(0) brightness(0.9);
+  }
+
+  /* Card Content Wrapper */
+  .social-page .card-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  /* Card Header (Centered Title) */
+  .social-page .card-header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    color: var(--light);
+    pointer-events: none; /* allows hover buttons to be clickable */
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .social-page .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+  }
+
+  .social-page .card-small .card-title {
+    font-size: 1.2rem;
+  }
+
+  /* Hover Content (hidden until hover) */
+  .social-page .card-hover-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    background: rgba(255,255,255,0.95);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    z-index: 3;
+    transition: transform 0.35s cubic-bezier(.22,.9,.36,1), opacity 0.25s ease;
+  }
+
+  .social-page .card:hover .card-hover-content {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Fade Title on Hover */
+  .social-page .card:hover .card-header {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+
+  /* Buttons */
+  .social-page .card-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .social-page .btn {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+
+  .social-page .btn-primary {
+    background: var(--primary);
+    color: var(--light);
+  }
+
+  .social-page .btn-primary:hover {
+    background: #d19595;
+  }
+
+  .social-page .btn-video {
+    background: var(--secondary);
+    color: var(--light);
+  }
+
+  .social-page .btn-video:hover {
+    background: #91ca9f;
+  }
+
+  /* ===== Modal ===== */
+  .social-page .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 10000 !important;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .social-page .modal-content {
+    border-radius: 15px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+
+.social-page .modal-header {
+  background: var(--accent);
+  color: var(--light);
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  justify-content: space-between;
+  flex-direction: row;  /* ADD THIS LINE */
+}
+
+.social-page .modal-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  order: -1;  /* Makes title appear on the right in RTL */
+}
+
+.social-page .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--light);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  padding: 0;
+  order: 0; 
+  line-height: 1;
+}
+
+.social-page .close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+  .social-page .modal-body {
+    flex: 1;
+  }
+
+  .social-page .modal[style*="display: flex"] {
+  display: flex !important;
+}
+
+  /* PDF / Video Containers */
+  .social-page .pdf-container, .social-page .video-container {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .social-page .pdf-container { height: 500px; }
+  .social-page .pdf-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+  }
+  .social-page .pdf-icon { font-size: 3rem; margin-bottom: 15px; }
+
+  .social-page .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    margin-bottom: 20px;
+  }
+  .social-page .video-container iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+
+  /* ===== Responsive ===== */
+/* Add this at the end of your style tag */
+
+/* Mobile fixes for Social Studies page */
+@media screen and (max-width: 768px) {
+    /* Fix header */
+    .social-page .page-header {
+        margin-top: 15px;
+        padding: 20px 10px;
+    }
+
+    .social-page .page-header h1 {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+
+    .social-page .page-header .subtitle {
+        font-size: 1rem;
+        padding: 0 5px;
+    }
+
+    /* Fix tab button container - make it vertical */
+    .social-page .tab-btn-container {
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px;
+        width: 100%;
+        align-items: center;
+    }
+
+    /* Term switch - make it wider */
+    .social-page .term-switch {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+        padding: 5px 10px;
+        margin: 0 auto;
+    }
+
+    .social-page .term-label {
+        font-size: 0.95rem;
+        margin-right: 10px;
+    }
+
+    .social-page .term-btn {
+        padding: 8px 20px;
+        font-size: 0.95rem;
+        flex: 1;
+    }
+
+    /* Earth button - full width */
+    .social-page .tab-btn-container .earth-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin: 0 auto;
+    }
+
+    /* Fix unit titles */
+    .social-page .unit-title {
+        font-size: 1.5rem;
+        margin-right: 5px;
+        margin-bottom: 15px;
+        padding: 10px 5px;
+        text-align: center;
+    }
+
+    /* Fix cards grid - single column */
+    .social-page .cards-container,
+    .social-page .cards-container-3 {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+        padding: 0 10px;
+    }
+
+    /* Fix cards - make them slightly smaller */
+    .social-page .card {
+        height: 180px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .social-page .card-small {
+        height: 160px;
+    }
+
+    /* Card title styling */
+    .social-page .card-title {
+        font-size: 1.2rem;
+        padding: 0 15px;
+        line-height: 1.4;
+    }
+
+    .social-page .card-small .card-title {
+        font-size: 1.1rem;
+    }
+
+    /* Fix hover content */
+    .social-page .card-hover-content {
+        padding: 15px;
+    }
+
+    /* Buttons - stack vertically */
+    .social-page .card-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .social-page .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    /* Fix modals for mobile */
+    .social-page .modal-content {
+        width: 95%;
+        max-height: 80vh;
+    }
+
+    .social-page .modal-header {
+        padding: 12px 15px;
+    }
+
+    .social-page .modal-title {
+        font-size: 1rem;
+    }
+
+    .social-page .close-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.4rem;
+    }
+
+    .social-page .pdf-container embed {
+        min-height: 350px;
+    }
+
+
+
+    /* Make video overlay bigger on mobile */
+.social-page .video-container {
+    padding-bottom: 75% !important; /* Makes video taller */
+    height: 0 !important;
+}
+
+.social-page .video-container iframe {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* Make modal bigger for video */
+.social-page #videoModal .modal-content {
+    width: 100% !important;
+    max-width: 500px !important; /* Wider on mobile */
+    height: auto !important;
+    min-height: 400px !important;
+}
+
+    /* Mobile PDF buttons styling */
+.social-page .pdf-placeholder button {
+    transition: all 0.3s ease;
+}
+
+.social-page .pdf-placeholder button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+}
+
+
+</style>
+
+<body>
+  
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- 📘 SOCIAL STUDIES PAGE -->
+<div class="social-page">
+<div class="container">
+<div class="page-header">
+<h1>الدراسات الاجتماعية</h1>
+<p class="subtitle">هذا وطني في سيرة الحضارية لعُمان للصف الحادي عشر</p>
+  <div class="tab-btn-container">
+    <div class="term-switch">
+      <span class="term-label">الفصل:</span>
+      <button class="term-btn active" data-term-btn="1">الأول</button>
+      <button class="term-btn" data-term-btn="2">الثاني</button>
+    </div>
+    <button class="earth-btn" onclick="openEarthPopup()">🌍 افتح جوجل إيرث</button>
+  </div>
+</div>
+<script>
+function openEarthPopup() {
+  const earthURL = "https://earth.google.com/earth/d/1RrazA4cAO_9uphJY7ABrtDO6qvKU46Qk?usp=sharing";
+
+  // Set popup width/height
+  const width = 500;
+  const height = 500;
+
+  // Position it on the right side of the screen
+  const left = window.screen.width - width - 20; // 20px from right edge
+  const top = 50; // 50px from top edge
+
+  window.open(
+    earthURL,
+    "earthPopup",
+    `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+  );
+}
+</script>
+      
+<main>
+
+<!-- ✅ Unit 1 -->
+<section class="unit">
+<h3 class="unit-title" data-term="1"><u>الوحدة الأولى: عُمان ... المكان و الحضارة</u></h3>
+<div class="cards-container" data-term="1">
+
+<!-- Lesson 1 -->
+<div class="card" data-lesson="1">
+<div class="card-bg" style="background-image: url('pdfs/ss/l1.jpg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">عُمان ... الموقع ومظاهر السطح</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss1.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="Frv1yoX3_ps">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 2 -->
+<div class="card" data-lesson="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l2.webp')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">عُمان ... المناخ والنبات الطبيعي</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss2.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="YPY9dc7Yd90">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 3 -->
+<div class="card" data-lesson="3">
+<div class="card-bg" style="background-image: url('pdfs/ss/l33.jpg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">عُمان ... العصور القديمة وصدر الإسلام</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss3.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="b4SQ2r1aVgs">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 4 -->
+<div class="card" data-lesson="4">
+<div class="card-bg" style="background-image: url('pdfs/ss/l4.jpg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">عمان بين القرنين الثاني و السادس الهجريين</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss4.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="EcfsBHk0t5A">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- UNIT 2 -->
+<section class="unit">
+<h2 class="unit-title" data-term="1"><u>الوحدة الثانية: التاريخ والحضارات</u></h2>
+<div class="cards-container-3" data-term="1">
+
+<!-- Lesson 5 -->
+<div class="card card-small" data-lesson="5">
+<div class="card-bg" style="background-image: url('pdfs/ss/l5.webp')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">المجتمع العماني</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss5.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="zyQT6w9VRdA">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 6 -->
+<div class="card card-small" data-lesson="6">
+<div class="card-bg" style="background-image: url('pdfs/ss/l6.webp')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">المؤسسات الثقافية العمانية<br> بين الماضي و الحاضر</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss6.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="CEwmaZZjvHo">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 7 -->
+<div class="card card-small" data-lesson="7" data-term="1">
+<div class="card-bg" style="background-image: url('pdfs/ss/l7.jpeg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">الإسهامات الثقافية والحضارية العمانية</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss7.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="STcUJWGu8Yg">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- UNIT 3 -->
+<section class="unit">
+<h2 class="unit-title" data-term="2"><u>الوحدة الثالثة : الاقتصاد العماني .. نمو وتطور</u></h2>
+<div class="cards-container-3" data-term="2">
+
+<!-- Lesson 8 -->
+<div class="card card-small" data-lesson="8" data-term="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l8.jpg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">نشأة الاقتصاد العماني وتطوره</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss8.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="MSXZnlmL36s">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 9 -->
+<div class="card card-small" data-lesson="9" data-term="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l9.jpeg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">الاقتصاد العماني ... مقوّماته وقطاعاته</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss9.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="6LX9sYjor1w">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 10 -->
+<div class="card card-small" data-lesson="10" data-term="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l10.jpg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">الاقتصاد العماني ... التنافسية وآفاق المستقبل</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss10.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="Ge93L78XHsM">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- UNIT 4 -->
+<section class="unit">
+<h2 class="unit-title" data-term="2"><u>الوحدة الرابعة : عمان .. الدولة العصرية</u></h2>
+<div class="cards-container-3" data-term="2">
+
+<!-- Lesson 11 -->
+<div class="card card-small" data-lesson="11" data-term="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l11.jpg')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">السلطان قابوس بن سعيد ... مؤسس الدولة العصرية</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss11.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="LhgxlzB6I7U">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 12 -->
+<div class="card card-small" data-lesson="12" data-term="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l12.jfif')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">التشريعات والقوانين العمانية</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss12.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="wES7Godb-oo">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Lesson 13 -->
+<div class="card card-small" data-lesson="13" data-term="2">
+<div class="card-bg" style="background-image: url('pdfs/ss/l13.jfif')"></div>
+<div class="card-content">
+<div class="card-header">
+<h3 class="card-title">الجهاز الإداري للدولة ومؤسساتها</h3>
+</div>
+<div class="card-hover-content">
+<div class="card-buttons">
+<button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ss13.pdf">فتح PDF</button>
+<button class="btn btn-video open-video" data-video="7dbJASMsAg8">مشاهدة الفيديو</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</section>
+
+<br>
+
+<!-- ✅ Exam Revision Section -->
+<section class="unit">
+  <h2 class="unit-title"><u>المراجعات والاختبارات والكتب</u></h2>
+  <div class="cards-container">
+    
+    <!-- Revision 1 -->
+    <div class="card" data-lesson="ex1" data-term="1">
+      <div class="card-bg" style="background-image: url('pdfs/ss/na1.jpg')"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">نموذج اختبار (1)</h3>
+        </div>
+        <div class="card-hover-content">
+          <div class="card-buttons">
+            <button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ssq.pdf">الأسئلة</button>
+            <button class="btn btn-video open-pdf" data-pdf="pdfs/ss/ssa.pdf">الإجابات</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revision 2 -->
+    <div class="card" data-lesson="ex2" data-term="1">
+      <div class="card-bg" style="background-image: url('pdfs/ss/na2.jpg')"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">ملخص كامل</h3>
+        </div>
+        <div class="card-hover-content">
+          <div class="card-buttons">
+            <button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ssr1.pdf">عرض الملخص</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Revision 3-->
+    <div class="card" data-lesson="ex1" data-term="2">
+      <div class="card-bg" style="background-image: url('pdfs/ss/na1.jpg')"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">نموذج اختبار (1)</h3>
+        </div>
+        <div class="card-hover-content">
+          <div class="card-buttons">
+            <button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ssq2.pdf">الأسئلة</button>
+            <button class="btn btn-video open-pdf" data-pdf="pdfs/ss/ssa2.pdf">الإجابات</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revision 4 -->
+    <div class="card" data-lesson="ex2" data-term="2">
+      <div class="card-bg" style="background-image: url('pdfs/ss/na2.jpg')"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">ملخص كامل</h3>
+        </div>
+        <div class="card-hover-content">
+          <div class="card-buttons">
+            <button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/ssr2.pdf">عرض الملخص</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revision 3 -->
+    <div class="card" data-lesson="ex3">
+      <div class="card-bg" style="background-image: url('pdfs/ss/na3.jpg')"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">الكتاب المدرسي</h3>
+        </div>
+        <div class="card-hover-content">
+          <div class="card-buttons">
+            <button class="btn btn-video open-pdf" data-pdf="pdfs/ss/sscb.pdf">كتاب الطالب</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revision 4 -->
+    <div class="card" data-lesson="ex4">
+      <div class="card-bg" style="background-image: url('pdfs/ss/na4.jpg')"></div>
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">دليل المعلم</h3>
+        </div>
+        <div class="card-hover-content">
+          <div class="card-buttons">
+            <button class="btn btn-primary open-pdf" data-pdf="pdfs/ss/sstb.pdf">افتح الدليل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+</main>
+  
+
+    <!-- 📄 PDF Modal -->
+    <div class="modal" id="pdfModal">
+<div class="modal-content">
+<div class="modal-header">
+<h3 class="modal-title" id="modalTitle">عرض PDF للدرس</h3>
+<button class="close-btn" id="closeModal">&times;</button>
+</div>
+<div class="modal-body">
+<div class="pdf-container">
+<div class="pdf-placeholder">
+<div class="pdf-icon">📄</div>
+<p>سيظهر محتوى PDF هنا</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <!-- 🎬 Video Modal -->
+<div class="modal" id="videoModal">
+<div class="modal-content">
+<div class="modal-header">
+<h3 class="modal-title" id="videoModalTitle">مشاهدة الفيديو التعليمي</h3>
+<button class="close-btn" id="closeVideoModal">&times;</button>
+</div>
+<div class="modal-body">
+<div class="video-container" id="videoPlayer"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// ===== Get modal elements =====
+const pdfModal = document.getElementById('pdfModal');
+const videoModal = document.getElementById('videoModal');
+const modalTitle = document.getElementById('modalTitle');
+const videoModalTitle = document.getElementById('videoModalTitle');
+const closeModal = document.getElementById('closeModal');
+const closeVideoModal = document.getElementById('closeVideoModal');
+const videoPlayer = document.getElementById('videoPlayer');
+
+// ===== Get buttons =====
+const openPdfButtons = document.querySelectorAll('.open-pdf');
+const openVideoButtons = document.querySelectorAll('.open-video');
+
+// ===== PDF Modal =====
+openPdfButtons.forEach(button => {
+  button.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const card = this.closest('.card');
+    const lessonTitle = card.querySelector('.card-title').textContent;
+    const pdfPath = this.getAttribute('data-pdf');
+    
+    modalTitle.textContent = `PDF: ${lessonTitle}`;
+    
+    const pdfContainer = pdfModal.querySelector('.pdf-container');
+    pdfContainer.innerHTML = ''; // Clear previous
+    
+    const embed = document.createElement('embed');
+    embed.src = pdfPath;
+    embed.type = 'application/pdf';
+    embed.width = '100%';
+    embed.height = '100%';
+    embed.style.minHeight = '500px';
+    
+    pdfContainer.appendChild(embed);
+    pdfModal.style.display = 'flex';
+  });
+});
+
+// ===== Video Modal =====
+openVideoButtons.forEach(button => {
+  button.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const card = this.closest('.card');
+    const lessonTitle = card.querySelector('.card-title').textContent;
+    const videoId = this.getAttribute('data-video');
+    
+    if (!videoId) return;
+    
+    videoModalTitle.textContent = `${lessonTitle}`;
+    videoPlayer.innerHTML = ''; // Clear previous
+    
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0`;
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.position = "absolute";
+    iframe.style.top = "0";
+    iframe.style.left = "0";
+    
+    videoPlayer.appendChild(iframe);
+    videoModal.style.display = 'flex';
+  });
+});
+
+// ===== Close Modals =====
+closeModal.addEventListener('click', () => {
+  pdfModal.style.display = 'none';
+  const pdfContainer = pdfModal.querySelector('.pdf-container');
+  pdfContainer.innerHTML = '<div class="pdf-placeholder"><div class="pdf-icon">📄</div><p>سيظهر محتوى PDF هنا</p></div>';
+});
+
+closeVideoModal.addEventListener('click', () => {
+  videoModal.style.display = 'none';
+  videoPlayer.innerHTML = ''; // Remove iframe to stop video
+});
+
+// ===== Close on outside click =====
+window.addEventListener('click', e => {
+  if (e.target === pdfModal) {
+    pdfModal.style.display = 'none';
+    const pdfContainer = pdfModal.querySelector('.pdf-container');
+    pdfContainer.innerHTML = '<div class="pdf-placeholder"><div class="pdf-icon">📄</div><p>سيظهر محتوى PDF هنا</p></div>';
+  }
+  if (e.target === videoModal) {
+    videoModal.style.display = 'none';
+    videoPlayer.innerHTML = '';
+  }
+});
+
+// ===== Close on Escape key =====
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    pdfModal.style.display = 'none';
+    videoModal.style.display = 'none';
+    videoPlayer.innerHTML = '';
+    const pdfContainer = pdfModal.querySelector('.pdf-container');
+    pdfContainer.innerHTML = '<div class="pdf-placeholder"><div class="pdf-icon">📄</div><p>سيظهر محتوى PDF هنا</p></div>';
+  }
+});
+</script>
+
+<script>
+// Term toggle functionality with tabs
+document.addEventListener('DOMContentLoaded', function() {
+  const termButtons = document.querySelectorAll('.term-btn');
+  const socialPage = document.querySelector('.social-page');
+  
+  // Set initial term
+  let currentTerm = '1';
+  socialPage.setAttribute('data-current-term', currentTerm);
+  
+  // Function to update active button
+  function updateActiveButton(term) {
+    termButtons.forEach(btn => {
+      const btnTerm = btn.getAttribute('data-term-btn');
+      if (btnTerm === term) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+  
+  // Function to filter content by term
+  function filterByTerm(term) {
+    // Update data attribute (this handles the CSS hiding)
+    socialPage.setAttribute('data-current-term', term);
+    
+    // Update active button
+    updateActiveButton(term);
+    
+    // Additional JavaScript hiding for empty units
+    const allUnits = document.querySelectorAll('.social-page .unit');
+    
+    allUnits.forEach(unit => {
+      // Check if unit has any visible cards
+      const visibleCards = Array.from(unit.querySelectorAll('.card')).filter(card => {
+        const cardTerm = card.getAttribute('data-term');
+        // Card is visible if it has no data-term OR matches current term
+        return !cardTerm || cardTerm === term;
+      });
+      
+      // Hide unit if no visible cards
+      if (visibleCards.length === 0) {
+        unit.style.display = 'none';
+      } else {
+        unit.style.display = '';
+      }
+    });
+  }
+  
+  // Add click event to term buttons
+  termButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const term = this.getAttribute('data-term-btn');
+      filterByTerm(term);
+    });
+  });
+  
+  // Initialize - show term 1
+  filterByTerm('1');
+});
+
+
+
+</script>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<!--Mobile Script-->
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+
+// ===== MOBILE PDF BUTTONS FOR SOCIAL STUDIES =====
+// Modify PDF modal for mobile
+if (window.innerWidth <= 768) {
+    // Override PDF button behavior
+    document.querySelectorAll('.open-pdf').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const pdfUrl = this.getAttribute('data-pdf');
+            const card = this.closest('.card');
+            const lessonTitle = card.querySelector('.card-title').textContent;
+            const fileName = pdfUrl.split('/').pop() || 'file.pdf';
+            
+            // Create custom mobile view
+            const pdfContainer = pdfModal.querySelector('.pdf-container');
+            pdfContainer.innerHTML = `
+                <div class="pdf-placeholder" style="padding: 40px 20px;">
+                    <div class="pdf-icon" style="font-size: 4rem; margin-bottom: 20px;">📄</div>
+                    <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--dark);">${lessonTitle}</p>
+                    <div style="display: flex; flex-direction: column; gap: 15px; max-width: 300px; margin: 0 auto;">
+                        <button onclick="window.open('${pdfUrl}', '_blank')" 
+                                style="background: #4CAF50; color: white; padding: 15px; border: none; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-external-link-alt"></i> فتح الملف
+                        </button>
+                        <button onclick="downloadFile('${pdfUrl}', '${fileName}')" 
+                                style="background: var(--primary); color: white; padding: 15px; border: none; border-radius: 30px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fas fa-download"></i> تحميل الملف
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modalTitle.textContent = lessonTitle;
+            pdfModal.style.display = 'flex';
+        });
+    });
+}
+
+// Download function
+window.downloadFile = function(url, filename) {
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(blobUrl);
+            showMessage('📥 جاري التحميل...');
+        })
+        .catch(() => {
+            window.open(url, '_blank');
+            showMessage('📂 تم فتح الملف');
+        });
+};
+
+// Show message function
+window.showMessage = function(text) {
+    const msg = document.createElement('div');
+    msg.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        z-index: 10001;
+        animation: slideUp 0.3s ease;
+    `;
+    msg.textContent = text;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
+};
+
+</script>
+
+</body>
+</html>

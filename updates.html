@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَسَار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #483d8a;
+            --secondary: #c2b6d4;
+            --accent: #FF6584;
+            --light: #F8F9FA;
+            --light-bg: #FFFFFF;
+            --medium: #E9ECEF;
+            --dark: #343A40;
+            --text: #495057;
+            --text-light: #6C757D;
+            --success: #36D1DC;
+            --footer: #cecee2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .up-header {
+            margin-top: 90px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 2px 4px rgba(72, 61, 139, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .updates-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 3rem;
+        }
+
+        .update-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .update-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .update-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .update-badge {
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .update-badge.upcoming {
+            background: rgba(171, 107, 214, 0.466);
+            color: var(--primary);
+        }
+
+        .update-badge.maintenance {
+            background: rgba(255, 101, 132, 0.2);
+            color: var(--accent);
+        }
+
+        .update-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .update-content {
+            padding: 20px;
+        }
+
+        .update-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .update-description {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--medium);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-upcoming {
+            background-color: var(--primary);
+        }
+
+        .update-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .update-priority {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .priority-high {
+            color: var(--accent);
+        }
+
+        .priority-medium {
+            color: #5bac5b;
+        }
+
+        .priority-low {
+            color: var(--success);
+        }
+
+        .update-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <header class="up-header">
+        <div class="container">
+            <h1>التحديثات والصيانة</h1>
+            <p class="subtitle">ابق على اطلاع بآخر التحديثات القادمة وجداول الصيانة</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="upcoming">القادمة قريباً</button>
+                <button class="filter-btn" data-filter="maintenance">الصيانة</button>
+            </div>
+        </div>
+
+        <div class="updates-container" id="updatesContainer">
+            <!-- سيتم إدراج التحديثات هنا ديناميكياً -->
+        </div>
+    </div>
+
+    <script>
+        // بيانات التحديثات
+        const updates = [
+            {
+                id: 1,
+                title: "ملفات الفصل الدراسي الثاني",
+                description: "سيتم قريبًا إضافة ملفات الفصل الدراسي الثاني من مقاطع فيديو وملفات PDF لجميع المواد، حتى يتمكّن الطلاب من متابعة الدروس بكل سهولة.",
+                date: "2026-2-25",
+                type: "upcoming",
+                priority: "high",
+                progress: 85
+            },
+            {
+                id: 2,
+                title: "تحسين أداء الموقع",
+                description: "نعمل حاليًا على تحسين سرعة وأداء الموقع ليعمل بسلاسة أكبر لجميع المستخدمين.",
+                date: "2025-10-25",
+                type: "maintenance",
+                priority: "medium"
+            },
+            {
+                id: 3,
+                title: "تمكين الطلاب من رفع ملفاتهم",
+                description: "سيتم إضافة ميزة جديدة تسمح للطلاب برفع ملفاتهم التعليمية داخل المنصّة، ليتمكن جميع الطلاب من الاستفادة من محتوى بعضهم البعض.",
+                date: "2025-11-05",
+                type: "upcoming",
+                priority: "low",
+                progress: 40
+            },
+            {
+                id: 4,
+                title: "تحديثات تقنية دورية",
+                description: "يجري الفريق عدة تحديثات تقنية لضمان استقرار المنصة وحل أي مشاكل قد تواجه المستخدمين.",
+                date: "2025-10-20",
+                type: "maintenance",
+                priority: "high"
+            },
+            {
+                id: 5,
+                title: "إضافة مواد المسار الأدبي",
+                description: "قريبًا سيتم إضافة جميع مواد المسار الأدبي (أدبي) إلى المنصّة، مع توفير ملفات وشرح مناسب لكل مادة.",
+                date: "2025-12-10",
+                type: "upcoming",
+                priority: "medium",
+                progress: 15
+            },
+            {
+                id: 6,
+                title: "فحص أمان البيانات",
+                description: "يتم الآن إجراء صيانة مخصّصة لتعزيز حماية بيانات المستخدمين وضمان أعلى مستويات الأمان.",
+                date: "2025-11-01",
+                type: "maintenance",
+                priority: "low"
+            }
+        ];
+
+        // عناصر DOM
+        const updatesContainer = document.getElementById('updatesContainer');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // تنسيق التاريخ
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('ar-EG', options);
+        }
+
+        // عرض التحديثات
+        function renderUpdates(updatesToRender) {
+            updatesContainer.innerHTML = '';
+            
+            if (updatesToRender.length === 0) {
+                updatesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>لا توجد تحديثات</h3>
+                        <p>حاول تغيير معايير التصفية</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            updatesToRender.forEach(update => {
+                const updateElement = document.createElement('div');
+                updateElement.className = 'update-card';
+                
+                let priorityText = '';
+                let priorityClass = '';
+                
+                switch(update.priority) {
+                    case 'high':
+                        priorityText = 'أولوية عالية';
+                        priorityClass = 'priority-high';
+                        break;
+                    case 'medium':
+                        priorityText = 'أولوية متوسطة';
+                        priorityClass = 'priority-medium';
+                        break;
+                    case 'low':
+                        priorityText = 'أولوية منخفضة';
+                        priorityClass = 'priority-low';
+                        break;
+                }
+                
+                // شريط التقدم للتحديثات القادمة
+                let progressHTML = '';
+                if (update.type === 'upcoming' && update.progress !== undefined) {
+                    progressHTML = `
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>التقدم</span>
+                                <span>${update.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill progress-upcoming" style="width: ${update.progress}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                updateElement.innerHTML = `
+                    <div class="update-header">
+                        <span class="update-badge ${update.type}">${update.type === 'upcoming' ? 'قادم قريباً' : 'صيانة'}</span>
+                        <span class="update-date">${formatDate(update.date)}</span>
+                    </div>
+                    <div class="update-content">
+                        <h3 class="update-title">${update.title}</h3>
+                        <p class="update-description">${update.description}</p>
+                        ${progressHTML}
+                        <div class="update-meta">
+                            <div class="update-priority ${priorityClass}">
+                                <i class="fas fa-flag"></i>
+                                <span>${priorityText}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                updatesContainer.appendChild(updateElement);
+            });
+        }
+
+// تصفية التحديثات
+function filterUpdates() {
+    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+    
+    let filteredUpdates = updates;
+    
+    // تطبيق عامل التصفية
+    if (activeFilter !== 'all') {
+        filteredUpdates = updates.filter(update => update.type === activeFilter);
+    }
+    
+    renderUpdates(filteredUpdates);
+}
+
+// عند تحميل الصفحة، إظهار التحديثات القادمة فقط
+document.addEventListener('DOMContentLoaded', function() {
+    // إخفاء جميع التحديثات أولاً
+    const allUpdates = document.querySelectorAll('.update-card');
+    allUpdates.forEach(update => update.style.display = 'none');
+    
+    // إظهار التحديثات القادمة فقط
+    const upcomingUpdates = updates.filter(update => update.type === 'upcoming');
+    renderUpdates(upcomingUpdates);
+});
+
+        // مستمعي الأحداث
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterUpdates();
+            });
+        });
+
+        // العرض الأولي
+        renderUpdates(updates);
+    </script>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Chatbot -->
+    <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+</body>
+</html>

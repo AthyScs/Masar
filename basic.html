@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَسَار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #b4aae0;
+            --secondary: #7aa6ff;
+            --accent-light: #6c5ce7;
+            --bg-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-light: #ffffff;
+            --light: #F8F9FA;
+            --text-light: #2d3436;
+            --footer: #cecee2;
+        }
+
+        * {  
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Cairo', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-light);
+            min-height: 100vh;
+            transition: all 0.5s ease;
+        }
+
+        .header {
+            margin-top: 80px;
+            text-align: center;
+            padding: 5rem 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T70,70 Q50,90 30,70 Z" fill="white"/></svg>');
+            background-size: 150px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .semester-selection {
+            margin: 1rem auto;
+            max-width: 500px;
+            padding: 0 2rem;
+        }
+
+        .semester-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .semester-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            background: var(--card-light);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+        }
+
+        .semester-btn.active {
+            background: var(--accent-light);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .category-selection {
+            margin: 1rem auto;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .category-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: var(--card-light);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+        }
+
+        .category-btn.active {
+            background: var(--accent-light);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            justify-items: center;
+            gap: 1.5rem;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-bottom: 70px;
+        }
+
+        /* Integrated Lesson View (Hidden by default) */
+        .integrated-lesson-view {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+            margin-bottom: 70px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-header {
+            margin-bottom: 50px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .back-btn {
+            background: var(--accent-light);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+        }
+
+        .lesson-header h2 {
+    color: #362c7c;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+            margin: 0;
+            display: inline-block;
+            text-align: right;
+        }
+
+        .lesson-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Two-column layout */
+        .lesson-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            min-height: 70vh;
+            padding: 0 1rem;
+        }
+
+        /* PDF Sidebar */
+        .pdf-sidebar {
+            background: var(--card-light);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-sidebar:hover {
+            border-color: var(--accent-light);
+            transform: translateY(-5px);
+        }
+
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .pdf-header h3 {
+            color: var(--accent-light);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pdf-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .pdf-preview {
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 550px;
+        }
+
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #f8f9fa;
+        }
+
+        /* Video Sidebar */
+        .video-sidebar {
+            background: var(--card-light);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .video-sidebar:hover {
+            border-color: var(--accent-light);
+            transform: translateY(-5px);
+        }
+
+        .video-header {
+            margin-bottom: 25px;
+        }
+
+        .video-header h3 {
+            color: var(--accent-light);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .video-header .subtitle {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Main Video Player */
+        .main-video-player {
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .main-video-player iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+        }
+
+        /* رابط YouTube بسيط */
+        .simple-youtube-link {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .simple-youtube-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .video-main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .youtube-click-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+    background: rgba(126, 118, 197, 0.9);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .youtube-click-text i {
+            margin-left: 8px;
+        }
+
+        /* Video Playlist */
+        .video-playlist {
+            margin-top: 25px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .video-playlist::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .video-playlist::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .video-playlist::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .video-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+
+        .video-item:hover {
+            background: rgba(108, 92, 231, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .video-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent-light));
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .video-number {
+            background: rgba(108, 92, 231, 0.1);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .video-item.active .video-number {
+            background: white;
+            color: var(--accent-light);
+        }
+
+        .video-title {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .video-duration {
+            margin-left: 15px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .video-item.active .video-duration {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .video-status {
+            margin-right: 10px;
+            color: #27ae60;
+            font-size: 1.2rem;
+        }
+
+        /* Original Cards */
+        .math-card, .unit-card, .lesson-card, .test-card, .video-card {
+            background: var(--card-light);
+            width: 100%;
+            max-width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            text-decoration: none;
+            color: var(--text-light);
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .math-card::before, .unit-card::before, .lesson-card::before, .test-card::before, .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .math-card:hover, .unit-card:hover, .lesson-card:hover, .test-card:hover, .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-color: var(--accent-light);
+        }
+
+        .math-card:hover::before, .unit-card:hover::before, .lesson-card:hover::before, .test-card:hover::before, .video-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-image {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .math-card:hover .card-image, 
+        .unit-card:hover .card-image, 
+        .lesson-card:hover .card-image,
+        .test-card:hover .card-image,
+        .video-card:hover .card-image {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .math-card h2, .unit-card h2, .lesson-card h2, .test-card h2, .video-card h2 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .card-description {
+            margin-top: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .lesson-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .math-card, .unit-card, .lesson-card, .test-card, .video-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardEntrance 0.6s ease forwards;
+        }
+
+        @keyframes cardEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .completion-badge {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background: #27ae60;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 0.8rem;
+            left: 0.8rem;
+            background: none;
+            border: none;
+            color: #ddd;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn.active {
+            color: #e74c3c;
+        }
+
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto 1rem;
+            padding: 0 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb span {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        /* Empty state for lessons without videos */
+        .no-videos-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .no-videos-message i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+/* Add at the end of your style tag - Mobile fixes for basic math page */
+@media screen and (max-width: 768px) {
+    /* Header fixes */
+    .header {
+        margin-top: 60px;
+        padding: 2rem 1rem 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    /* Semester and category buttons */
+    .semester-selection {
+        padding: 0 1rem;
+    }
+
+    .semester-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .semester-btn {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        flex: 1 1 auto;
+        min-width: 120px;
+    }
+
+    .category-selection {
+        padding: 0 1rem;
+    }
+
+    .category-buttons {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .category-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        flex: 1 1 auto;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+        padding: 0 1rem;
+        font-size: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Main container cards */
+    .main-container {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0.5rem;
+        margin-bottom: 60px;
+    }
+
+    .unit-card, .lesson-card, .test-card {
+        max-width: 100%;
+        padding: 1.2rem;
+    }
+
+    .card-image {
+        width: 60px;
+        height: 60px;
+        font-size: 1.3rem;
+    }
+
+    .unit-card h2, .lesson-card h2, .test-card h2 {
+        font-size: 1.1rem;
+    }
+
+    .card-description {
+        font-size: 0.85rem;
+    }
+
+    .lesson-meta {
+        font-size: 0.75rem;
+    }
+
+    /* Fix favorite button position */
+    .favorite-btn {
+        top: 0.5rem;
+        left: 0.5rem;
+        font-size: 1rem;
+    }
+
+    /* Integrated lesson view */
+    .integrated-lesson-view {
+        padding: 10px;
+    }
+
+    .lesson-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .back-btn {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+    }
+
+    .lesson-header h2 {
+        font-size: 1.3rem;
+        margin-right: 0;
+        text-align: right;
+        width: 100%;
+    }
+
+    /* Two-column layout becomes single column */
+    .lesson-content {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+        padding: 0;
+    }
+
+    /* PDF sidebar */
+    .pdf-sidebar {
+        padding: 20px;
+    }
+
+    .pdf-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .pdf-actions {
+        gap: 8px;
+    }
+
+    .action-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .pdf-preview {
+        height: 350px;
+        margin: 15px 0;
+    }
+
+    /* Video sidebar */
+    .video-sidebar {
+        padding: 20px;
+    }
+
+    .video-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .video-header .subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* Main video player */
+    .main-video-player {
+        margin: 15px 0;
+    }
+
+    .simple-youtube-link {
+        height: 200px;
+    }
+
+    .youtube-click-text {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    /* Video playlist */
+    .video-playlist {
+        max-height: 200px;
+    }
+
+    .video-item {
+        padding: 12px;
+    }
+
+    .video-number {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+        margin-left: 10px;
+    }
+
+    .video-title {
+        font-size: 0.85rem;
+    }
+
+    .video-duration {
+        font-size: 0.75rem;
+        margin-left: 8px;
+    }
+
+    /* No videos message */
+    .no-videos-message {
+        padding: 30px 15px;
+    }
+
+    .no-videos-message i {
+        font-size: 2.5rem;
+    }
+
+    .no-videos-message p {
+        font-size: 0.9rem;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- Header-->
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <header class="header">
+        <h1>الرياضيات الأساسية</h1>
+        <p class="subtitle">الصف الحادي عشر - اختر القسم لبدء التعلم</p>
+    </header>
+
+    <div class="semester-selection">
+        <div class="semester-buttons">
+            <button class="semester-btn active" onclick="changeSemester('first')">الفصل الدراسي الأول</button>
+            <button class="semester-btn" onclick="changeSemester('second')">الفصل الدراسي الثاني</button>
+        </div>
+    </div>
+
+    <div class="category-selection">
+        <div class="category-buttons">
+            <button class="category-btn active" onclick="showCategory('summaries')">📚 المواد التعليمية</button>
+            <button class="category-btn" onclick="showCategory('tests')">📝 الاختبارات</button>
+        </div>
+    </div>
+
+    <div class="breadcrumb" id="breadcrumb">
+        <span>الرئيسية</span> / الرياضيات الأساسي / المواد التعليمية
+    </div>
+
+    <!-- Main Content Container (For units/lessons list) -->
+    <main class="main-container" id="content-container">
+        <!-- المحتوى سيتم تحميله هنا ديناميكياً -->
+    </main>
+
+    <!-- Integrated Lesson View (Hidden by default) -->
+    <div class="integrated-lesson-view" id="integratedLessonView">
+        <div class="lesson-header">
+            <button onclick="goBackToUnits()" class="back-btn">
+                <i class="fas fa-arrow-right"></i> العودة للوحدات
+            </button>
+            <h2 id="lessonTitle">عنوان الدرس</h2>
+        </div>
+        
+        <div class="lesson-content">
+            <!-- Left Sidebar: PDF -->
+            <div class="pdf-sidebar">
+                <div class="pdf-header">
+                    <h3><i class="fas fa-file-pdf"></i> ملخص الدرس</h3>
+                    <div class="pdf-actions">
+                        <button onclick="downloadCurrentPDF()" class="action-btn" title="تحميل PDF">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button onclick="openPDFInNewTab()" class="action-btn" title="فتح في نافذة جديدة">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pdf-preview">
+                    <iframe src="" id="pdfFrame" class="pdf-frame"></iframe>
+                </div>
+            </div>
+            
+            <!-- Right Sidebar: Videos -->
+            <div class="video-sidebar">
+                <div class="video-header">
+                    <h3><i class="fas fa-video"></i> فيديوهات الشرح</h3>
+                    <p class="subtitle" id="videoCount">0 فيديوهات</p>
+                </div>
+                
+                <!-- Main Video Player -->
+                <div class="main-video-player">
+                    <div id="videoPlayerContainer">
+                        <!-- YouTube iframe will be injected here -->
+                        <div class="no-videos-message" id="noVideosMessage">
+                            <i class="fas fa-video-slash"></i>
+                            <p>لا تتوفر فيديوهات لهذا الدرس حالياً</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Playlist -->
+                <div class="video-playlist" id="videoPlaylist">
+                    <!-- Videos will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+<!--Main Script-->
+    <script>
+        // البيانات الأصلية
+        const BASIC_LESSONS_DATA = {
+            first: {
+                summaries: {
+                    units: [
+                        {
+                            id: "unit1",
+                            title: "الوحدة الأولى: المعادلات والمتباينات والدوال التربيعية",
+                            lessons: [
+                                {
+                                    id: "unit1_lesson1",
+                                    title: "حل المعادلات التربيعية بالتحليل إلى عوامل",
+                                    description: "ملخص درس حل المعادلات التربيعية بالتحليل",
+                                    duration: "15 دقيقة",
+                                    pdf: "pdfs/basic/lesson1.pdf",
+                                    content: "هذا ملخص كامل لدرس حل المعادلات التربيعية بالتحليل إلى عوامل..."
+                                },
+                                {
+                                    id: "unit1_lesson2", 
+                                    title: "القيم العظمى والقيم الصغرى للدالة التربيعية",
+                                    description: "ملخص درس القيم العظمى والصغرى",
+                                    duration: "20 دقيقة",
+                                    pdf: "pdfs/basic/lesson2.pdf",
+                                    content: "هذا ملخص كامل لدرس القيم العظمى والقيم الصغرى للدالة التربيعية..."
+                                },
+                                {
+                                    id: "unit1_lesson3",
+                                    title: "المتباينات التربيعية",
+                                    description: "ملخص درس المتباينات التربيعية", 
+                                    duration: "18 دقيقة",
+                                    pdf: "pdfs/basic/lesson3.pdf",
+                                    content: "هذا ملخص كامل لدرس المتباينات التربيعية..."
+                                },
+                                {
+                                    id: "unit1_lesson4",
+                                    title: "جذور المعادلة التربيعية",
+                                    description: "ملخص درس جذور المعادلة التربيعية",
+                                    duration: "25 دقيقة",
+                                    pdf: "pdfs/basic/lesson4.pdf",
+                                    content: "هذا ملخص كامل لدرس جذور المعادلة التربيعية..."
+                                },
+                                {
+                                    id: "unit1_lesson5",
+                                    title: "حل المعادلات الآنية (معادلة خطية ومعادلة تربيعية)",
+                                    description: "ملخص درس حل المعادلات الآنية",
+                                    duration: "22 دقيقة",
+                                    pdf: "pdfs/basic/lesson5.pdf",
+                                    content: "هذا ملخص كامل لدرس حل المعادلات الآنية..."
+                                },
+                                {
+                                    id: "unit1_lesson6",
+                                    title: "التقاطع بين مستقيم ومنحنى الدالة التربيعية",
+                                    description: "ملخص درس التقاطع بين المستقيم والمنحنى",
+                                    duration: "20 دقيقة",
+                                    pdf: "pdfs/basic/lesson6.pdf",
+                                    content: "هذا ملخص كامل لدرس التقاطع بين مستقيم ومنحنى الدالة التربيعية..."
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit2",
+                            title: "الوحدة الثانية: الدوال",
+                            lessons: [
+                                {
+                                    id: "unit2_lesson1",
+                                    title: "تعريف الدوال ومجالها ومداها",
+                                    description: "ملخص درس تعريف الدوال والمجال والمدى",
+                                    duration: "15 دقيقة", 
+                                    pdf: "pdfs/basic/lesson7.pdf",
+                                    content: "هذا ملخص كامل لدرس تعريف الدوال ومجالها ومداها..."
+                                },
+                                {
+                                    id: "unit2_lesson2",
+                                    title: "الدوال المركبة",
+                                    description: "ملخص درس الدوال المركبة",
+                                    duration: "20 دقيقة",
+                                    pdf: "pdfs/basic/lesson8.pdf", 
+                                    content: "هذا ملخص كامل لدرس الدوال المركبة..."
+                                },
+                                {
+                                    id: "unit2_lesson3",
+                                    title: "الدوال العكسية",
+                                    description: "ملخص درس الدوال العكسية",
+                                    duration: "25 دقيقة",
+                                    pdf: "pdfs/basic/lesson9.pdf",
+                                    content: "هذا ملخص كامل لدرس الدوال العكسية..."
+                                },
+                                {
+                                    id: "unit2_lesson4",
+                                    title: "منحنى الدالة ومنحنى دالتها العكسية",
+                                    description: "ملخص درس منحنى الدالة والعكسية",
+                                    duration: "18 دقيقة",
+                                    pdf: "pdfs/basic/lesson10.pdf",
+                                    content: "هذا ملخص كامل لدرس منحنى الدالة ومنحنى دالتها العكسية..."
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit3", 
+                            title: "الوحدة الثالثة: المتتاليات والمتسلسلات",
+                            lessons: [
+                                {
+                                    id: "unit3_lesson1",
+                                    title: "المتتاليات الحسابية",
+                                    description: "ملخص درس المتتاليات الحسابية",
+                                    duration: "25 دقيقة",
+                                    pdf: "pdfs/basic/lesson11.pdf",
+                                    content: "هذا ملخص كامل لدرس المتتاليات الحسابية..."
+                                },
+                                {
+                                    id: "unit3_lesson2",
+                                    title: "المتتاليات الهندسية",
+                                    description: "ملخص درس المتتاليات الهندسية",
+                                    duration: "28 دقيقة",
+                                    pdf: "pdfs/basic/lesson12.pdf",
+                                    content: "هذا ملخص كامل لدرس المتتاليات الهندسية..."
+                                },
+                                {
+                                    id: "unit3_lesson3",
+                                    title: "المتسلسلات الهندسية غير المنتهية",
+                                    description: "ملخص درس المتسلسلات الهندسية غير المنتهية",
+                                    duration: "35 دقيقة",
+                                    pdf: "pdfs/basic/lesson13.pdf",
+                                    content: "هذا ملخص كامل لدرس المتسلسلات الهندسية غير المنتهية..."
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit4",
+                            title: "الوحدة الرابعة: مقاييس النزعة المركزية", 
+                            lessons: [
+                                {
+                                    id: "unit4_lesson1",
+                                    title: "مقاييس النزعة المركزية",
+                                    description: "ملخص درس مقاييس النزعة المركزية",
+                                    duration: "18 دقيقة",
+                                    pdf: "pdfs/basic/lesson14.pdf",
+                                    content: "هذا ملخص كامل لدرس مقاييس النزعة المركزية..."
+                                },
+                                {
+                                    id: "unit4_lesson2",
+                                    title: "الحساب التقديري لمقاييس النزعة المركزية",
+                                    description: "ملخص درس الوسط الحسابي والمنوال والوسيط",
+                                    duration: "25 دقيقة",
+                                    pdf: "pdfs/basic/lesson15.pdf",
+                                    content: "هذا ملخص كامل لدرس الوسط الحسابي والمنوال والوسيط..."
+                                },
+                                {
+                                    id: "unit4_lesson3",
+                                    title: "خصائص مقاييس النزعة المركزية",
+                                    description: "ملخص درس خصائص مقاييس النزعة المركزية",
+                                    duration: "20 دقيقة",
+                                    pdf: "pdfs/basic/lesson16.pdf",
+                                    content: "هذا ملخص كامل لدرس خصائص مقاييس النزعة المركزية..."
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit5",
+                            title: "الوحدة الخامسة: مقاييس التشتت",
+                            lessons: [
+                                {
+                                    id: "unit5_lesson1", 
+                                    title: "المدى للبيانات المجمعة وغير المجمعة",
+                                    description: "ملخص درس المدى للبيانات",
+                                    duration: "22 دقيقة",
+                                    pdf: "pdfs/basic/lesson17.pdf",
+                                    content: "هذا ملخص كامل لدرس المدى للبيانات المجمعة وغير المجمعة..."
+                                },
+                                {
+                                    id: "unit5_lesson2",
+                                    title: "المدى الربيعي",
+                                    description: "ملخص درس المدى الربيعي",
+                                    duration: "20 دقيقة",
+                                    pdf: "pdfs/basic/lesson18.pdf",
+                                    content: "هذا ملخص كامل لدرس المدى الربيعي..."
+                                },
+                                {
+                                    id: "unit5_lesson3",
+                                    title: "التباين والانحراف المعياري",
+                                    description: "ملخص درس التباين والانحراف المعياري",
+                                    duration: "28 دقيقة",
+                                    pdf: "pdfs/basic/lesson19.pdf",
+                                    content: "هذا ملخص كامل لدرس التباين والانحراف المعياري..."
+                                },
+                                {
+                                    id: "unit5_lesson4",
+                                    title: "خصائص مقاييس التشتت",
+                                    description: "ملخص درس خصائص مقاييس التشتت",
+                                    duration: "25 دقيقة",
+                                    pdf: "pdfs/basic/lesson20.pdf",
+                                    content: "هذا ملخص كامل لدرس خصائص مقاييس التشتت..."
+                                }
+                            ]
+                        }
+                    ]
+                
+                },
+                tests: {
+                    categories: [
+        {
+            title: "ملفات الاختبارات النهائيه",
+            tests: [
+                {
+                    id: "final_tests_collection",
+                    title: "تجميع اختبارات",
+                    description: "تجميع اختبارات الفصل الأول",
+                    pdf: "pdfs/basic/basq11.pdf",
+                    duration: "ساعتان"
+                },
+                {
+                    id: "final_tests_answers",
+                    title: "نموذج إجابة",
+                    description: "نموذج إجابة الاختبارات النهائية",
+                    pdf: "pdfs/basic/basa1.pdf",
+                    duration: "-"
+                }
+            ]
+        }
+    ]
+}
+},
+second: {
+    summaries: {
+        units: [
+            {
+                id: "unit6_second",
+                title: "الوحدة السادسة: الأسس واللوغاريتمات",
+                lessons: [
+                    {
+                        id: "unit6_second_summary",
+                        title: "ملخص الوحدة السادسة",
+                        description: "ملخص شامل للأسس واللوغاريتمات",
+                        duration: "45 دقيقة",
+                        playlist: "https://www.youtube.com/playlist?list=PL-I8Ocn2snzQEHv1Ynzq9u1RFQ26OMXJ2",
+                        pdf: "pdfs/basic/bas6.pdf",
+                        content: "ملخص كامل لمفاهيم الأسس واللوغاريتمات..."
+                    }
+                ]
+            },
+            {
+                id: "unit7_second",
+                title: "الوحدة السابعة: المصفوفات",
+                lessons: [
+                    {
+                        id: "unit7_second_summary",
+                        title: "ملخص الوحدة السابعة",
+                        description: "ملخص شامل للمصفوفات",
+                        duration: "40 دقيقة",
+                        playlist: "https://www.youtube.com/playlist?list=PL-I8Ocn2snzQEHv1Ynzq9u1RFQ26OMXJ2",
+                        pdf: "pdfs/basic/bas7.pdf",
+                        content: "ملخص كامل لمفاهيم المصفوفات..."
+                    }
+                ]
+            },
+            {
+                id: "unit8_second",
+                title: "الوحدة الثامنة: التباديل والتوافيق",
+                lessons: [
+                    {
+                        id: "unit8_second_summary",
+                        title: "ملخص الوحدة الثامنة",
+                        description: "ملخص شامل للتباديل والتوافيق",
+                        duration: "35 دقيقة",
+                        playlist: "https://www.youtube.com/playlist?list=PL-I8Ocn2snzQEHv1Ynzq9u1RFQ26OMXJ2",
+                        pdf: "pdfs/basic/bas8.pdf",
+                        content: "ملخص كامل لمفاهيم التباديل والتوافيق..."
+                    },
+                    {
+                        id: "unit8_second_review",
+                        title: "مراجعة الوحدة الثامنة",
+                        description: "مراجعة شاملة للتباديل والتوافيق",
+                        duration: "35 دقيقة",
+                        playlist: "https://www.youtube.com/playlist?list=PL-I8Ocn2snzQEHv1Ynzq9u1RFQ26OMXJ2",
+                        pdf: "pdfs/basic/bas8(2).pdf",
+                        content: "مراجعة كاملة لمفاهيم التباديل والتوافيق..."
+                    }                    
+                ]
+            },
+            {
+                id: "unit9_second",
+                title: "الوحدة التاسعة: مفكوك ذات الحدّين",
+                lessons: [
+                    {
+                        id: "unit9_second_summary",
+                        title: "ملخص الوحدة التاسعة",
+                        description: "ملخص شامل لمفكوك ذات الحدين",
+                        duration: "30 دقيقة",
+                        playlist: "https://www.youtube.com/playlist?list=PL-I8Ocn2snzQEHv1Ynzq9u1RFQ26OMXJ2",
+                        pdf: "pdfs/basic/bas9.pdf",
+                        content: "ملخص كامل لمفاهيم مفكوك ذات الحدين..."
+                    }
+                ]
+            }
+        ]
+    },
+tests: {
+    categories: [
+        {
+            title: "ملفات الكتب",
+            tests: [
+                {
+                    id: "book_student",
+                    title: "كتاب الطالب",
+                    description: "كتاب الطالب للفصل الثاني",
+                    pdf: "pdfs/basic/cbb2.pdf",
+                    duration: "-"
+                },
+                {
+                    id: "book_activity",
+                    title: "كتاب النشاط",
+                    description: "كتاب النشاط للفصل الثاني",
+                    pdf: "pdfs/basic/wbb2.pdf",
+                    duration: "-"
+                },
+                {
+                    id: "book_teacher",
+                    title: "دليل المعلم",
+                    description: "دليل المعلم للفصل الثاني",
+                    pdf: "pdfs/basic/tbb2.pdf",
+                    duration: "-"
+                }
+            ]
+        },
+        {
+            title: "ملفات الاختبارات القصيره الأولى",
+            tests: [
+                {
+                    id: "short_test1",
+                    title: "اختبار قصير أول",
+                    description: "الاختبار القصير الأول",
+                    pdf: "pdfs/basic/basq1.pdf",
+                    duration: "30 دقيقة"
+                },
+                {
+                    id: "short_test2",
+                    title: "اختبار قصير ثاني",
+                    description: "الاختبار القصير الثاني",
+                    pdf: "pdfs/basic/basq2.pdf",
+                    duration: "30 دقيقة"
+                }
+            ]
+        },
+        {
+            title: "ملفات الاختبارات النهائيه",
+            tests: [
+                {
+                    id: "final_tests_collection",
+                    title: "تجميع اختبارات",
+                    description: "تجميع اختبارات الفصل الثاني",
+                    pdf: "pdfs/basic/basq.pdf",
+                    duration: "ساعتان"
+                },
+                {
+                    id: "final_tests_answers",
+                    title: "نموذج إجابة",
+                    description: "نموذج إجابة الاختبارات النهائية",
+                    pdf: "pdfs/basic/basa.pdf",
+                    duration: "-"
+                }
+            ]
+        }
+    ]
+}
+}
+        };
+
+        // بيانات الفيديوهات
+        const BASIC_VIDEOS_DATA = {
+            first: {
+                videos: {
+                    units: [
+                        {
+                            id: "unit1",
+                            title: "الوحدة الأولى: المعادلات والمتباينات والدوال التربيعية",
+                            videos: [
+                                {
+                                    id: "unit1_lesson1",
+                                    title: "حل المعادلات التربيعية بالتحليل إلى عوامل",
+                                    parts: [
+                                        {
+                                            id: "1_1_a",
+                                            title: "الجزء الأول",
+                                            youtubeId: "DLaC2Y-21Rw",
+                                            duration: "15:30",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit1_lesson2",
+                                    title: "القيم العظمى والقيم الصغرى للدالة التربيعية",
+                                    parts: [
+                                        {
+                                            id: "1_2_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "luqfb7Xk_Mo",
+                                            duration: "18:20",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit1_lesson3",
+                                    title: "المتباينات التربيعية",
+                                    parts: [
+                                        {
+                                            id: "1_3_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "lfMf5_HDuA8",
+                                            duration: "16:15",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit1_lesson4",
+                                    title: "جذور المعادلة التربيعية",
+                                    parts: [
+                                        {
+                                            id: "1_4_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "CyLTFYIt96E",
+                                            duration: "17:25",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit1_lesson5",
+                                    title: "حل المعادلات الآنية (معادلة خطية ومعادلة تربيعية)",
+                                    parts: [
+                                        {
+                                            id: "1_5_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "G6pO0Vo-UxU",
+                                            duration: "20:10",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit1_lesson6",
+                                    title: "التقاطع بين مستقيم ومنحنى الدالة التربيعية",
+                                    parts: [
+                                        {
+                                            id: "1_6_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "FBGPUZq2UFM",
+                                            duration: "19:45",
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit2",
+                            title: "الوحدة الثانية: الدوال",
+                            videos: [
+                                {
+                                    id: "unit2_lesson1",
+                                    title: "تعريف الدوال ومجالها ومداها",
+                                    parts: [
+                                        {
+                                            id: "2_1_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "9E56j9Y5ccU",
+                                            duration: "19:20",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit2_lesson2",
+                                    title: "الدوال المركبة",
+                                    parts: [
+                                        {
+                                            id: "2_2_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "_fAJapQsSMc",
+                                            duration: "16:30",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit2_lesson3",
+                                    title: "الدوال العكسية",
+                                    parts: [
+                                        {
+                                            id: "2_3_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "7xaAT0MWHF4",
+                                            duration: "21:15",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit2_lesson4",
+                                    title: "منحنى الدالة ومنحنى دالتها العكسية",
+                                    parts: [
+                                        {
+                                            id: "2_4_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "298x5oAjw94",
+                                            duration: "18:40",
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit3",
+                            title: "الوحدة الثالثة: المتتاليات والمتسلسلات",
+                            videos: [
+                                {
+                                    id: "unit3_lesson1",
+                                    title: "المتتاليات الحسابية",
+                                    parts: [
+                                        {
+                                            id: "3_1_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "2R7DhrMMIzk",
+                                            duration: "22:10",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit3_lesson2",
+                                    title: "المتتاليات الهندسية",
+                                    parts: [
+                                        {
+                                            id: "3_2_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "ConJ-2nQ03E",
+                                            duration: "24:30",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit3_lesson3",
+                                    title: "المتسلسلات الهندسية غير المنتهية",
+                                    parts: [
+                                        {
+                                            id: "3_3_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "HH_oTndLcq8",
+                                            duration: "19:55",
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit4",
+                            title: "الوحدة الرابعة: مقاييس النزعة المركزية",
+                            videos: [
+                                {
+                                    id: "unit4_lesson1",
+                                    title: "مقاييس النزعة المركزية",
+                                    parts: [
+                                        {
+                                            id: "4_1_a",
+                                            title: "الجزء الأول",
+                                            youtubeId: "1HiS5k0Cz6k",
+                                            duration: "17:20",
+                                        },
+                                        {
+                                            id: "4_1_b",
+                                            title: "الجزء الثاني",
+                                            youtubeId: "MEjrqcNPX_8",
+                                            duration: "15:45",
+                                        }
+                                    ]
+                                },
+                                {   
+                                    id: "unit4_lesson2",
+                                    title: "الوسط الحسابي والمنوال والوسيط",
+                                    parts: [
+                                        {
+                                            id: "4_2_a",
+                                            title: "الجزء الأول",
+                                            youtubeId: "zt8a0H2gae8",
+                                            duration: "20:45",
+                                        },
+                                        {
+                                            id: "4_2_b",
+                                            title: "الجزء الثاني",
+                                            youtubeId: "ekQ_l5Te4JA",
+                                            duration: "22:15",
+                                        },
+                                    ]
+                                },
+                                {
+                                    id: "unit4_lesson3",
+                                    title: "خصائص مقاييس النزعة المركزية",
+                                    parts: [
+                                        {
+                                            id: "4_3_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "lXbaV-MyYGs",
+                                            duration: "14:40",
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "unit5",
+                            title: "الوحدة الخامسة: مقاييس التشتت",
+                            videos: [
+                                {
+                                    id: "unit5_lesson1",
+                                    title: "المدى للبيانات المجمعة وغير المجمعة",
+                                    parts: [
+                                        {
+                                            id: "5_1_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "gSiM1mzDCeM",
+                                            duration: "18:30",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit5_lesson2",
+                                    title: "المدى الربيعي",
+                                    parts: [
+                                        {
+                                            id: "5_2_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "4jSWeMZb634",
+                                            duration: "16:15",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit5_lesson3",
+                                    title: "التباين والانحراف المعياري",
+                                    parts: [
+                                        {
+                                            id: "5_3_a",
+                                            title: "الجزء الأول",
+                                            youtubeId: "NBeFvMQ5Zo0",
+                                            duration: "23:40",
+                                        },
+                                        {
+                                            id: "5_3_b",
+                                            title: "الجزء الثاني",
+                                            youtubeId: "DaOCaocghR8",
+                                            duration: "21:25",
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "unit5_lesson4",
+                                    title: "خصائص مقاييس التشتت",
+                                    parts: [
+                                        {
+                                            id: "5_4_1",
+                                            title: "الجزء الأول",
+                                            youtubeId: "Q2ThuAU4d-I",
+                                            duration: "13:06",
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        };
+// ============================================
+// STATE MANAGEMENT - حالة التطبيق
+// ============================================
+let currentState = {
+    category: 'summaries',
+    semester: 'first',
+    currentUnit: null,
+    currentLesson: null,
+    currentVideoIndex: 0
+};
+
+// ============================================
+// DOM ELEMENTS - العناصر الرئيسية
+// ============================================
+const contentContainer = document.getElementById('content-container');
+const integratedLessonView = document.getElementById('integratedLessonView');
+const breadcrumb = document.getElementById('breadcrumb');
+
+// ============================================
+// HELPER FUNCTIONS - دوال مساعدة
+// ============================================
+
+// التحقق مما إذا كان الدرس يحتوي على قائمة تشغيل
+function hasPlaylist(lesson) {
+    return lesson.playlist && lesson.playlist.includes('youtube.com/playlist');
+}
+
+// استخراج معرف الفيديو من رابط قائمة التشغيل
+function extractPlaylistFirstVideoId(playlistUrl) {
+    const match = playlistUrl.match(/[?&]v=([^&]+)/);
+    if (match) return match[1];
+    
+    const listMatch = playlistUrl.match(/[?&]list=([^&]+)/);
+    if (listMatch) {
+        return 'youtube_playlist';
+    }
+    
+    return 'youtube_playlist';
+}
+
+// ============================================
+// VIDEO FUNCTIONS - دوال الفيديو
+// ============================================
+
+// الحصول على الفيديوهات للدرس المحدد
+function getVideosForLesson(lessonId, lesson) {
+    // التحقق من وجود قائمة تشغيل
+    if (lesson && lesson.playlist) {
+        return [{
+            youtubeId: extractPlaylistFirstVideoId(lesson.playlist),
+            title: "قائمة تشغيل كاملة",
+            duration: lesson.duration || "متعدد",
+            isPlaylist: true,
+            playlistUrl: lesson.playlist
+        }];
+    }
+    
+    // البحث في بيانات الفيديوهات العادية
+    if (!BASIC_VIDEOS_DATA[currentState.semester] || 
+        !BASIC_VIDEOS_DATA[currentState.semester].videos) {
+        return null;
+    }
+    
+    const videoUnits = BASIC_VIDEOS_DATA[currentState.semester].videos.units;
+    
+    for (const unit of videoUnits) {
+        for (const video of unit.videos) {
+            if (video.id === lessonId) {
+                return video.parts.map(part => ({
+                    youtubeId: part.youtubeId,
+                    title: part.title,
+                    duration: part.duration,
+                    isPlaylist: false
+                }));
+            }
+        }
+    }
+    
+    return null;
+}
+
+// تحميل وعرض الفيديو الرئيسي
+function loadVideo(youtubeId, index, isPlaylist = false, playlistUrl = null) {
+    const container = document.getElementById('videoPlayerContainer');
+    container.innerHTML = '';
+    
+    const youtubeLink = document.createElement('a');
+    
+    if (isPlaylist && playlistUrl) {
+        youtubeLink.href = playlistUrl;
+    } else {
+        youtubeLink.href = `https://youtu.be/${youtubeId}`;
+    }
+    
+    youtubeLink.target = '_blank';
+    youtubeLink.className = 'simple-youtube-link';
+    
+    // اختيار الصورة المصغرة المناسبة
+    let thumbnailSrc;
+    if (isPlaylist) {
+        thumbnailSrc = 'pdfs/basic/thumbnail.png'; // للقوائم
+    } else {
+        thumbnailSrc = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`; // للفيديوهات العادية
+    }
+    
+    youtubeLink.innerHTML = `
+        <img src="${thumbnailSrc}" 
+             alt="${currentState.currentLesson?.title || 'رياضيات'}" 
+             class="video-main-image"
+             onerror="this.onerror=null; this.src='pdfs/basic/thumbnail.png';">
+        <div class="youtube-click-text">
+            <i class="fab fa-youtube"></i>
+            <span>${isPlaylist ? 'انقر لفتح قائمة التشغيل' : 'انقر لفتح الفيديو'}</span>
+        </div>
+    `;
+    
+    container.appendChild(youtubeLink);
+    currentState.currentVideoIndex = index;
+}
+
+// عرض قائمة الفيديوهات في الجانب
+function renderVideoPlaylist(videos) {
+    const playlist = document.getElementById('videoPlaylist');
+    playlist.innerHTML = '';
+    
+    videos.forEach((video, index) => {
+        const videoItem = document.createElement('div');
+        videoItem.className = 'video-item';
+        if (index === 0) {
+            videoItem.classList.add('active');
+            currentState.currentVideoIndex = 0;
+        }
+        
+        const isPlaylist = video.isPlaylist;
+        
+        videoItem.innerHTML = `
+            <span class="video-number">${index + 1}</span>
+            <span class="video-title">${video.title} ${isPlaylist ? '<i class="fas fa-list" style="margin-right: 5px;"></i>' : ''}</span>
+            <span class="video-duration">${video.duration}</span>
+        `;
+        
+        videoItem.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            document.querySelectorAll('.video-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            videoItem.classList.add('active');
+            loadVideo(video.youtubeId, index, video.isPlaylist, video.playlistUrl);
+            currentState.currentVideoIndex = index;
+        });
+        
+        playlist.appendChild(videoItem);
+    });
+}
+
+// ============================================
+// PDF FUNCTIONS - دوال PDF
+// ============================================
+
+function downloadCurrentPDF() {
+    if (currentState.currentLesson && currentState.currentLesson.pdf) {
+        const pdfUrl = currentState.currentLesson.pdf;
+        
+        const link = document.createElement('a');
+        link.href = pdfUrl;
+        const fileName = pdfUrl.split('/').pop() || 'lesson.pdf';
+        link.download = fileName;
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert('لا يوجد ملف PDF للتحميل');
+    }
+}
+
+function openPDFInNewTab() {
+    if (currentState.currentLesson && currentState.currentLesson.pdf) {
+        window.open(currentState.currentLesson.pdf, '_blank');
+    } else {
+        alert('لا يوجد ملف PDF لفتحه');
+    }
+}
+
+// ============================================
+// UI FUNCTIONS - دوال واجهة المستخدم
+// ============================================
+
+// عرض واجهة الدرس المتكامل
+function showIntegratedLesson(lesson) {
+    currentState.currentLesson = lesson;
+    
+    contentContainer.style.display = 'none';
+    integratedLessonView.style.display = 'block';
+    
+    document.getElementById('lessonTitle').textContent = lesson.title;
+    
+    // تحديث PDF
+    const pdfFrame = document.getElementById('pdfFrame');
+    pdfFrame.src = '';
+    setTimeout(() => {
+        pdfFrame.src = lesson.pdf;
+    }, 50);
+    
+    // الحصول على الفيديوهات
+    const videos = getVideosForLesson(lesson.id, lesson);
+    const videoCount = videos ? videos.length : 0;
+    document.getElementById('videoCount').textContent = `${videoCount} فيديوهات`;
+    
+    // تنظيف وتهيئة واجهة الفيديو
+    const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+    const noVideosMessage = document.getElementById('noVideosMessage');
+    const playlist = document.getElementById('videoPlaylist');
+    
+    videoPlayerContainer.innerHTML = '';
+    playlist.innerHTML = '';
+    
+    if (noVideosMessage) {
+        noVideosMessage.style.display = 'none';
+    }
+    
+    if (videos && videos.length > 0) {
+        renderVideoPlaylist(videos);
+        
+        const firstVideo = videos[0];
+        loadVideo(firstVideo.youtubeId, 0, firstVideo.isPlaylist, firstVideo.playlistUrl);
+        
+        if (noVideosMessage) {
+            noVideosMessage.style.display = 'none';
+        }
+    } else {
+        playlist.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">لا توجد فيديوهات لهذا الدرس</div>';
+        
+        if (noVideosMessage) {
+            noVideosMessage.style.display = 'block';
+        }
+    }
+    
+    updateBreadcrumbForLesson();
+}
+
+// العودة إلى قائمة الوحدات
+function goBackToUnits() {
+    integratedLessonView.style.display = 'none';
+    
+    document.getElementById('pdfFrame').src = '';
+    document.getElementById('videoPlayerContainer').innerHTML = '';
+    document.getElementById('videoPlaylist').innerHTML = '';
+    
+    currentState.currentLesson = null;
+    currentState.currentVideoIndex = 0;
+    
+    contentContainer.style.display = 'grid';
+    renderContent();
+}
+
+// تحديث مسار التنقل للدرس
+function updateBreadcrumbForLesson() {
+    if (currentState.currentUnit && currentState.currentLesson) {
+        breadcrumb.innerHTML = `
+            <span>الرئيسية</span> / الرياضيات الأساسي / ${currentState.currentUnit.title} / ${currentState.currentLesson.title}
+        `;
+    }
+}
+
+// تحديث مسار التنقل العام
+function updateBreadcrumb() {
+    let breadcrumbText = '<span>الرئيسية</span> / الرياضيات الأساسي';
+    
+    if (currentState.category === 'summaries') {
+        breadcrumbText += ' / المواد التعليمية';
+    } else if (currentState.category === 'tests') {
+        breadcrumbText += ' / الاختبارات';
+    }
+    
+    if (currentState.currentUnit) {
+        breadcrumbText += ` / ${currentState.currentUnit.title}`;
+    }
+    
+    breadcrumb.innerHTML = breadcrumbText;
+}
+
+// إضافة حركات للبطاقات
+function addCardAnimations() {
+    const cards = document.querySelectorAll('.math-card, .unit-card, .lesson-card, .test-card, .video-card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+    });
+}
+
+// ============================================
+// RENDERING FUNCTIONS - دوال العرض
+// ============================================
+
+// عرض المحتوى حسب الفئة
+function renderContent() {
+    contentContainer.innerHTML = '';
+    updateBreadcrumb();
+    
+    if (currentState.category === 'summaries') {
+        renderLearningMaterials();
+    } else if (currentState.category === 'tests') {
+        renderTests();
+    } else {
+        contentContainer.innerHTML = '<div class="unit-card"><h2>جاري تطوير هذا القسم</h2></div>';
+    }
+    
+    addCardAnimations();
+}
+
+// عرض المواد التعليمية (PDF + فيديوهات)
+function renderLearningMaterials() {
+    const pdfData = BASIC_LESSONS_DATA[currentState.semester].summaries;
+    const videoData = BASIC_VIDEOS_DATA[currentState.semester]?.videos;
+    
+    if (!currentState.currentUnit) {
+        // عرض قائمة الوحدات
+        breadcrumb.innerHTML = '<span>الرئيسية</span> / الرياضيات الأساسي / المواد التعليمية';
+        
+        const allUnits = [];
+        
+        pdfData.units.forEach(unit => {
+            const videoUnit = videoData?.units.find(vu => vu.id === unit.id);
+            allUnits.push({
+                ...unit,
+                hasVideos: !!videoUnit
+            });
+        });
+        
+        allUnits.forEach((unit, index) => {
+            const videoUnit = videoData?.units.find(vu => vu.id === unit.id);
+            const totalVideos = videoUnit ? videoUnit.videos.length : 0;
+            
+            const card = document.createElement('div');
+            card.classList.add('unit-card');
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.innerHTML = `
+                <div class="card-image">
+                    <i class="fas ${unit.hasVideos ? 'fa-play-circle' : 'fa-book'}"></i>
+                </div>
+                <h2>${unit.title}</h2>
+                <p class="card-description">
+                    ${unit.lessons.length} درس
+                    ${totalVideos > 0 ? ` • ${totalVideos} فيديو` : ''}
+                </p>
+                <div class="lesson-meta">
+                    <span><i class="fas fa-play-circle"></i> ابدأ التعلم</span>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                currentState.currentUnit = unit;
+                renderContent();
+            });
+            contentContainer.appendChild(card);
+        });
+    } else {
+        // عرض دروس الوحدة
+        breadcrumb.innerHTML = `<span>الرئيسية</span> / الرياضيات الأساسي / المواد التعليمية / ${currentState.currentUnit.title}`;
+        
+        // زر العودة
+        const backCard = document.createElement('div');
+        backCard.classList.add('unit-card');
+        backCard.innerHTML = `
+            <div class="card-image">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <h2>العودة للوحدات</h2>
+            <p class="card-description">انقر للعودة إلى قائمة الوحدات</p>
+        `;
+        backCard.addEventListener('click', () => {
+            currentState.currentUnit = null;
+            renderContent();
+        });
+        contentContainer.appendChild(backCard);
+        
+        // عرض الدروس
+        const pdfUnit = pdfData.units.find(u => u.id === currentState.currentUnit.id);
+        const videoUnit = videoData?.units.find(vu => vu.id === currentState.currentUnit.id);
+        
+        if (pdfUnit) {
+            pdfUnit.lessons.forEach((lesson, index) => {
+                const videoLesson = videoUnit?.videos.find(v => v.id === lesson.id);
+                const hasVideos = !!videoLesson;
+                const isFavorite = localStorage.getItem(`favorite_${lesson.id}`) === 'true';
+                
+                const card = document.createElement('div');
+                card.classList.add('lesson-card');
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${lesson.id}', event)">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <div class="card-image">
+                        <i class="fas ${hasVideos ? 'fa-file-video' : 'fa-file-pdf'}"></i>
+                    </div>
+                    <h2>${lesson.title}</h2>
+                    <p class="card-description">${lesson.description}</p>
+                    <div class="lesson-meta">
+                        <span><i class="fas fa-clock"></i> ${lesson.duration}</span>
+                        <span>${hasVideos ? 'PDF + فيديو' : 'PDF فقط'}</span>
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    showIntegratedLesson(lesson);
+                });
+                contentContainer.appendChild(card);
+            });
+        }
+    }
+}
+
+// عرض الاختبارات
+function renderTests() {
+    const data = BASIC_LESSONS_DATA[currentState.semester].tests;
+    breadcrumb.innerHTML = '<span>الرئيسية</span> / الرياضيات الأساسي / الاختبارات';
+    
+    data.categories.forEach((category, index) => {
+        const card = document.createElement('div');
+        card.classList.add('unit-card');
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.innerHTML = `
+            <div class="card-image">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h2>${category.title}</h2>
+            <p class="card-description">${category.tests.length} اختبار</p>
+            <div class="lesson-meta">
+                <span><i class="fas fa-play-circle"></i> ابدأ الاختبار</span>
+            </div>
+        `;
+        card.addEventListener('click', () => {
+            openTestsCategory(category);
+        });
+        contentContainer.appendChild(card);
+    });
+}
+
+// فتح فئة الاختبارات
+function openTestsCategory(category) {
+    breadcrumb.innerHTML = `<span>الرئيسية</span> / الرياضيات الأساسي / الاختبارات / ${category.title}`;
+    
+    contentContainer.innerHTML = '';
+    
+    // زر العودة
+    const backCard = document.createElement('div');
+    backCard.classList.add('unit-card');
+    backCard.innerHTML = `
+        <div class="card-image">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        <h2>العودة للاختبارات</h2>
+        <p class="card-description">انقر للعودة إلى قائمة الاختبارات</p>
+    `;
+    backCard.addEventListener('click', () => {
+        renderContent();
+    });
+    contentContainer.appendChild(backCard);
+    
+    // عرض الاختبارات
+    category.tests.forEach((test, index) => {
+        const isVideo = test.pdf.includes('youtu');
+        const card = document.createElement('div');
+        card.classList.add('test-card');
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.innerHTML = `
+            <div class="card-image">
+                <i class="fas ${isVideo ? 'fa-play-circle' : 'fa-file-pdf'}"></i>
+            </div>
+            <h2>${test.title}</h2>
+            <p class="card-description">${test.description}</p>
+            <div class="lesson-meta">
+                <span><i class="fas fa-clock"></i> ${test.duration}</span>
+                <span><i class="fas ${isVideo ? 'fa-play' : 'fa-download'}"></i> ${isVideo ? 'مشاهدة' : 'تحميل'}</span>
+            </div>
+        `;
+        card.addEventListener('click', () => {
+            window.open(test.pdf, '_blank');
+        });
+        contentContainer.appendChild(card);
+    });
+}
+
+// ============================================
+// FAVORITE FUNCTIONS - دوال المفضلة
+// ============================================
+
+function toggleFavorite(lessonId, event) {
+    event.stopPropagation();
+    const isFavorite = localStorage.getItem(`favorite_${lessonId}`) === 'true';
+    localStorage.setItem(`favorite_${lessonId}`, !isFavorite);
+    renderContent();
+}
+
+// ============================================
+// SEMESTER & CATEGORY FUNCTIONS - دوال الفصول والفئات
+// ============================================
+
+function changeSemester(semester) {
+    currentState.semester = semester;
+    currentState.currentUnit = null;
+    currentState.currentLesson = null;
+    
+    document.querySelectorAll('.semester-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    integratedLessonView.style.display = 'none';
+    contentContainer.style.display = 'grid';
+    renderContent();
+}
+
+function showCategory(category) {
+    if (category === 'videos') {
+        category = 'summaries';
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector('.category-btn[onclick*="summaries"]').classList.add('active');
+    }
+    
+    currentState.category = category;
+    currentState.currentUnit = null;
+    currentState.currentLesson = null;
+    
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    integratedLessonView.style.display = 'none';
+    contentContainer.style.display = 'grid';
+    renderContent();
+}
+
+// ============================================
+// INITIALIZATION - التهيئة عند تحميل الصفحة
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    renderContent();
+});
+    </script>
+
+<!--Mobile SCript-->
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>َ مَسَار </title>
+    <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300&family=Mynerve&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/581e5f415a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #e27272;
+            --secondary: #9e0000;
+            --accent: #e9c46a;
+            --light: #faf8f8;
+            --light-gray: #efe9e9;
+            --medium-gray: #bdadad;
+            --dark: #292121;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --footer: #e2cece;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #faf5f5 0%, #e2c3c3 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(157, 42, 42, 0.1) 0%, rgba(250, 245, 245, 0) 70%);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(157, 42, 42, 0.3);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(157, 42, 42, 0.5), 0 0 30px rgba(83, 38, 38, 0.3);
+            }
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            right: 0;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(157, 42, 42, 0.3);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(157, 42, 42, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+        
+        /* About Life Skills Section */
+        .about-life {
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        .about-visual {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .life-skills-animation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .skill-wheel {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .skill-item {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Importance Section */
+        .importance {
+            background-color: var(--light-gray);
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+            box-shadow: var(--shadow);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card i {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Challenges Section */
+        .challenges {
+            background-color: var(--light);
+        }
+        
+        .warning-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .warning-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border-right: 5px solid var(--accent);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .warning-card:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 10px 25px rgba(233, 196, 106, 0.1);
+        }
+        
+        .warning-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Skills Categories Section */
+        .skills-categories {
+            background-color: var(--light-gray);
+        }
+        
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+        
+        .category-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .skills-list {
+            list-style-type: none;
+            text-align: right;
+        }
+        
+        .skills-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-right: 20px;
+        }
+        
+        .skills-list li::before {
+            content: '•';
+            position: absolute;
+            right: 0;
+            color: var(--primary);
+        }
+        
+        /* Development Section */
+        .development {
+            background-color: var(--light);
+        }
+        
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .step:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* Resources Section */
+        .resources {
+            background-color: var(--light-gray);
+            text-align: center;
+        }
+        
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .platform {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .platform:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .platform h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .platform a {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .platform a:hover {
+            color: var(--accent);
+        }
+    
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .platforms {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .platforms {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .skill-wheel {
+                width: 250px;
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            section {
+                padding: 70px 0;
+            }
+            
+            .platforms {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-wheel {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .skill-item {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cards-container, .warning-cards, .categories-container {
+                grid-template-columns: 1fr;
+            }
+        }
+         </style>
+
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-elements" id="floatingElements"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>المهارات الحياتية</h1>
+                <p>اكتشف مهارات الحياة الأساسية لتحقيق النجاح والسعادة</p>
+                <p>طور قدراتك الشخصية والمهنية لمواجهة تحديات الحياة بثقة</p>
+                <a href="#about" class="btn">ابدأ رحلتك الحياتية</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Life Skills Section -->
+    <section id="about" class="about-life">
+        <div class="container">
+            <h2 class="section-title">ما هي المهارات الحياتية؟</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>المهارات الحياتية هي مجموعة القدرات والكفاءات التي تمكن الفرد من التعامل بفعالية مع متطلبات وتحديات الحياة اليومية. هذه المهارات تشمل القدرات الشخصية والاجتماعية والعملية التي تساعدنا على اتخاذ قرارات مستنيرة، وحل المشكلات، والتفكير النقدي، والتواصل الفعال، وإدارة المشاعر، والتعامل مع الضغوط.</p>
+                    <p>تعتبر المهارات الحياتية أساسية للنجاح في جميع مجالات الحياة، من العلاقات الشخصية إلى البيئة المهنية. فهي تمكننا من التكيف مع التغيرات، ومواجهة التحديات، واتخاذ قرارات إيجابية، والعيش حياة متوازنة ومليئة بالإنجاز.</p>
+                    <p>في عالم اليوم سريع التغير، أصبحت المهارات الحياتية أكثر أهمية من أي وقت مضى. فهي لا تساعدنا فقط على البقاء، بل على الازدهار والنجاح في بيئة دائمة التطور.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="life-skills-animation">
+                        <div class="skill-wheel" id="skillWheel">
+                            <!-- Skill items will be added by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Importance Section -->
+    <section class="importance">
+        <div class="container">
+            <h2 class="section-title">أهمية المهارات الحياتية</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <i class="fas fa-user-check"></i>
+                    <h3>تعزيز الثقة بالنفس</h3>
+                    <p>تمكنك المهارات الحياتية من مواجهة التحديات اليومية بثقة أكبر، مما يعزز تقديرك لذاتك ويحسن صورتك عن نفسك.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>اتخاذ قرارات أفضل</h3>
+                    <p>تساعدك على تحليل المواقف بشكل نقدي واتخاذ قرارات مستنيرة في جميع جوانب حياتك الشخصية والمهنية.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>تحسين العلاقات</h3>
+                    <p>تعزز مهارات التواصل والتعاطف وحل النزاعات، مما يحسن جودة علاقاتك مع العائلة والأصدقاء والزملاء.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>تطوير المسار المهني</h3>
+                    <p>تزيد من فرصك في النجاح الوظيفي من خلال تحسين مهارات القيادة والعمل الجماعي وإدارة الوقت.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-heart"></i>
+                    <h3>الصحة النفسية</h3>
+                    <p>تعلمك كيفية إدارة الضغوط والتعامل مع المشاعر السلبية، مما يحسن صحتك النفسية والعاطفية.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>الإبداع والابتكار</h3>
+                    <p>تشجع التفكير الإبداعي وحل المشكلات بطرق مبتكرة، مما يوسع آفاقك ويفتح أمامك فرصًا جديدة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges Section -->
+    <section class="challenges">
+        <div class="container">
+            <h2 class="section-title">تحديات تنمية المهارات الحياتية</h2>
+            <div class="warning-cards">
+                <div class="warning-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> نقص الوعي</h3>
+                    <p>كثير من الناس لا يدركون أهمية المهارات الحياتية أو يحتاجونها، مما يحد من دوافعهم لتطويرها.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-clock"></i> ضيق الوقت</h3>
+                    <p>ضغوط الحياة اليومية والالتزامات المتعددة تجعل من الصعب تخصيص وقت كافٍ لتنمية المهارات الشخصية.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-graduation-cap"></i> قلة الفرص التعليمية</h3>
+                    <p>الأنظمة التعليمية التقليدية غالبًا ما تركز على المعرفة الأكاديمية على حساب المهارات الحياتية العملية.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-theater-masks"></i> الخوف من التغيير</h3>
+                    <p>الميل للبقاء في منطقة الراحة والخوف من الفشل يحدان من استعداد الأشخاص لتطوير مهارات جديدة.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-mobile-alt"></i> تأثير التكنولوجيا</h3>
+                    <p>الإفراط في استخدام التكنولوجيا قد يضعف المهارات الاجتماعية والعملية الأساسية.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-comments"></i> نقص الدعم</h3>
+                    <p>عدم وجود مرشدين أو مجتمعات داعمة يمكن أن يجعل عملية تطوير المهارات الحياتية أكثر صعوبة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Categories Section -->
+    <section class="skills-categories">
+        <div class="container">
+            <h2 class="section-title">فئات المهارات الحياتية الأساسية</h2>
+            <div class="categories-container">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>المهارات الشخصية</h3>
+                    <ul class="skills-list">
+                        <li>الوعي الذاتي</li>
+                        <li>إدارة المشاعر</li>
+                        <li>التفكير النقدي</li>
+                        <li>حل المشكلات</li>
+                        <li>اتخاذ القرارات</li>
+                        <li>التفكير الإبداعي</li>
+                    </ul>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>المهارات العملية</h3>
+                    <ul class="skills-list">
+                        <li>إدارة الوقت</li>
+                        <li>التخطيط المالي</li>
+                        <li>الطهي والتغذية</li>
+                        <li>العناية بالمنزل</li>
+                        <li>الصحة واللياقة</li>
+                        <li>الإسعافات الأولية</li>
+                    </ul>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>المهارات المهنية</h3>
+                    <ul class="skills-list">
+                        <li>إعداد السيرة الذاتية</li>
+                        <li>مهارات المقابلة</li>
+                        <li>التخطيط الوظيفي</li>
+                        <li>التواصل المهني</li>
+                        <li>إدارة المشاريع</li>
+                        <li>التسويق الشخصي</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Section -->
+    <section class="development">
+        <div class="container">
+            <h2 class="section-title">كيف تطور مهاراتك الحياتية</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>التقييم الذاتي</h3>
+                        <p>ابدأ بتقييم مهاراتك الحالية وتحديد نقاط القوة والضعف. اسأل نفسك: ما المهارات التي أمتلكها بالفعل؟ وما المهارات التي أحتاج إلى تطويرها؟ يمكنك استخدام استبيانات التقييم الذاتي أو طلب تعليقات من الآخرين.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>تحديد الأهداف</h3>
+                        <p>حدد المهارات التي تريد تطويرها ووضع أهداف واضحة وقابلة للتحقيق. ركز على مهارتين أو ثلاث في كل مرة لتجنب الإرهاق. اجعل أهدافك محددة وقابلة للقياس وذات صلة بحياتك اليومية.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>التعلم المستمر</h3>
+                        <p>ابحث عن مصادر التعلم المناسبة لكل مهارة. يمكنك القراءة، مشاهدة الفيديوهات التعليمية، الالتحاق بالدورات، أو التعلم من خلال التجربة العملية. خصص وقتًا منتظمًا للتعلم والممارسة.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>التطبيق العملي</h3>
+                        <p>طبق ما تتعلمه في حياتك اليومية. ابحث عن فرص لممارسة المهارات الجديدة في مواقف حقيقية. تذكر أن المهارات تتطور بالممارسة المستمرة والتعلم من الأخطاء.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>التقييم والتعديل</h3>
+                        <p>قيم تقدمك بانتظام وعدل استراتيجيتك حسب الحاجة. احتفل بالإنجازات الصغيرة واطلب التغذية الراجعة من الآخرين. استمر في تطوير مهاراتك وتعلم مهارات جديدة باستمرار.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources">
+        <div class="container">
+            <h2 class="section-title">موارد تطوير المهارات الحياتية</h2>
+            <p>استكشف هذه المنصات والموارد لتحسين مهاراتك الحياتية</p>
+            <div class="platforms">
+                <div class="platform">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>MeatD</h3>
+                    <p>مؤسسة تعليمية تقدم برامج تدريبية معتمدة دوليا من المعهد الأمريكي للتنمية ،الشرق الأوسط للتدريب والتطوير.</p>
+                    <a href="https://meatdtraining.com/" target="_blank">استكشف المحتوى </a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-users"></i>
+                    <h3>Edraak</h3>
+                    <p>اكتشف مجموعة واسعة من أكثر من 300 دورة، مصممة خصيصًا لتلبية مهاراتكم واهتماماتكم!</p>
+                    <a href="https://www.edraak.org/" target="_blank">استعرض الدورات</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-video"></i>
+                    <h3>LMS </h3>
+                    <p>سلسلة فيديوهات لتطوير مهاراتك الشخصية والاجتماعية والمعرفية بطريقة عملية قائمة تشغيل يوتيوب.</p>
+                    <a href="https://www.youtube.com/playlist?list=PL36i_UcLTQFB98c_wKVFk_zCOoaTwNDRF" target="_blank"> شاهد الآن </a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Rwaq</h3>
+                    <p>المنصة العربية للتعليم المفتوح، مواد أكاديمية مجانية باللغة العربية في شتى المجالات والتخصصات.</p>
+                    <a href="https://www.rwaq.org/" target="_blank">استكشف المحتوى</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-podcast"></i>
+                    <h3>Mahara</h3>
+                    <p>منصة تدريبية عربية لكافة العلوم والمهارات.. علِّم وتعلَّم. دورات مهارة (123)</p>
+                    <a href="https://www.maharah.net/" target="_blank">استكشف المحتوى</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Itqan</h3>
+                    <p> تعلم القرآن الكريم وتعليمه للجميع حول العالم عبر وسائل التواصل الاجتماعي المختلفة.</p>
+                    <a href="https://itqan-quran.com/" target="_blank">تعلم القرآن</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Beit</h3>
+                    <p>دروس عملية لتقوية مهاراتك الحياتية والمهنية مثل التفاوض وإعداد السيرة الذاتية.</p>
+                    <a href="https://www.youtube.com/playlist?list=PLJWVAfxLILHXhXV_TgDIa1guKdUDFKLCj" target="_blank"> شاهد الآن</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>RDC</h3>
+                    <p>تعلم تنظيم الوقت، اتخاذ القرار، والتواصل بفعالية من خلال دروس قصيرة وواضحة.</p>
+                    <a href="https://www.youtube.com/playlist?list=PLz-aw1__DD4dJ7GvGg5JZ1pqlZS2uGkEG" target="_blank">شاهد الآن</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Chatbot -->
+<iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+<button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<!-- Floating Elements and Skill Wheel Script -->
+    <script>
+        // Create floating elements for hero section
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingContainer = document.getElementById('floatingElements');
+            const numElements = 15;
+            
+            for (let i = 0; i < numElements; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // Random size
+                const size = Math.random() * 40 + 10;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                
+                // Random position
+                element.style.right = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay and duration
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                element.style.animationDuration = `${15 + Math.random() * 10}s`;
+                
+                floatingContainer.appendChild(element);
+            }
+            
+            // Create skill wheel
+            createSkillWheel();
+        });
+        
+        function createSkillWheel() {
+            const wheel = document.getElementById('skillWheel');
+            const skills = [
+                { icon: 'fas fa-brain', name: 'تفكير' },
+                { icon: 'fas fa-comments', name: 'تواصل' },
+                { icon: 'fas fa-heart', name: 'تعاطف' },
+                { icon: 'fas fa-clock', name: 'وقت' },
+                { icon: 'fas fa-money-bill-wave', name: 'مال' },
+                { icon: 'fas fa-users', name: 'فريق' },
+                { icon: 'fas fa-lightbulb', name: 'إبداع' },
+                { icon: 'fas fa-balance-scale', name: 'قرار' }
+            ];
+            
+            const radius = 120; // Reduced radius for smaller wheel
+            const angleStep = (2 * Math.PI) / skills.length;
+            
+            skills.forEach((skill, index) => {
+                const angle = index * angleStep;
+                const x = radius * Math.cos(angle);
+                const y = radius * Math.sin(angle);
+                
+                const skillItem = document.createElement('div');
+                skillItem.classList.add('skill-item');
+                skillItem.innerHTML = `<i class="${skill.icon}"></i>`;
+                skillItem.style.transform = `translate(${x}px, ${y}px)`;
+                
+                wheel.appendChild(skillItem);
+            });
+        }
+    </script>
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+</body>
+</html>

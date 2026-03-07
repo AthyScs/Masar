@@ -1,0 +1,3014 @@
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَسَار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a4720;
+            --secondary: #2d5a2d;
+            --accent: #b89446;
+            --gold: #d4af37;
+            --cream: #fef9f0;
+            --light-green: #f0f7f0;
+            --text-dark: #1a2a1a;
+            --text-light: #4a5c4a;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --footer: #cee2d3;
+             --light: #f8faf8;
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Amiri', 'Scheherazade New', serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .islamic-bg {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(180, 148, 70, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(42, 95, 45, 0.1) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%231a4720" opacity="0.03" d="M50,10 Q70,30 50,50 Q30,70 50,90 Q70,70 50,50 Q30,30 50,10Z"/></svg>');
+            background-attachment: fixed;
+        }
+
+        .header {
+            margin-top: 80px;
+            text-align: center;
+            padding: 2.5rem 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M50,10 Q70,30 50,50 Q30,70 50,90 Q70,70 50,50 Q30,30 50,10Z" fill="white"/></svg>'),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.05"><path d="M30,30 Q50,50 70,30 Q50,10 30,30Z" fill="white"/></svg>');
+            background-size: 80px, 60px;
+            background-position: 20% 30%, 80% 70%;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+
+[data-current-term="1"] [data-term="2"],
+[data-current-term="2"] [data-term="1"] {
+    display: none !important;
+}
+
+        .term-toggle-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.term-btn {
+    background: rgba(255, 215, 0, 0.15);  /* gold with opacity */
+    border: 2px solid rgba(255, 215, 0, 0.3);  /* gold border */
+    color: var(--light);
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.term-btn:hover {
+    background: rgba(255, 215, 0, 0.25);  /* more opaque gold */
+    border-color: rgba(255, 215, 0, 0.5);  /* brighter gold border */
+    transform: translateY(-2px);
+}
+
+.term-btn.active {
+    background: var(--gold);  /* solid gold */
+    color: var(--primary);  /* your primary color (likely dark blue/navy) */
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);  /* gold glow */
+}
+
+        .progress-info {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem;
+            margin-top: 1.2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(180, 148, 70, 0.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn.active {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(180, 148, 70, 0.3);
+        }
+
+        .nav-btn:hover:not(.active) {
+            border-color: var(--gold);
+            color: var(--primary);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-bottom: 7rem;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #lessons-section {
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        /* تصميم بطاقات الوحدات الجديدة */
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .unit-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(180, 148, 70, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 280px;
+        }
+
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .unit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+        }
+
+        .unit-card.completed {
+            background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
+            border-color: var(--success);
+        }
+
+        .unit-card.completed::before {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+        }
+
+        .unit-icon-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .unit-card:hover .unit-icon-large {
+            transform: scale(1.1);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+
+        .unit-card.completed .unit-icon-large {
+            background: linear-gradient(135deg, var(--success), var(--secondary));
+        }
+
+        .unit-card-title {
+            color: var(--primary);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .unit-card-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .unit-stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(180, 148, 70, 0.1);
+        }
+
+        .unit-lesson-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .unit-lesson-count i {
+            color: var(--gold);
+        }
+
+        .unit-progress {
+            text-align: right;
+        }
+
+        .unit-progress-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .unit-progress-bar {
+            width: 120px;
+            height: 6px;
+            background: rgba(180, 148, 70, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .unit-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--accent));
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .unit-card.completed .unit-progress-fill {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+        }
+
+        /* تصميم صفحة دروس الوحدة */
+        .unit-lessons-page {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(180, 148, 70, 0.2);
+            position: relative;
+        }
+
+        .back-to-units {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--light-green);
+            color: var(--primary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-units:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .unit-page-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-green);
+        }
+
+        .unit-page-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+
+        .unit-page-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .unit-page-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-top: 0.3rem;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .lesson-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fdf8 100%);
+            border-radius: 15px;
+            padding: 1.8rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(180, 148, 70, 0.3);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .lesson-card.completed {
+            background: linear-gradient(135deg, #f0fff0 0%, #ffffff 100%);
+            border-color: var(--success);
+        }
+
+        .lesson-card.completed::before {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+        }
+
+        .lesson-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .lesson-number {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(180, 148, 70, 0.3);
+        }
+
+        .lesson-card.completed .lesson-number {
+            background: linear-gradient(135deg, var(--success), var(--secondary));
+        }
+
+        .lesson-title {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.3rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-desc {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .lesson-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .video-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 71, 32, 0.3);
+        }
+
+        .video-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(26, 71, 32, 0.4);
+        }
+
+        .pdf-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--gold);
+            box-shadow: 0 4px 12px rgba(180, 148, 70, 0.2);
+        }
+
+        .pdf-btn:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(180, 148, 70, 0.3);
+        }
+
+        /* تصميم مشغل الفيديو */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .video-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .video-container {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            background: black;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .close-video {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-video:hover {
+            background: rgba(255,0,0,0.8);
+            transform: scale(1.1);
+        }
+
+        /* تصميم صفحة المحفوظات */
+        .memorization-page {
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .ayaat-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .quran-frame {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 2px solid #e8d8a5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quran-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--gold), var(--secondary));
+        }
+
+        .quran-frame::after {
+            content: '﷽';
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 1.5rem;
+            font-size: 1.8rem;
+            color: var(--gold);
+        }
+
+        .surah-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-green);
+        }
+
+        .surah-header h2 {
+            color: var(--primary);
+            font-size: 1.7rem;
+            margin-top: 30px;
+            margin-bottom: 0.5rem;
+        }
+
+        .surah-header .ref {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .ayaat-text {
+            font-size: 1.4rem;
+            line-height: 2.2;
+            text-align: justify;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .play-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .play-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+/* Hide the actual checkbox but keep it functional */
+.completion-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Make the clickable area cover the entire label */
+.completion-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-dark);
+    position: relative;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+/* Add hover effect to the entire label */
+.completion-toggle:hover {
+    background-color: rgba(180, 148, 70, 0.05);
+}
+
+        .checkmark {
+            width: 26px;
+            height: 26px;
+            border: 2px solid var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .completion-toggle input:checked + .checkmark {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: white;
+        }
+
+        .checkmark::after {
+            content: '✓';
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .completion-toggle input:checked + .checkmark::after {
+            opacity: 1;
+        }
+
+        /* تصميم الأحاديث */
+        .hadith-frame {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 2px solid #e8d8a5;
+            position: relative;
+        }
+
+        .hadith-frame::before {
+            content: '﴿';
+            position: absolute;
+            top: -15px;
+            right: 25px;
+            background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
+            padding: 0 1rem;
+            font-size: 2.2rem;
+            color: var(--gold);
+        }
+
+        .hadith-frame::after {
+            content: '﴾';
+            position: absolute;
+            bottom: -15px;
+            left: 25px;
+            background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
+            padding: 0 1rem;
+            font-size: 2.2rem;
+            color: var(--gold);
+        }
+
+        .hadith-text {
+            font-size: 1.35rem;
+            line-height: 2;
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .hadith-ref {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        /* قسم الاختبارات */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .test-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(180, 148, 70, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .test-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* تصميم أزرار ملفات الوحدة */
+        .unit-files-section {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px dashed var(--gold);
+        }
+
+        .unit-files-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .unit-files-title i {
+            color: var(--gold);
+            font-size: 1.8rem;
+        }
+
+        .unit-files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .unit-file-card {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid rgba(180, 148, 70, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .unit-file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+            background: linear-gradient(135deg, #fff2d7 0%, #ffffff 100%);
+        }
+
+        .unit-file-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .unit-file-info {
+            flex: 1;
+        }
+
+        .unit-file-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .unit-file-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }        
+
+        /* قسم الملفات الشاملة - تصميم موحد */
+        .master-files-section {
+            background: linear-gradient(135deg, #1a4720 0%, #2d5a2d 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0 2rem;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .master-files-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .master-files-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .master-files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .master-file-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .master-file-card:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .master-file-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .master-file-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .master-file-desc {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }        
+
+@media screen and (max-width: 768px) {
+
+    .header{
+        margin-top: 60px;
+    }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .units-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .unit-card {
+                padding: 1.5rem;
+                min-height: 250px;
+            }
+            
+            .unit-icon-large {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lesson-actions {
+                flex-direction: column;
+            }
+            
+            .video-iframe {
+                height: 300px;
+            }
+            
+            .controls-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .unit-page-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            
+    .nav-container {
+        position: relative !important; /* Changed from sticky to relative */
+        top: auto !important;
+        padding: 0.5rem 0;
+    }
+
+    .nav-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 0 1rem;
+    }
+
+    .nav-btn {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        flex: 0 1 auto;
+        min-width: 110px;
+    }
+
+    /* Fix memorization section - make text smaller and container wider */
+    .memorization-page {
+        padding: 1rem 0.5rem;
+    }
+
+    .ayaat-container {
+        max-width: 100%;
+    }
+
+    .quran-frame {
+        padding: 2rem 0.8rem 1.5rem;
+        margin: 0 0 1.5rem 0;
+        width: 100%;
+    }
+
+    .quran-frame::after {
+        font-size: 1.3rem;
+        top: -5px;
+        padding: 0 1rem;
+        background: var(--cream);
+    }
+
+    .surah-header {
+        margin-top: 15px;
+        margin-bottom: 1rem;
+    }
+
+    .surah-header h2 {
+        font-size: 1.2rem;
+        margin-top: 20px;
+    }
+
+    .surah-header .ref {
+        font-size: 0.9rem;
+    }
+
+    .ayaat-text {
+        font-size: 0.95rem !important; /* Smaller text */
+        line-height: 2;
+        word-break: break-word;
+        text-align: center; /* Center the text for better readability */
+        padding: 0 0.2rem;
+    }
+
+    /* Fix hadith frames */
+    .hadith-frame {
+        padding: 1.8rem 1rem;
+        margin: 0 0 1.5rem 0;
+    }
+
+    .hadith-frame::before,
+    .hadith-frame::after {
+        font-size: 1.5rem;
+    }
+
+    .hadith-text {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .hadith-ref {
+        font-size: 0.85rem;
+    }
+
+    /* Fix controls row */
+    .controls-row {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: stretch;
+    }
+
+    .play-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .completion-toggle {
+        justify-content: center;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .checkmark {
+        width: 22px;
+        height: 22px;
+    }
+
+    /* Fix tests section buttons */
+    .tests-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+
+    .test-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .test-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .test-card p {
+        font-size: 0.9rem;
+    }
+
+    .test-card .play-btn {
+        width: 100%;
+        max-width: 200px;
+        margin: 1rem auto 0;
+        background: var(--secondary) !important;
+    }
+
+    /* Center download buttons */
+    .test-card button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Fix unit cards */
+    .units-grid {
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+
+    .unit-card {
+        padding: 1.5rem;
+        min-height: auto;
+    }
+
+    .unit-card-title {
+        font-size: 1.2rem;
+    }
+
+    .unit-card-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .unit-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .unit-progress-bar {
+        width: 100%;
+    }
+
+    /* Fix lesson cards */
+    .lesson-card {
+        padding: 1.2rem;
+    }
+
+    .lesson-title {
+        font-size: 1.1rem;
+    }
+
+    .lesson-desc {
+        font-size: 0.9rem;
+    }
+
+    .lesson-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Fix unit files */
+    .unit-files-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .unit-file-card {
+        padding: 1rem;
+    }
+
+    .unit-file-name {
+        font-size: 1rem;
+    }
+
+    .unit-file-desc {
+        font-size: 0.85rem;
+    }
+
+    /* Fix master files */
+    .master-files-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .master-files-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+
+    .master-file-card {
+        padding: 1rem;
+    }
+
+    .master-file-name {
+        font-size: 1rem;
+    }
+
+    .master-file-desc {
+        font-size: 0.8rem;
+    }
+
+    /* Fix back button */
+    .back-to-units {
+        width: 100%;
+        justify-content: center;
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    /* Fix unit page header */
+    .unit-page-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+
+    .unit-page-icon {
+        margin: 0 auto;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .unit-page-title {
+        font-size: 1.3rem;
+    }
+
+    .unit-page-subtitle {
+        font-size: 0.95rem;
+    }
+}
+
+    </style>
+</head>
+<body class="islamic-bg">
+
+    <!-- Main Header -->
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>التربية الإسلامية</h1>
+        <p class="subtitle">الصف الحادي عشر</p>
+                <div class="term-toggle-container">
+        <button class="term-btn" data-term-btn="1">الفصل الأول</button>
+        <button class="term-btn" data-term-btn="2">الفصل الثاني</button>
+    </div>
+        <div class="progress-info">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>تقدمك في المادة</span>
+                <span id="progress-percentage">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p style="font-size: 0.9rem; opacity: 0.9;">أكمل دروسك ومحفوظاتك لزيادة التقدم</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-buttons"  data-term="1">
+            <button class="nav-btn active" onclick="showSection('lessons')">
+                <i class="fas fa-book-quran"></i>
+                الدروس
+            </button>
+            <button class="nav-btn" onclick="showSection('memorization')">
+                <i class="fas fa-mosque"></i>
+                المحفوظات
+            </button>
+            <button class="nav-btn" onclick="showSection('tests')">
+                <i class="fas fa-clipboard-check"></i>
+                المراجعات
+            </button>     
+        </div>
+            <!-- term 2 -->     
+        <div class="nav-buttons"  data-term="2">
+            <button class="nav-btn active" onclick="showSection('lessons')">
+                <i class="fas fa-book-quran"></i>
+                الدروس
+            </button>
+            <button class="nav-btn" onclick="showSection('memorization')">
+                <i class="fas fa-mosque"></i>
+                المحفوظات
+            </button>
+            <button class="nav-btn" onclick="showSection('files')">
+                <i class="fas fa-folder-open"></i>
+                الملفات الشاملة
+            </button>            
+        </div>
+
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- قسم بطاقات الوحدات -->
+        <section id="units-section" class="content-section" style="display: block;">
+            <h2 class="section-title">الوحدات الدراسية</h2>
+            <div class="units-grid" id="units-container">
+                <!-- سيتم ملؤها بالـ JavaScript -->
+            </div>
+        </section>
+
+        <!-- قسم دروس الوحدة -->
+        <section id="unit-lessons-section" class="content-section">
+            <!-- سيتم ملؤها بالـ JavaScript -->
+        </section>
+
+        <!-- قسم المحفوظات -->
+        <section id="memorization-section" class="content-section">
+            <h2 class="section-title">المحفوظات</h2>
+            <div class="memorization-page">
+                <div class="ayaat-container">
+                    
+                    <!-- آل عمران 159-164 -->
+                    <div class="quran-frame" data-term="1">
+                        <div class="surah-header">
+                            <h2>سورة آل عمران</h2>
+                            <div class="ref">الآيات 159-164</div>
+                        </div>
+                        <div class="ayaat-text">
+                             فَبِمَا رَحْمَةٍۢ مِّنَ ٱللَّهِ لِنتَ لَهُمْ ۖ وَلَوْ كُنتَ فَظًّا غَلِيظَ ٱلْقَلْبِ لَٱنفَضُّوا۟ مِنْ حَوْلِكَ ۖ فَٱعْفُ عَنْهُمْ وَٱسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِى ٱلْأَمْرِ ۖ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى ٱللَّهِ ۚ إِنَّ ٱللَّهَ يُحِبُّ ٱلْمُتَوَكِّلِينَ ﴿١٥٩﴾ إِن يَنصُرْكُمُ ٱللَّهُ فَلَا غَالِبَ لَكُمْ ۖ وَإِن يَخْذُلْكُمْ فَمَن ذَا ٱلَّذِى يَنصُرُكُم مِّنۢ بَعْدِهِۦ ۗ وَعَلَى ٱللَّهِ فَلْيَتَوَكَّلِ ٱلْمُؤْمِنُونَ ﴿١٦٠﴾ وَمَا كَانَ لِنَبِىٍّ أَن يَغُلَّ ۚ وَمَن يَغْلُلْ يَأْتِ بِمَا غَلَّ يَوْمَ ٱلْقِيَـٰمَةِ ۚ ثُمَّ تُوَفَّىٰ كُلُّ نَفْسٍۢ مَّا كَسَبَتْ وَهُمْ لَا يُظْلَمُونَ ﴿١٦١﴾ أَفَمَنِ ٱتَّبَعَ رِضْوَٰنَ ٱللَّهِ كَمَنۢ بَآءَ بِسَخَطٍۢ مِّنَ ٱللَّهِ وَمَأْوَىٰهُ جَهَنَّمُ ۚ وَبِئْسَ ٱلْمَصِيرُ ﴿١٦٢﴾ هُمْ دَرَجَـٰتٌ عِندَ ٱللَّهِ ۗ وَٱللَّهُ بَصِيرٌۢ بِمَا يَعْمَلُونَ ﴿١٦٣﴾ لَقَدْ مَنَّ ٱللَّهُ عَلَى ٱلْمُؤْمِنِينَ إِذْ بَعَثَ فِيهِمْ رَسُولًۭا مِّنْ أَنفُسِهِمْ يَتْلُوا۟ عَلَيْهِمْ ءَايَـٰتِهِۦ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ ٱلْكِتَـٰبَ وَٱلْحِكْمَةَ وَإِن كَانُوا۟ مِن قَبْلُ لَفِى ضَلَـٰلٍۢ مُّبِينٍ ﴿١٦٤﴾ 
+                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('pRG97tERet4')">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran1')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- الأنبياء 19-29 -->
+                    <div class="quran-frame" data-term="1">
+                        <div class="surah-header">
+                            <h2>سورة الأنبياء</h2>
+                            <div class="ref">الآيات 19-29</div>
+                        </div>
+                        <div class="ayaat-text">
+وَلَهُۥ مَن فِى ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ ۚ وَمَنْ عِندَهُۥ لَا يَسْتَكْبِرُونَ عَنْ عِبَادَتِهِۦ وَلَا يَسْتَحْسِرُونَ ﴿١٩﴾ يُسَبِّحُونَ ٱلَّيْلَ وَٱلنَّهَارَ لَا يَفْتُرُونَ ﴿٢٠﴾ أَمِ ٱتَّخَذُوٓا۟ ءَالِهَةًۭ مِّنَ ٱلْأَرْضِ هُمْ يُنشِرُونَ ﴿٢١﴾ لَوْ كَانَ فِيهِمَآ ءَالِهَةٌ إِلَّا ٱللَّهُ لَفَسَدَتَا ۚ فَسُبْحَـٰنَ ٱللَّهِ رَبِّ ٱلْعَرْشِ عَمَّا يَصِفُونَ ﴿٢٢﴾ لَا يُسْـَٔلُ عَمَّا يَفْعَلُ وَهُمْ يُسْـَٔلُونَ ﴿٢٣﴾ أَمِ ٱتَّخَذُوا۟ مِن دُونِهِۦٓ ءَالِهَةًۭ ۖ قُلْ هَاتُوا۟ بُرْهَـٰنَكُمْ ۖ هَـٰذَا ذِكْرُ مَن مَّعِىَ وَذِكْرُ مَن قَبْلِى ۗ بَلْ أَكْثَرُهُمْ لَا يَعْلَمُونَ ٱلْحَقَّ ۖ فَهُم مُّعْرِضُونَ ﴿٢٤﴾ وَمَآ أَرْسَلْنَا مِن قَبْلِكَ مِن رَّسُولٍ إِلَّا نُوحِىٓ إِلَيْهِ أَنَّهُۥ لَآ إِلَـٰهَ إِلَّآ أَنَا۠ فَٱعْبُدُونِ ﴿٢٥﴾ وَقَالُوا۟ ٱتَّخَذَ ٱلرَّحْمَـٰنُ وَلَدًۭا ۗ سُبْحَـٰنَهُۥ ۚ بَلْ عِبَادٌۭ مُّكْرَمُونَ ﴿٢٦﴾ لَا يَسْبِقُونَهُۥ بِٱلْقَوْلِ وَهُم بِأَمْرِهِۦ يَعْمَلُونَ ﴿٢٧﴾ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يَشْفَعُونَ إِلَّا لِمَنِ ٱرْتَضَىٰ وَهُم مِّنْ خَشْيَتِهِۦ مُشْفِقُونَ ﴿٢٨﴾ وَمَن يَقُلْ مِنْهُمْ إِنِّىٓ إِلَـٰهٌۭ مِّن دُونِهِۦ فَذَٰلِكَ نَجْزِيهِ جَهَنَّمَ ۚ كَذَٰلِكَ نَجْزِى ٱلظَّـٰلِمِينَ ﴿٢٩﴾                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('LN4F09VdaV0')">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran2')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- الأحزاب 38-48 -->
+                    <div class="quran-frame" data-term="1">
+                        <div class="surah-header">
+                            <h2>سورة الأحزاب</h2>
+                            <div class="ref">الآيات 38-48</div>
+                        </div>
+                        <div class="ayaat-text">
+                            مَّا كَانَ عَلَى ٱلنَّبِىِّ مِنْ حَرَجٍۢ فِيمَا فَرَضَ ٱللَّهُ لَهُۥ ۖ سُنَّةَ ٱللَّهِ فِى ٱلَّذِينَ خَلَوْا۟ مِن قَبْلُ ۚ وَكَانَ أَمْرُ ٱللَّهِ قَدَرًۭا مَّقْدُورًا ﴿٣٨﴾ ٱلَّذِينَ يُبَلِّغُونَ رِسَـٰلَـٰتِ ٱللَّهِ وَيَخْشَوْنَهُۥ وَلَا يَخْشَوْنَ أَحَدًا إِلَّا ٱللَّهَ ۗ وَكَفَىٰ بِٱللَّهِ حَسِيبًۭا ﴿٣٩﴾ مَّا كَانَ مُحَمَّدٌ أَبَآ أَحَدٍۢ مِّن رِّجَالِكُمْ وَلَـٰكِن رَّسُولَ ٱللَّهِ وَخَاتَمَ ٱلنَّبِيِّـۧنَ ۗ وَكَانَ ٱللَّهُ بِكُلِّ شَىْءٍ عَلِيمًۭا ﴿٤٠﴾ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱذْكُرُوا۟ ٱللَّهَ ذِكْرًۭا كَثِيرًۭا ﴿٤١﴾ وَسَبِّحُوهُ بُكْرَةًۭ وَأَصِيلًا ﴿٤٢﴾ هُوَ ٱلَّذِى يُصَلِّى عَلَيْكُمْ وَمَلَـٰٓئِكَتُهُۥ لِيُخْرِجَكُم مِّنَ ٱلظُّلُمَـٰتِ إِلَى ٱلنُّورِ ۚ وَكَانَ بِٱلْمُؤْمِنِينَ رَحِيمًۭا ﴿٤٣﴾ تَحِيَّتُهُمْ يَوْمَ يَلْقَوْنَهُۥ سَلَـٰمٌۭ ۚ وَأَعَدَّ لَهُمْ أَجْرًۭا كَرِيمًۭا ﴿٤٤﴾ يَـٰٓأَيُّهَا ٱلنَّبِىُّ إِنَّآ أَرْسَلْنَـٰكَ شَـٰهِدًۭا وَمُبَشِّرًۭا وَنَذِيرًۭا ﴿٤٥﴾ وَدَاعِيًا إِلَى ٱللَّهِ بِإِذْنِهِۦ وَسِرَاجًۭا مُّنِيرًۭا ﴿٤٦﴾ وَبَشِّرِ ٱلْمُؤْمِنِينَ بِأَنَّ لَهُم مِّنَ ٱللَّهِ فَضْلًۭا كَبِيرًۭا ﴿٤٧﴾ وَلَا تُطِعِ ٱلْكَـٰفِرِينَ وَٱلْمُنَـٰفِقِينَ وَدَعْ أَذَىٰهُمْ وَتَوَكَّلْ عَلَى ٱللَّهِ ۚ وَكَفَىٰ بِٱللَّهِ وَكِيلًۭا ﴿٤٨﴾
+                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('NUGFlaHO9lo')">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran3')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- البقرة 186-187 -->
+                    <div class="quran-frame" data-term="1">
+                        <div class="surah-header">
+                            <h2>سورة البقرة</h2>
+                            <div class="ref">الآيات 186-187</div>
+                        </div>
+                        <div class="ayaat-text">
+                            ١٨٥ وَإِذَا سَأَلَكَ عِبَادِى عَنِّى فَإِنِّى قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ ٱلدَّاعِ إِذَا دَعَانِ ۖ فَلْيَسْتَجِيبُوا۟ لِى وَلْيُؤْمِنُوا۟ بِى لَعَلَّهُمْ يَرْشُدُونَ ﴿١٨٦﴾ أُحِلَّ لَكُمْ لَيْلَةَ ٱلصِّيَامِ ٱلرَّفَثُ إِلَىٰ نِسَآئِكُمْ ۚ هُنَّ لِبَاسٌۭ لَّكُمْ وَأَنتُمْ لِبَاسٌۭ لَّهُنَّ ۗ عَلِمَ ٱللَّهُ أَنَّكُمْ كُنتُمْ تَخْتَانُونَ أَنفُسَكُمْ فَتَابَ عَلَيْكُمْ وَعَفَا عَنكُمْ ۖ فَٱلْـَٔـٰنَ بَـٰشِرُوهُنَّ وَٱبْتَغُوا۟ مَا كَتَبَ ٱللَّهُ لَكُمْ ۚ وَكُلُوا۟ وَٱشْرَبُوا۟ حَتَّىٰ يَتَبَيَّنَ لَكُمُ ٱلْخَيْطُ ٱلْأَبْيَضُ مِنَ ٱلْخَيْطِ ٱلْأَسْوَدِ مِنَ ٱلْفَجْرِ ۖ ثُمَّ أَتِمُّوا۟ ٱلصِّيَامَ إِلَى ٱلَّيْلِ ۚ وَلَا تُبَـٰشِرُوهُنَّ وَأَنتُمْ عَـٰكِفُونَ فِى ٱلْمَسَـٰجِدِ ۗ تِلْكَ حُدُودُ ٱللَّهِ فَلَا تَقْرَبُوهَا ۗ كَذَٰلِكَ يُبَيِّنُ ٱللَّهُ ءَايَـٰتِهِۦ لِلنَّاسِ لَعَلَّهُمْ يَتَّقُونَ ﴿١٨٧﴾
+                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('lWQ92ELDXDs')">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran4')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- آل عمران 102-105 -->
+                    <div class="quran-frame" data-term="1">
+                        <div class="surah-header">
+                            <h2>سورة آل عمران</h2>
+                            <div class="ref">الآيات 102-105</div>
+                        </div>
+                        <div class="ayaat-text">
+                            يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ حَقَّ تُقَاتِهِۦ وَلَا تَمُوتُنَّ إِلَّا وَأَنتُم مُّسْلِمُونَ ﴿١٠٢﴾ وَٱعْتَصِمُوا۟ بِحَبْلِ ٱللَّهِ جَمِيعًۭا وَلَا تَفَرَّقُوا۟ ۚ وَٱذْكُرُوا۟ نِعْمَتَ ٱللَّهِ عَلَيْكُمْ إِذْ كُنتُمْ أَعْدَآءًۭ فَأَلَّفَ بَيْنَ قُلُوبِكُمْ فَأَصْبَحْتُم بِنِعْمَتِهِۦٓ إِخْوَٰنًۭا وَكُنتُمْ عَلَىٰ شَفَا حُفْرَةٍۢ مِّنَ ٱلنَّارِ فَأَنقَذَكُم مِّنْهَا ۗ كَذَٰلِكَ يُبَيِّنُ ٱللَّهُ لَكُمْ ءَايَـٰتِهِۦ لَعَلَّكُمْ تَهْتَدُونَ ﴿١٠٣﴾ وَلْتَكُن مِّنكُمْ أُمَّةٌۭ يَدْعُونَ إِلَى ٱلْخَيْرِ وَيَأْمُرُونَ بِٱلْمَعْرُوفِ وَيَنْهَوْنَ عَنِ ٱلْمُنكَرِ ۚ وَأُو۟لَـٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ ﴿١٠٤﴾ وَلَا تَكُونُوا۟ كَٱلَّذِينَ تَفَرَّقُوا۟ وَٱخْتَلَفُوا۟ مِنۢ بَعْدِ مَا جَآءَهُمُ ٱلْبَيِّنَـٰتُ ۚ وَأُو۟لَـٰٓئِكَ لَهُمْ عَذَابٌ عَظِيمٌۭ ﴿١٠٥﴾
+                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('QKSnRYFIhDs')">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran5')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+        <!-- term 2-->
+                    <!-- سورة النور 58-59 -->
+                    <div class="quran-frame" data-term="2">
+                        <div class="surah-header">
+                            <h2>سورة النور</h2>
+                            <div class="ref">الآيات 58-59</div>
+                        </div>
+                        <div class="ayaat-text">
+ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ لِيَسْتَـْٔذِنكُمُ ٱلَّذِينَ مَلَكَتْ أَيْمَـٰنُكُمْ وَٱلَّذِينَ لَمْ يَبْلُغُوا۟ ٱلْحُلُمَ مِنكُمْ ثَلَـٰثَ مَرَّٰتٍۢ ۚ مِّن قَبْلِ صَلَوٰةِ ٱلْفَجْرِ وَحِينَ تَضَعُونَ ثِيَابَكُم مِّنَ ٱلظَّهِيرَةِ وَمِنۢ بَعْدِ صَلَوٰةِ ٱلْعِشَآءِ ۚ ثَلَـٰثُ عَوْرَٰتٍۢ لَّكُمْ ۚ لَيْسَ عَلَيْكُمْ وَلَا عَلَيْهِمْ جُنَاحٌۢ بَعْدَهُنَّ ۚ طَوَّٰفُونَ عَلَيْكُم بَعْضُكُمْ عَلَىٰ بَعْضٍۢ ۚ كَذَٰلِكَ يُبَيِّنُ ٱللَّهُ لَكُمُ ٱلْـَٔايَـٰتِ ۗ وَٱللَّهُ عَلِيمٌ حَكِيمٌۭ ﴿٥٨﴾ وَإِذَا بَلَغَ ٱلْأَطْفَـٰلُ مِنكُمُ ٱلْحُلُمَ فَلْيَسْتَـْٔذِنُوا۟ كَمَا ٱسْتَـْٔذَنَ ٱلَّذِينَ مِن قَبْلِهِمْ ۚ كَذَٰلِكَ يُبَيِّنُ ٱللَّهُ لَكُمْ ءَايَـٰتِهِۦ ۗ وَٱللَّهُ عَلِيمٌ حَكِيمٌۭ ﴿٥٩﴾                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('FfiAVkfwLHw', null, true)">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran_f2_1')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- سورة الأعراف 194-198 -->
+                    <div class="quran-frame" data-term="2">
+                        <div class="surah-header">
+                            <h2>سورة الأعراف</h2>
+                            <div class="ref">الآيات 194-198</div>
+                        </div>
+                        <div class="ayaat-text">
+إِنَّ ٱلَّذِينَ تَدْعُونَ مِن دُونِ ٱللَّهِ عِبَادٌ أَمْثَالُكُمْ ۖ فَٱدْعُوهُمْ فَلْيَسْتَجِيبُوا۟ لَكُمْ إِن كُنتُمْ صَـٰدِقِينَ ﴿١٩٤﴾ أَلَهُمْ أَرْجُلٌۭ يَمْشُونَ بِهَآ ۖ أَمْ لَهُمْ أَيْدٍۢ يَبْطِشُونَ بِهَآ ۖ أَمْ لَهُمْ أَعْيُنٌۭ يُبْصِرُونَ بِهَآ ۖ أَمْ لَهُمْ ءَاذَانٌۭ يَسْمَعُونَ بِهَا ۗ قُلِ ٱدْعُوا۟ شُرَكَآءَكُمْ ثُمَّ كِيدُونِ فَلَا تُنظِرُونِ ﴿١٩٥﴾ إِنَّ وَلِـِّۧىَ ٱللَّهُ ٱلَّذِى نَزَّلَ ٱلْكِتَـٰبَ ۖ وَهُوَ يَتَوَلَّى ٱلصَّـٰلِحِينَ ﴿١٩٦﴾ وَٱلَّذِينَ تَدْعُونَ مِن دُونِهِۦ لَا يَسْتَطِيعُونَ نَصْرَكُمْ وَلَآ أَنفُسَهُمْ يَنصُرُونَ ﴿١٩٧﴾ وَإِن تَدْعُوهُمْ إِلَى ٱلْهُدَىٰ لَا يَسْمَعُوا۟ ۖ وَتَرَىٰهُمْ يَنظُرُونَ إِلَيْكَ وَهُمْ لَا يُبْصِرُونَ ﴿١٩٨﴾                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('Cx8tfk6523Q', null, true)">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran_f2_2')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- سورة آل عمران 139-144 -->
+                    <div class="quran-frame" data-term="2">
+                        <div class="surah-header">
+                            <h2>سورة آل عمران</h2>
+                            <div class="ref">الآيات 139-144</div>
+                        </div>
+                        <div class="ayaat-text">
+وَلَا تَهِنُوا۟ وَلَا تَحْزَنُوا۟ وَأَنتُمُ ٱلْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ ﴿١٣٩﴾ إِن يَمْسَسْكُمْ قَرْحٌۭ فَقَدْ مَسَّ ٱلْقَوْمَ قَرْحٌۭ مِّثْلُهُۥ ۚ وَتِلْكَ ٱلْأَيَّامُ نُدَاوِلُهَا بَيْنَ ٱلنَّاسِ وَلِيَعْلَمَ ٱللَّهُ ٱلَّذِينَ ءَامَنُوا۟ وَيَتَّخِذَ مِنكُمْ شُهَدَآءَ ۗ وَٱللَّهُ لَا يُحِبُّ ٱلظَّـٰلِمِينَ ﴿١٤٠﴾ وَلِيُمَحِّصَ ٱللَّهُ ٱلَّذِينَ ءَامَنُوا۟ وَيَمْحَقَ ٱلْكَـٰفِرِينَ ﴿١٤١﴾ أَمْ حَسِبْتُمْ أَن تَدْخُلُوا۟ ٱلْجَنَّةَ وَلَمَّا يَعْلَمِ ٱللَّهُ ٱلَّذِينَ جَـٰهَدُوا۟ مِنكُمْ وَيَعْلَمَ ٱلصَّـٰبِرِينَ ﴿١٤٢﴾ وَلَقَدْ كُنتُمْ تَمَنَّوْنَ ٱلْمَوْتَ مِن قَبْلِ أَن تَلْقَوْهُ فَقَدْ رَأَيْتُمُوهُ وَأَنتُمْ تَنظُرُونَ ﴿١٤٣﴾ وَمَا مُحَمَّدٌ إِلَّا رَسُولٌۭ قَدْ خَلَتْ مِن قَبْلِهِ ٱلرُّسُلُ ۚ أَفَإِي۟ن مَّاتَ أَوْ قُتِلَ ٱنقَلَبْتُمْ عَلَىٰٓ أَعْقَـٰبِكُمْ ۚ وَمَن يَنقَلِبْ عَلَىٰ عَقِبَيْهِ فَلَن يَضُرَّ ٱللَّهَ شَيْـًۭٔا ۗ وَسَيَجْزِى ٱللَّهُ ٱلشَّـٰكِرِينَ ﴿١٤٤﴾                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('GdDKei_62xU', null, true)">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran_f2_3')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- سورة النساء 22-24 -->
+                    <div class="quran-frame" data-term="2">
+                        <div class="surah-header">
+                            <h2>سورة النساء</h2>
+                            <div class="ref">الآيات 22-24</div>
+                        </div>
+                        <div class="ayaat-text">
+وَلَا تَنكِحُوا۟ مَا نَكَحَ ءَابَآؤُكُم مِّنَ ٱلنِّسَآءِ إِلَّا مَا قَدْ سَلَفَ ۚ إِنَّهُۥ كَانَ فَـٰحِشَةًۭ وَمَقْتًۭا وَسَآءَ سَبِيلًا ﴿٢٢﴾ حُرِّمَتْ عَلَيْكُمْ أُمَّهَـٰتُكُمْ وَبَنَاتُكُمْ وَأَخَوَٰتُكُمْ وَعَمَّـٰتُكُمْ وَخَـٰلَـٰتُكُمْ وَبَنَاتُ ٱلْأَخِ وَبَنَاتُ ٱلْأُخْتِ وَأُمَّهَـٰتُكُمُ ٱلَّـٰتِىٓ أَرْضَعْنَكُمْ وَأَخَوَٰتُكُم مِّنَ ٱلرَّضَـٰعَةِ وَأُمَّهَـٰتُ نِسَآئِكُمْ وَرَبَـٰٓئِبُكُمُ ٱلَّـٰتِى فِى حُجُورِكُم مِّن نِّسَآئِكُمُ ٱلَّـٰتِى دَخَلْتُم بِهِنَّ فَإِن لَّمْ تَكُونُوا۟ دَخَلْتُم بِهِنَّ فَلَا جُنَاحَ عَلَيْكُمْ وَحَلَـٰٓئِلُ أَبْنَآئِكُمُ ٱلَّذِينَ مِنْ أَصْلَـٰبِكُمْ وَأَن تَجْمَعُوا۟ بَيْنَ ٱلْأُخْتَيْنِ إِلَّا مَا قَدْ سَلَفَ ۗ إِنَّ ٱللَّهَ كَانَ غَفُورًۭا رَّحِيمًۭا ﴿٢٣﴾ ۞ وَٱلْمُحْصَنَـٰتُ مِنَ ٱلنِّسَآءِ إِلَّا مَا مَلَكَتْ أَيْمَـٰنُكُمْ ۖ كِتَـٰبَ ٱللَّهِ عَلَيْكُمْ ۚ وَأُحِلَّ لَكُم مَّا وَرَآءَ ذَٰلِكُمْ أَن تَبْتَغُوا۟ بِأَمْوَٰلِكُم مُّحْصِنِينَ غَيْرَ مُسَـٰفِحِينَ ۚ فَمَا ٱسْتَمْتَعْتُم بِهِۦ مِنْهُنَّ فَـَٔاتُوهُنَّ أُجُورَهُنَّ فَرِيضَةًۭ ۚ وَلَا جُنَاحَ عَلَيْكُمْ فِيمَا تَرَٰضَيْتُم بِهِۦ مِنۢ بَعْدِ ٱلْفَرِيضَةِ ۚ إِنَّ ٱللَّهَ كَانَ عَلِيمًا حَكِيمًۭا ﴿٢٤﴾                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('NixHLqIQDok', null, true)">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran_f2_4')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- سورة المائدة 90-92 -->
+                    <div class="quran-frame" data-term="2">
+                        <div class="surah-header">
+                            <h2>سورة المائدة</h2>
+                            <div class="ref">الآيات 90-92</div>
+                        </div>
+                        <div class="ayaat-text">
+يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِنَّمَا ٱلْخَمْرُ وَٱلْمَيْسِرُ وَٱلْأَنصَابُ وَٱلْأَزْلَـٰمُ رِجْسٌۭ مِّنْ عَمَلِ ٱلشَّيْطَـٰنِ فَٱجْتَنِبُوهُ لَعَلَّكُمْ تُفْلِحُونَ ﴿٩٠﴾ إِنَّمَا يُرِيدُ ٱلشَّيْطَـٰنُ أَن يُوقِعَ بَيْنَكُمُ ٱلْعَدَٰوَةَ وَٱلْبَغْضَآءَ فِى ٱلْخَمْرِ وَٱلْمَيْسِرِ وَيَصُدَّكُمْ عَن ذِكْرِ ٱللَّهِ وَعَنِ ٱلصَّلَوٰةِ ۖ فَهَلْ أَنتُم مُّنتَهُونَ ﴿٩١﴾ وَأَطِيعُوا۟ ٱللَّهَ وَأَطِيعُوا۟ ٱلرَّسُولَ وَٱحْذَرُوا۟ ۚ فَإِن تَوَلَّيْتُمْ فَٱعْلَمُوٓا۟ أَنَّمَا عَلَىٰ رَسُولِنَا ٱلْبَلَـٰغُ ٱلْمُبِينُ ﴿٩٢﴾                        </div>
+                        <div class="controls-row">
+                            <button class="play-btn" onclick="openVideo('Symz7_ULiiQ', null, true)">
+                                <i class="fas fa-play-circle"></i>
+                                استمع للتلاوة
+                            </button>
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('quran_f2_5')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>         
+
+
+                    <!-- الأحاديث -->
+                    <div class="hadith-frame" data-term="1">
+                        <div class="hadith-text">
+                            عن أبي هريرة رضي الله عنه عن النبي صلى الله عليه وسلم قال: "الطاعم الشاكر بمنزلة الصائم الصابر"
+                        </div>
+                        <div class="hadith-ref">رواه البخاري</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith1')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="hadith-frame" data-term="1">
+                        <div class="hadith-text">
+                            عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: "إن لله تسعة وتسعين اسما مائة إلا واحدا من أحصاها دخل الجنة"
+                        </div>
+                        <div class="hadith-ref">رواه البخاري</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith2')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="hadith-frame" data-term="1">
+                        <div class="hadith-text">
+                            أبو عبيدة عن جابر بن زيد عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: "يتعاقب فيكم ملائكة بالليل وملائكة بالنهار فيجتمعون في صلاة الفجر فتعرج الملائكة الذين باتوا فيكم فيسألهم ربهم وهو أعلم بهم -:كيف تركتم عبادي؟ فيقولون:تركناهم وهم يصلون وأتيناهم وهم يصلون"
+                        </div>
+                        <div class="hadith-ref">رواه البخاري</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith3')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="hadith-frame" data-term="1">
+                        <div class="hadith-text">
+                            عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: "كل أمتي يدخلون الجنة إلا من أبى" .قالوا يارسول الله ومن يأبى, قال: "من أطاعني دخل الجنه ومن عصاني فقد أبى"
+                        </div>
+                        <div class="hadith-ref">رواه البخاري</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith4')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="hadith-frame" data-term="1">
+                        <div class="hadith-text">
+                            أبو عبيدة عن جابر بن زيد عن أبي هريرة رضي الله عنه قال:قال رسول الله صلى الله عليه وسلم: "اياكم والظن فان الظن أكذب الحديث ولا تجسسوا ولا تحسسوا ولا تنافسوا ولا تحاسدوا ولا تدابروا وكونوا عباد الله اخوان"
+                        </div>
+                        <div class="hadith-ref">رواه البخاري</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith5')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <!--2 الأحاديث -->
+                    <div class="hadith-frame" data-term="2">
+                        <div class="hadith-text">
+                            عن عبدالله بن عمرو رضي الله عنه عن النبي صلى الله عليه وسلم قال: "أربع من كن فيه كان منافقا خالصا ومن كانت فيه خصلة منهن كانت فيه خصلة من النفاق حتى يدعها اذا اؤتمن خان واذا حدث كذب واذا عاهد غدر واذا خاصم فجر"
+                        </div>
+                        <div class="hadith-ref">متفق عليه</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith_f2_1')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="hadith-frame" data-term="2">
+                        <div class="hadith-text">
+                            عن عبدالله بن عمر رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: "من حمل علينا السلاح فليس منا"
+                        </div>
+                        <div class="hadith-ref">متفق عليه</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith_f2_2')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="hadith-frame" data-term="2">
+                        <div class="hadith-text">
+                            عن ابن عباس عن النبي صلى الله عليه وسلم قال: "خيركم خيركم لأهله وأنا خيركم لأهلي"
+                        </div>
+                        <div class="hadith-ref">رواه الترمذي</div>
+                        <div class="controls-row" style="justify-content: center; margin-top: 1.5rem;">
+                            <label class="completion-toggle">
+                                <input type="checkbox" onchange="toggleCompletion('hadith_f2_3')">
+                                <span class="checkmark"></span>
+                                تم الحفظ
+                            </label>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الاختبارات -->
+        <section id="tests-section" class="content-section" data-term="1">
+            <h2 class="section-title">الاختبارات والملخصات</h2>
+            <div class="tests-grid">
+                <div class="test-card">
+                    <div class="test-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>الاختبار (1)</h3>
+                    <p>اختبار نهائي سابق للفصل الدراسي</p>
+                    <button class="play-btn" style="margin-top: 1rem; background: var(--secondary);" onclick="openPDF('pdfs/ism/ismq.pdf')">
+                        <i class="fas fa-download"></i>
+                        تحميل الاختبار
+                    </button>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>الإجابات (1)</h3>
+                    <p>إجابة الاختبار النهائي للفصل الدراسي</p>
+                    <button class="play-btn" style="margin-top: 1rem; background: var(--secondary);" onclick="openPDF('pdfs/ism/isma.pdf')">
+                        <i class="fas fa-download"></i>
+                        تحميل الإجابات
+                    </button>
+                </div>
+                
+                <div class="test-card">
+                    <div class="test-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>ملخص كامل</h3>
+                    <p>ملخص كامل للفصل الدراسي</p>
+                    <button class="play-btn" style="margin-top: 1rem; background: var(--secondary);" onclick="openPDF('pdfs/ism/ismr.pdf')">
+                        <i class="fas fa-download"></i>
+                        تحميل الملخص
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الملفات الشاملة (الجديد) -->
+        <section id="files-section" class="content-section" data-term="2">
+            <h2 class="section-title">الملفات الشاملة للمادة</h2>
+            <div class="memorization-page">
+                <div class="master-files-section" style="margin-top: 0;">
+                    <div class="master-files-grid" id="master-files-container">
+                        <!-- سيتم ملؤها بالـ JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- مشغل الفيديو -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-container">
+            <button class="close-video" onclick="closeVideo()">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe class="video-iframe" id="videoIframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+
+    <script>
+
+        // بيانات الملفات الشاملة
+        const masterFiles = [
+            { name: "كتاب-اسلاميه", desc: "الكتاب المدرسي كاملاً", icon: "fa-book", path: "pdfs/ism/ismcb2.pdf" },
+            { name: "دليل-المعلم", desc: "إرشادات وحلول", icon: "fa-chalkboard-teacher", path: "pdfs/ism/ismtb2.pdf" },
+            { name: "حل-أنشطة-الكتاب", desc: "إجابات نموذجية", icon: "fa-puzzle-piece", path: "pdfs/ism/ismba.pdf" },
+            { name: "اختبارات-اجوبه", desc: "نماذج اختبارات سابقة", icon: "fa-file-signature", path: "pdfs/ism/ismqa.pdf" },
+            { name: "المحفوظات", desc: "نصوص الحفظ كاملة", icon: "fa-mosque", path: "pdfs/ism/ismm.pdf" }
+        ];
+
+        // بيانات الوحدات والدروس
+        const term1 = [
+            {
+                id: "unit1",
+                title: "الوحدة الأولى: قيمنا",
+                subtitle: "القيم الإسلامية وأهميتها",
+                icon: "fas fa-heart",
+                lessonsCount: 5,
+                lessons: [
+                    { id: "u1l1", title: "القيم وأهميتها", desc: "تعريف القيم وأهميتها في حياة المسلم", videoId: "gO9ynSb51jI", pdf: "pdfs/ism/L1.pdf" },
+                    { id: "u1l2", title: "قيم حث عليها القرآن الكريم", desc: "القيم التي دعا إليها القرآن الكريم", videoId: "L1XAmvmbZsE", pdf: "pdfs/ism/L4.pdf" },
+                    { id: "u1l3", title: "ثواب الشاكر الصابر", desc: "فضل الشكر والصبر في الإسلام", videoId: "HdG5dDYEkfA", pdf: "pdfs/ism/L2.pdf" },
+                    { id: "u1l4", title: "من القيم الروحية", desc: "القيم الروحية في الإسلام", videoId: "Ds4OLctZRFc", pdf: "pdfs/ism/L3.pdf" },
+                    { id: "u1l5", title: "من القيم الشخصية", desc: "القيم الشخصية للمسلم", videoId: "EiAeaVRFLLc", pdf: "pdfs/ism/L5.pdf" }
+                ]
+            },
+            {
+                id: "unit2",
+                title: "الوحدة الثانية: أحكام التلاوة",
+                subtitle: "صفات الحروف وأحكام التجويد",
+                icon: "fas fa-microphone-alt",
+                lessonsCount: 4,
+                lessons: [
+                    { id: "u2l1", title: "صفات الحروف", desc: "تعريف صفات الحروف وأقسامها", videoId: "n5_hS8jGlE8", pdf: "pdfs/ism/L6.pdf" },
+                    { id: "u2l2", title: "الهمس والجهر", desc: "صفة الهمس والجهر في الحروف", videoId: "Icmk07xQmyA", pdf: "pdfs/ism/L7.pdf" },
+                    { id: "u2l3", title: "الشدة والرخاوة", desc: "صفة الشدة والرخاوة في الحروف", videoId: "F7E3Z3HC2mM", pdf: "pdfs/ism/L8.pdf" },
+                    { id: "u2l4", title: "الاستعلاء والاطباق وما يضادهما", desc: "صفات الاستعلاء والاطباق", videoId: "F9ae8El5N50", pdf: "pdfs/ism/L9.pdf" }
+                ]
+            },
+            {
+                id: "unit3",
+                title: "الوحدة الثالثة: عقيدتنا",
+                subtitle: "أساسيات العقيدة الإسلامية",
+                icon: "fas fa-star-and-crescent",
+                lessonsCount: 5,
+                lessons: [
+                    { id: "u3l1", title: "أدلة وجود الله تعالى", desc: "الأدلة على وجود الخالق عز وجل", videoId: "kW0QobFHhnI", pdf: "pdfs/ism/L10.pdf" },
+                    { id: "u3l2", title: "من دلائل وحدانية الله تعالى", desc: "الأدلة على وحدانية الله سبحانه", videoId: "3aYsKyjX31c", pdf: "pdfs/ism/L11.pdf" },
+                    { id: "u3l3", title: "أسماء الله الحسنى", desc: "معرفة أسماء الله الحسنى وفضلها", videoId: "IrUytWZK1yk", pdf: "pdfs/ism/L12.pdf" },
+                    { id: "u3l4", title: "صفات الله تعالى", desc: "صفات الله عز وجل الثبوتية والسلوبية", videoId: "XM-BY_t-IuQ", pdf: "pdfs/ism/L14.pdf" },
+                    { id: "u3l5", title: "حب الله وتعظيمه", desc: "محبة الله تعالى وتعظيمه في قلوبنا", videoId: "alUSP2L6vPY", pdf: "pdfs/ism/L13.pdf" }
+                ]
+            },
+            {
+                id: "unit4",
+                title: "الوحدة الرابعة: أسوتنا الحسنة",
+                subtitle: "الاقتداء بالنبي صلى الله عليه وسلم",
+                icon: "fas fa-user",
+                lessonsCount: 5,
+                lessons: [
+                    { id: "u4l1", title: "السراج المنير", desc: "النبي صلى الله عليه وسلم نبراس الهداية", videoId: "2bR-ENkOgxs", pdf: "pdfs/ism/L15.pdf" },
+                    { id: "u4l2", title: "الرسول صلى الله عليه وسلم الداعية", desc: "دعوة النبي صلى الله عليه وسلم", videoId: "v5mLNy_KtZE", pdf: "pdfs/ism/L18.pdf" },
+                    { id: "u4l3", title: "الرسول صلى الله عليه وسلم المربي", desc: "تربية النبي صلى الله عليه وسلم لأصحابه", videoId: "EuW71A8b3Z8", pdf: "pdfs/ism/L16.pdf" },
+                    { id: "u4l4", title: "الرسول صلى الله عليه وسلم الإنسان", desc: "الجوانب الإنسانية في شخصية النبي", videoId: "p5B_HA7SVoA", pdf: "pdfs/ism/L17.pdf" },
+                    { id: "u4l5", title: "حق الرسول صلى الله عليه وسلم على أمته", desc: "حقوق النبي صلى الله عليه وسلم على المسلمين", videoId: "DIZHz4pmB7Q", pdf: "pdfs/ism/L19.pdf" }
+                ]
+            },
+            {
+                id: "unit5",
+                title: "الوحدة الخامسة: عبادتنا",
+                subtitle: "أحكام العبادات في الإسلام",
+                icon: "fas fa-pray",
+                lessonsCount: 5,
+                lessons: [
+                    { id: "u5l1", title: "العبادة في الإسلام", desc: "مفهوم العبادة وأهميتها في الإسلام", videoId: "K_TrlZeA_fo", pdf: "pdfs/ism/L21.pdf" },
+                    { id: "u5l2", title: "مكانة الصلاة في الإسلام", desc: "مكانة الصلاة وأهميتها", videoId: "D3griWqEjEE", pdf: "pdfs/ism/L22.pdf" },
+                    { id: "u5l3", title: "فضل المحافظة على الصلاة", desc: "ثواب المحافظة على الصلاة", videoId: "n1YJPLed3kE", pdf: "pdfs/ism/L23.pdf" },
+                    { id: "u5l4", title: "من أحكام الإمامة في الصلاة", desc: "أحكام الإمامة وشروطها", videoId: "fiCK76qbtvw", pdf: "pdfs/ism/L24.pdf" },
+                    { id: "u5l5", title: "من أحكام الصيام", desc: "أحكام الصيام ومبطلاته", videoId: "Esavewkp8VY", pdf: "pdfs/ism/L20.pdf" }
+                ]
+            },
+            {
+                id: "unit6",
+                title: "الوحدة السادسة: مجتمعنا المسلم",
+                subtitle: "بناء المجتمع الإسلامي",
+                icon: "fas fa-users",
+                lessonsCount: 5,
+                lessons: [
+                    { id: "u6l1", title: "أسس بناء المجتمع المسلم", desc: "أسس وقواعد بناء المجتمع الإسلامي", videoId: "J9VsC6_RGh4", pdf: "pdfs/ism/L25.pdf" },
+                    { id: "u6l2", title: "أهداف المجتمع المسلم", desc: "الأهداف التي يسعى المجتمع المسلم لتحقيقها", videoId: "BsbadpzLrXM", pdf: "pdfs/ism/L26.pdf" },
+                    { id: "u6l3", title: "صفات المجتمع المسلم", desc: "الصفات المميزة للمجتمع المسلم", videoId: "-lBjABoU1aM", pdf: "pdfs/ism/L27.pdf" },
+                    { id: "u6l4", title: "العلاقات بين أفراد المجتمع المسلم", desc: "نظام العلاقات في المجتمع الإسلامي", videoId: "WgWXSHxDm48", pdf: "pdfs/ism/L28.pdf" },
+                    { id: "u6l5", title: "آفات تهدد المجتمع المسلم", desc: "المخاطر والآفات التي تهدد المجتمع", videoId: "iqjKY6VCGhU", pdf: "pdfs/ism/L29.pdf" }
+                ]
+            }
+        ];
+
+        const term2 = [
+            {
+                id: "unit1",
+                title: "الوحدة الأولى: قيمنا",
+                subtitle: "القيم الإسلامية وتطبيقاتها",
+                icon: "fas fa-heart",
+                lessonsCount: 5,
+                unitFiles: [
+                    { name: "سؤال-جواب-1", desc: "أسئلة وأجوبة الوحدة الأولى", path: "pdfs/ism/isme1.pdf" },
+                    { name: "ملخص-الوحدة-1", desc: "ملخص شامل للوحدة الأولى", path: "pdfs/ism/ismr1.pdf" }
+                ],
+                lessons: [
+                    { id: "u1l1", title: "من القيم الإسلامية: الاستئذان", desc: "أدب الاستئذان وأحكامه", videoId: "YB-jyMEJF1I", pdf: "pdfs/ism/L30.pdf" },
+                    { id: "u1l2", title: "التنافس في الخير", desc: "المنافسة الإيجابية في الأعمال الصالحة", videoId: "2h7q2KMXnVY", pdf: "pdfs/ism/L31.pdf" },
+                    { id: "u1l3", title: "من القيم الأسرية", desc: "القيم التي تحكم العلاقات الأسرية", videoId: "WlbcojMpug8", pdf: "pdfs/ism/L32.pdf" },
+                    { id: "u1l4", title: "من قيم المواطنة", desc: "المواطنة الصالحة والانتماء", videoId: "E2IYeoMwvHI", pdf: "pdfs/ism/L33.pdf" },
+                    { id: "u1l5", title: "من القيم الثقافية", desc: "القيم التي تنظم الثقافة والحوار", videoId: "TurZm4ZMlYM", pdf: "pdfs/ism/L34.pdf" }
+                ]
+            },
+            {
+                id: "unit2",
+                title: "الوحدة الثانية: من أحكام التلاوة",
+                subtitle: "صفات الحروف",
+                icon: "fas fa-microphone-alt",
+                lessonsCount: 3,
+                unitFiles: [
+                    { name: "سؤال-جواب-2", desc: "أسئلة وأجوبة الوحدة الثانية", path: "pdfs/ism/isme2.pdf" },
+                    { name: "ملخص-الوحدة-2", desc: "ملخص شامل للوحدة الثانية", path: "pdfs/ism/ismr2.pdf" }
+                ],
+                lessons: [
+                    { id: "u2l1", title: "الصفير واللين", desc: "صفة الصفير واللين في الحروف", videoId: "7RDH57qAn6s" , pdf: "pdfs/ism/L35.pdf"},
+                    { id: "u2l2", title: "التكرير والتفشي", desc: "صفة التكرير والتفشي", videoId: "-nwP2QbNsGY", pdf: "pdfs/ism/L36.pdf" },
+                    { id: "u2l3", title: "الاستطالة والانحراف", desc: "صفة الاستطالة والانحراف", videoId: "jJsa0sfK__w", pdf: "pdfs/ism/L37.pdf" }
+                ]
+            },
+            {
+                id: "unit3",
+                title: "الوحدة الثالثة: عقيدتنا",
+                subtitle: "الشرك والنفاق والقدر",
+                icon: "fas fa-star-and-crescent",
+                lessonsCount: 5,
+                unitFiles: [
+                    { name: "سؤال-جواب-3", desc: "أسئلة وأجوبة الوحدة الثالثة", path: "pdfs/ism/isme3.pdf" },
+                    { name: "ملخص-الوحدة-3", desc: "ملخص شامل للوحدة الثالثة", path: "pdfs/ism/ismr3.pdf" }
+                ],
+                lessons: [
+                    { id: "u3l1", title: "من مظاهر الشرك (1)", desc: "أنواع الشرك ومظاهره", videoId: "sBv4WFNE4vo", pdf: "pdfs/ism/L38.pdf" },
+                    { id: "u3l2", title: "من مظاهر الشرك (2)", desc: "مظاهر الشرك في العصر الحديث", videoId: "ZSbiAvinAk0", pdf: "pdfs/ism/L39.pdf" },
+                    { id: "u3l3", title: "النفاق: أقسامه وخصاله", desc: "النفاق الأكبر والأصغر", videoId: "ZZ8vsEQ9Vlk", pdf: "pdfs/ism/L40.pdf" },
+                    { id: "u3l4", title: "القضاء والقدر (1)", desc: "الإيمان بالقضاء والقدر", videoId: "1X10eCIgAbY", pdf: "pdfs/ism/L41.pdf" },
+                    { id: "u3l5", title: "القضاء والقدر (2)", desc: "مراتب القدر وحكمته", videoId: "aKJx8t4ocKI", pdf: "pdfs/ism/L42.pdf" }
+                ]
+            },
+            {
+                id: "unit4",
+                title: "الوحدة الرابعة: أسوتنا الحسنة",
+                subtitle: "غزوات النبي صلى الله عليه وسلم",
+                icon: "fas fa-user",
+                lessonsCount: 5,
+                unitFiles: [
+                    { name: "سؤال-جواب-4", desc: "أسئلة وأجوبة الوحدة الرابعة", path: "pdfs/ism/isme4.pdf" },
+                    { name: "ملخص-الوحدة-4", desc: "ملخص شامل للوحدة الرابعة", path: "pdfs/ism/ismr4.pdf" }
+                ],
+                lessons: [
+                    { id: "u4l1", title: "يوم الفرقان", desc: "غزوة بدر الكبرى", videoId: "lL1KH3rhMfk", pdf: "pdfs/ism/L43.pdf" },
+                    { id: "u4l2", title: "يوم أحد", desc: "غزوة أحد والدروس المستفادة", videoId: "m-wHAUkxfSg", pdf: "pdfs/ism/L44.pdf" },
+                    { id: "u4l3", title: "يوم الأحزاب", desc: "غزوة الخندق", videoId: "x-ACR1Nn4yo", pdf: "pdfs/ism/L45.pdf" },
+                    { id: "u4l4", title: "يوم حنين", desc: "غزوة حنين", videoId: "EFUJHlS2qP8", pdf: "pdfs/ism/L46.pdf" },
+                    { id: "u4l5", title: "التعايش السلمي", desc: "تعايش النبي مع غير المسلمين", videoId: "KW-rcPQBrbc", pdf: "pdfs/ism/L47.pdf" }
+                ]
+            },
+            {
+                id: "unit5",
+                title: "الوحدة الخامسة: عبادتنا",
+                subtitle: "الأسرة في الإسلام",
+                icon: "fas fa-pray",
+                lessonsCount: 4,
+                unitFiles: [
+                    { name: "سؤال-جواب-5", desc: "أسئلة وأجوبة الوحدة الخامسة", path: "pdfs/ism/isme5.pdf" },
+                    { name: "ملخص-الوحدة-5", desc: "ملخص شامل للوحدة الخامسة", path: "pdfs/ism/ismr5.pdf" }
+                ],
+                lessons: [
+                    { id: "u5l1", title: "الأسرة في الإسلام", desc: "مفهوم الأسرة وأهميتها", videoId: "tVhOjcBMM-o", pdf: "pdfs/ism/L48.pdf" },
+                    { id: "u5l2", title: "العلاقات الأسرية", desc: "تنظيم العلاقات داخل الأسرة", videoId: "HOfPpR1xIV0", pdf: "pdfs/ism/L49.pdf" },
+                    { id: "u5l3", title: "الزواج في الإسلام", desc: "أحكام الزواج ومقاصده", videoId: "hR5lvl4YvpU", pdf: "pdfs/ism/L50.pdf" },
+                    { id: "u5l4", title: "المحرمات من النساء", desc: "النساء المحرمات في الزواج", videoId: "uZNGEMilKoY", pdf: "pdfs/ism/L51.pdf" }
+                ]
+            },
+            {
+                id: "unit6",
+                title: "الوحدة السادسة: مجتمعنا المسلم",
+                subtitle: "آفات اجتماعية",
+                icon: "fas fa-users",
+                lessonsCount: 4,
+                unitFiles: [
+                    { name: "سؤال-جواب-6", desc: "أسئلة وأجوبة الوحدة السادسة", path: "pdfs/ism/isme6.pdf" },
+                    { name: "ملخص-الوحدة-6", desc: "ملخص شامل للوحدة السادسة", path: "pdfs/ism/ismr6.pdf" }
+                ],
+                lessons: [
+                    { id: "u6l1", title: "المخدرات والمؤثرات العقلية", desc: "حكم المخدرات وأضرارها", videoId: "Bu_4LAfIlVk", pdf: "pdfs/ism/L52.pdf" },
+                    { id: "u6l2", title: "الخمر", desc: "حكم الخمر وأضراره", videoId: "nycXS-ShMP0", pdf: "pdfs/ism/L53.pdf" },
+                    { id: "u6l3", title: "التدخين", desc: "حكم التدخين وأضراره", videoId: "HwSHAAlEJbI", pdf: "pdfs/ism/L54.pdf" },
+                    { id: "u6l4", title: "حوادث السير", desc: "أسباب حوادث السير وحكمها", videoId: "Ov8X5BsvHZU", pdf: "pdfs/ism/L55.pdf" }
+                ]
+            }
+        ];
+
+
+    // Current term state
+let currentTerm = localStorage.getItem('selectedTerm') || '1';    
+let currentUnitId = null;
+
+    // Get term buttons
+    const termButtons = document.querySelectorAll('.term-btn');
+
+    // Get units based on current term
+    function getUnitsData() {
+        return currentTerm === '1' ? term1 : term2;
+    }
+
+// Add this function to filter memorization items by term
+function filterMemorizationByTerm() {
+    const memorizationItems = document.querySelectorAll('#memorization-section .quran-frame, #memorization-section .hadith-frame');
+    
+    memorizationItems.forEach(item => {
+        const itemTerm = item.getAttribute('data-term');
+        if (itemTerm === currentTerm) {
+            item.style.display = 'block'; // or 'flex' depending on your CSS
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// تهيئة الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    
+//  Set active button based on saved term
+    termButtons.forEach(btn => {
+        const btnTerm = btn.getAttribute('data-term-btn');
+        if (btnTerm === currentTerm) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    renderUnits();
+    renderMasterFiles();
+    loadSavedProgress();
+    updateProgress();
+    
+    // Initialize navigation based on current term
+    updateNavigationForTerm();
+    filterMemorizationByTerm();
+    
+    // Term button functionality
+    termButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const term = this.getAttribute('data-term-btn');
+            
+            // Update active state
+            termButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update current term
+            currentTerm = term;
+
+            // Save to localStorage
+            localStorage.setItem('selectedTerm', term);            
+            
+            // Update navigation visibility
+            updateNavigationForTerm();
+            filterMemorizationByTerm();
+            
+            // Refresh the units display
+            if (document.getElementById('units-section').style.display !== 'none') {
+                renderUnits();
+            }
+            
+            // Show notification
+            showNotification(`تم التبديل إلى الفصل ${term === '1' ? 'الأول' : 'الثاني'}`);
+        });
+    });
+});
+  
+// Function to update navigation based on current term
+function updateNavigationForTerm() {
+    // Hide both nav containers first
+    document.querySelectorAll('.nav-buttons').forEach(nav => {
+        nav.style.display = 'none';
+    });
+    
+    // Show the nav container for current term
+    const activeNav = document.querySelector(`.nav-buttons[data-term="${currentTerm}"]`);
+    if (activeNav) {
+        activeNav.style.display = 'flex';
+    }
+    
+    // If current section is not available in this term, switch to lessons
+    const currentSection = document.querySelector('.content-section[style*="display: block"]');
+    if (currentSection) {
+        const sectionId = currentSection.id.replace('-section', '');
+        
+        // Check if current section's button exists in active nav
+        const buttonExists = activeNav && activeNav.querySelector(`[onclick="showSection('${sectionId}')"]`);
+        
+        // If section not available in this term, switch to lessons
+        if (!buttonExists && sectionId !== 'lessons') {
+            showSection('lessons');
+        }
+    }
+}
+
+
+// عرض الملفات الشاملة في جميع الأقسام
+    function renderMasterFiles() {
+        // عرض في قسم الملفات الشاملة الرئيسي
+        const masterContainer = document.getElementById('master-files-container');
+        if (masterContainer) {
+            masterContainer.innerHTML = '';
+            masterFiles.forEach(file => {
+                masterContainer.innerHTML += `
+                    <div class="master-file-card" onclick="openPDF('${file.path}')">
+                        <div class="master-file-icon">
+                            <i class="fas ${file.icon}"></i>
+                        </div>
+                        <div class="master-file-name">${file.name}</div>
+                        <div class="master-file-desc">${file.desc}</div>
+                    </div>
+                `;
+            });
+        }
+        
+        // عرض في قسم الوحدات
+        const unitsMaster = document.getElementById('master-files-units');
+        if (unitsMaster) {
+            unitsMaster.innerHTML = `
+                <div class="master-files-section">
+                    <h3 class="master-files-title">
+                        <i class="fas fa-folder-open"></i>
+                        الملفات الشاملة للمادة
+                    </h3>
+                    <div class="master-files-grid">
+                        ${masterFiles.map(file => `
+                            <div class="master-file-card" onclick="openPDF('${file.path}')">
+                                <div class="master-file-icon">
+                                    <i class="fas ${file.icon}"></i>
+                                </div>
+                                <div class="master-file-name">${file.name}</div>
+                                <div class="master-file-desc">${file.desc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // عرض في قسم المحفوظات
+        const memorizationMaster = document.getElementById('master-files-memorization');
+        if (memorizationMaster) {
+            memorizationMaster.innerHTML = `
+                <div class="master-files-section">
+                    <h3 class="master-files-title">
+                        <i class="fas fa-folder-open"></i>
+                        الملفات الشاملة للمادة
+                    </h3>
+                    <div class="master-files-grid">
+                        ${masterFiles.map(file => `
+                            <div class="master-file-card" onclick="openPDF('${file.path}')">
+                                <div class="master-file-icon">
+                                    <i class="fas ${file.icon}"></i>
+                                </div>
+                                <div class="master-file-name">${file.name}</div>
+                                <div class="master-file-desc">${file.desc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // عرض بطاقات الوحدات
+    function renderUnits() {
+        const container = document.getElementById('units-container');
+        container.innerHTML = '';
+        
+        getUnitsData().forEach(unit => {
+            const progress = calculateUnitProgress(unit.id);
+            const isCompleted = progress.percentage === 100;
+            
+            const unitCard = document.createElement('div');
+            unitCard.className = `unit-card ${isCompleted ? 'completed' : ''}`;
+            unitCard.onclick = () => showUnitLessons(unit.id);
+            
+            unitCard.innerHTML = `
+                <div class="unit-icon-large">
+                    <i class="${unit.icon}"></i>
+                </div>
+                <h3 class="unit-card-title">${unit.title}</h3>
+                <p class="unit-card-subtitle">${unit.subtitle}</p>
+                <div class="unit-stats">
+                    <div class="unit-lesson-count">
+                        <i class="fas fa-book-open"></i>
+                        <span>${unit.lessonsCount} دروس</span>
+                    </div>
+                    <div class="unit-progress">
+                        <div class="unit-progress-text">${progress.completed}/${unit.lessonsCount} مكتمل</div>
+                        <div class="unit-progress-bar">
+                            <div class="unit-progress-fill" style="width: ${progress.percentage}%"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(unitCard);
+        });
+    }
+
+    // عرض دروس الوحدة
+    function showUnitLessons(unitId) {
+        currentUnitId = unitId;
+        const unit = getUnitsData().find(u => u.id === unitId);
+        
+        const lessonsSection = document.getElementById('unit-lessons-section');
+           
+            // بناء HTML لملفات الوحدة
+            let unitFilesHTML = '';
+            if (unit.unitFiles && unit.unitFiles.length > 0) {
+                unitFilesHTML = `
+                    <div class="unit-files-section">
+                        <div class="unit-files-title">
+                            <i class="fas fa-folder-open"></i>
+                            <span>ملفات الوحدة</span>
+                        </div>
+                        <div class="unit-files-grid">
+                `;
+                
+                unit.unitFiles.forEach(file => {
+                    unitFilesHTML += `
+                        <div class="unit-file-card" onclick="openPDF('${file.path}', '${unitId}')">
+                            <div class="unit-file-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="unit-file-info">
+                                <div class="unit-file-name">${file.name}</div>
+                                <div class="unit-file-desc">${file.desc}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                unitFilesHTML += `
+                        </div>
+                    </div>
+                `;
+            }
+        
+        lessonsSection.innerHTML = `
+            <div class="unit-lessons-page">
+                <button class="back-to-units" onclick="showUnitsPage()">
+                    <i class="fas fa-arrow-right"></i>
+                    العودة للوحدات
+                </button>
+                
+                <div class="unit-page-header">
+                    <div class="unit-page-icon">
+                        <i class="${unit.icon}"></i>
+                    </div>
+                    <div>
+                        <h2 class="unit-page-title">${unit.title}</h2>
+                        <p class="unit-page-subtitle">${unit.subtitle}</p>
+                    </div>
+                </div>
+                
+                <div class="lessons-grid" id="lessons-grid-${unitId}"></div>
+
+                                    ${unitFilesHTML}
+            </div>
+        `;
+        
+        // إخفاء صفحة الوحدات وإظهار صفحة الدروس
+        document.getElementById('units-section').style.display = 'none';
+        lessonsSection.style.display = 'block';
+        
+        // عرض دروس الوحدة
+        renderUnitLessons(unitId);
+    }
+
+    // عرض دروس وحدة محددة
+    function renderUnitLessons(unitId) {
+        const unit = getUnitsData().find(u => u.id === unitId);
+        const container = document.getElementById(`lessons-grid-${unitId}`);
+        container.innerHTML = '';
+        
+        unit.lessons.forEach((lesson, index) => {
+            const isWatched = localStorage.getItem(`watched_${lesson.videoId}`) === 'true';
+            const isOpened = localStorage.getItem(`opened_${lesson.pdf}`) === 'true';
+            const isCompleted = isWatched || isOpened;
+            
+            const lessonCard = document.createElement('div');
+            lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''}`;
+            
+            lessonCard.innerHTML = `
+                <div class="lesson-header">
+                    <div class="lesson-number">${index + 1}</div>
+                    <div>
+                        <div class="lesson-title">${lesson.title}</div>
+                        <div class="lesson-desc">${lesson.desc}</div>
+                    </div>
+                </div>
+                <div class="lesson-actions">
+                    <button class="action-btn video-btn" onclick="openVideo('${lesson.videoId}', '${unitId}')">
+                        <i class="fas fa-play"></i>
+                        تشغيل الفيديو
+                    </button>
+                    <button class="action-btn pdf-btn" onclick="openPDF('${lesson.pdf}', '${unitId}')">
+                        <i class="fas fa-file-pdf"></i>
+                        فتح الملف
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(lessonCard);
+        });
+    }
+
+    // العودة إلى صفحة الوحدات
+    function showUnitsPage() {
+        document.getElementById('units-section').style.display = 'block';
+        document.getElementById('unit-lessons-section').style.display = 'none';
+        renderUnits();
+        updateProgress();
+    }
+
+    // حساب تقدم الوحدة
+    function calculateUnitProgress(unitId) {
+        const unit = getUnitsData().find(u => u.id === unitId);
+        let completed = 0;
+        
+        unit.lessons.forEach(lesson => {
+            if (localStorage.getItem(`watched_${lesson.videoId}`) === 'true' || 
+                localStorage.getItem(`opened_${lesson.pdf}`) === 'true') {
+                completed++;
+            }
+        });
+        
+        const percentage = unit.lessonsCount > 0 ? Math.round((completed / unit.lessonsCount) * 100) : 0;
+        return { completed, percentage };
+    }
+
+    // فتح الفيديو
+    function openVideo(videoId, unitId) {
+        const cleanVideoId = videoId.split('?')[0].split('&')[0];
+        window.open(`https://www.youtube.com/watch?v=${cleanVideoId}`, '_blank');
+        card.style.cursor = 'pointer'; 
+        
+        localStorage.setItem(`watched_${cleanVideoId}`, 'true');
+        
+        if (unitId) {
+            renderUnitLessons(unitId);
+        }
+        
+        updateProgress();
+        showNotification('تم تسجيل مشاهدة الفيديو');
+    }
+
+    // فتح ملف PDF
+    function openPDF(pdfPath, unitId) {
+        window.open(pdfPath, '_blank');
+        localStorage.setItem(`opened_${pdfPath}`, 'true');
+        
+        if (unitId) {
+            renderUnitLessons(unitId);
+        }
+        
+        updateProgress();
+    }
+
+    // تحديث التقدم العام
+    function updateProgress() {
+        let totalLessons = 0;
+        let completedLessons = 0;
+        
+        getUnitsData().forEach(unit => {
+            totalLessons += unit.lessonsCount;
+            const progress = calculateUnitProgress(unit.id);
+            completedLessons += progress.completed;
+        });
+        
+        // حساب المحفوظات المكتملة
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            totalLessons++;
+            const itemId = checkbox.getAttribute('onchange').split("'")[1];
+            if (localStorage.getItem(itemId) === 'true') {
+                completedLessons++;
+            }
+        });
+        
+        const progressPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
+        
+        document.getElementById('progress-percentage').textContent = `${progressPercentage}%`;
+        document.getElementById('progress-fill').style.width = `${progressPercentage}%`;
+        
+        // إعادة عرض الوحدات إذا كانت مرئية
+        if (document.getElementById('units-section').style.display !== 'none') {
+            renderUnits();
+        }
+    }
+
+    // تبديل حالة الحفظ
+    function toggleCompletion(itemId) {
+        const isCompleted = localStorage.getItem(itemId) === 'true';
+        localStorage.setItem(itemId, !isCompleted);
+        updateProgress();
+    }
+
+    // تحميل التقدم المحفوظ
+    function loadSavedProgress() {
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            const itemId = checkbox.getAttribute('onchange').split("'")[1];
+            if (localStorage.getItem(itemId) === 'true') {
+                checkbox.checked = true;
+            }
+        });
+    }
+
+// إظهار وإخفاء الأقسام
+function showSection(section) {
+    // إخفاء جميع الأقسام
+    document.querySelectorAll('.content-section').forEach(sec => {
+        sec.style.display = 'none';
+    });
+    
+    // إلغاء تفعيل جميع الأزرار في كلا النافبار
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // إظهار القسم المطلوب
+    if (section === 'lessons') {
+        showUnitsPage();
+    } else {
+        document.getElementById(section + '-section').style.display = 'block';
+    }
+    
+    // تفعيل الزر المناسب في النافبار الحالي
+    const activeNav = document.querySelector(`.nav-buttons[data-term="${currentTerm}"]`);
+    if (activeNav) {
+        const activeBtn = activeNav.querySelector(`[onclick="showSection('${section}')"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
+    }
+    
+    // تحديث شريط التقدم
+    updateProgress();
+}
+
+// إغلاق الفيديو
+    function closeVideo() {
+        document.getElementById('videoModal').classList.remove('active');
+        document.getElementById('videoIframe').src = '';
+    }
+
+    // إغلاق الفيديو عند الضغط على ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeVideo();
+        }
+    });
+
+    // Notification function
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--gold);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 2000);
+    }
+
+    // Add notification animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+</script>
+
+
+
+
+     <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>   
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+</body>
+</html>

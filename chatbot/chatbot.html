@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيان</title>
+    <!--Linking Google fonts for icons-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: transparent; /* Change from #F8F9FA */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margin */
+            overflow: hidden; /* Prevent scrollbars */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chatbot-popup {
+            width: 400px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 512px;
+        }
+
+        /* Smaller Header */
+        .chat-header {
+            display: flex;
+            align-items: center;
+            background: #6b7280;
+            padding: 14px 20px;
+            justify-content: space-between;
+        }
+
+        .chat-header .header-info {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .header-info .chatbot-logo {
+            height: 32px;
+            width: 32px;
+            padding: 6px;
+            fill: #6b7280;
+            flex-shrink: 0;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .header-info .logo-text {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .chat-body {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            gap: 16px;
+            flex-direction: column;
+            scrollbar-width: thin;
+            scrollbar-color: #ccccf5 transparent;
+        }
+
+        .chat-body .message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .chat-body .bot-message .bot-avatar {
+            height: 32px;
+            width: 32px;
+            padding: 6px;
+            fill: #fff;
+            flex-shrink: 0;
+            align-self: flex-end;
+            background: #6b7280;
+            border-radius: 50%;
+        }
+
+        .chat-body .user-message {
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .chat-body .message .message-text {
+            padding: 12px 16px;
+            max-width: 80%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            background: #f2f2f2;
+            border-radius: 16px 16px 16px 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            unicode-bidi: plaintext;
+            text-align: start;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            word-break: break-word;
+            hyphens: auto;
+        }
+        .chat-body .bot-message.thinking .message-text {
+            padding: 2px 16px;
+                word-wrap: normal;    
+    overflow-wrap: normal;     
+    white-space: nowrap;       
+    width: auto;              
+    display: inline-block;     
+        }
+
+        .chat-body .bot-message .message-text {
+            background: #f2f2f2;
+            border-radius: 16px 16px 16px 4px;
+        }
+
+        .chat-body .user-message .message-text {
+            color: #fff;
+            background: #6b7280;
+            border-radius: 16px 16px 4px 16px;
+        }
+
+        .chat-body .user-message .attachment {
+            width: 200px;
+            margin-top: 8px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .chat-body .bot-message .thinking-indicator {
+            display: flex;
+            gap: 5px;
+            padding-block: 12px;
+        }
+
+        .chat-body .bot-message .thinking-indicator .dot {
+            height: 7px;
+            width: 7px;
+            opacity: 0.7;
+            border-radius: 50%;
+            background: #c0bdda;
+            animation: dotPulse 1.8s ease-in-out infinite;
+        }
+
+        .chat-body .bot-message .thinking-indicator .dot:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .chat-body .bot-message .thinking-indicator .dot:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .chat-body .bot-message .thinking-indicator .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotPulse {
+            0%, 44% {
+                transform: translateY(0);
+            }
+            28% {
+                opacity: 0.4;
+                transform: translateY(-4px);
+            }
+            44% {
+                opacity: 0.2;
+            }
+        }
+
+        /* Fixed Text Area with Proper Padding */
+        .chat-footer {
+            background: #fff;
+            padding: 16px 20px 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .chat-footer .chat-form {
+            display: flex;
+            position: relative;
+            align-items: flex-end;
+            background: #fff;
+            border-radius: 24px;
+            outline: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+            min-height: 56px;
+        }
+
+        .chat-footer .chat-form:focus-within {
+            outline: 2px solid #6b7280;
+            box-shadow: 0 0 0 4px rgba(106, 90, 205, 0.1);
+        }
+
+        .chat-form .message-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            resize: none;
+            font-size: 1rem;
+            padding: 16px 18px 16px 0; /* Right padding for RTL */
+            border-radius: inherit;
+            scrollbar-width: thin;
+            scrollbar-color: transparent transparent;
+            unicode-bidi: plaintext;
+            text-align: start;
+            line-height: 1.5;
+            min-height: 56px;
+            max-height: 150px;
+        }
+
+        .chat-form .message-input::placeholder {
+            unicode-bidi: plaintext;
+            text-align: start;
+            color: #9e9e9e;
+        }
+
+        .chat-form .message-input:hover {
+            scrollbar-color: #c1c1cc transparent;
+        }
+
+        .chat-form .chat-controls {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            align-self: self-end;
+            padding: 0 0 8px 8px; /* Left padding for RTL */
+            height: 100%;
+        }
+
+        .chat-form .chat-controls button {
+            height: 40px;
+            width: 40px;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #8d8d99;
+            background: none;
+            border-radius: 50%;
+            transition: 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Improved Send Button */
+        .chat-form .chat-controls #send-message {
+            color: #6b7280;
+            display: none;
+            background: none;
+            transform: scaleX(-1);
+            font-size: 1.4rem;
+        }
+
+        .chat-form .chat-controls #send-message:hover {
+            color: #6b7280;
+            background: rgba(106, 90, 205, 0.1);
+        }
+
+        .chat-form .message-input:valid ~ .chat-controls #send-message {
+            display: flex;
+        }
+
+        .chat-form .chat-controls button:hover {
+            background: #f5f5f5;
+        }
+
+        /* Fixed File Upload */
+        .file-upload-wrapper {
+            height: 40px;
+            width: 40px;
+            position: relative;
+        }
+
+        .file-upload-wrapper :where(img, button) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .file-upload-wrapper img {
+            object-fit: cover;
+            display: none;
+        }
+
+        .file-upload-wrapper #file-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-upload-wrapper #file-cancel {
+            display: none;
+            color: #ff0000;
+            background: #fff;
+        }
+
+        .file-upload-wrapper.file-uploaded img {
+            display: block;
+        }
+
+        .file-upload-wrapper.file-uploaded #file-upload {
+            display: none;
+        }
+
+        .file-upload-wrapper.file-uploaded:hover #file-cancel {
+            display: flex;
+        }
+
+        em-emoji-picker {
+            position: absolute;
+            left: 50%;
+            top: -337px;
+            width: 100%;
+            max-width: 350px;
+            max-height: 330px;
+            visibility: hidden;
+            transform: translateX(-50%);
+        }
+
+        body.show-emoji-picker em-emoji-picker {
+            visibility: visible;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="chatbot-popup">
+        <!-- Smaller Header -->
+        <div class="chat-header">
+            <div class="header-info">
+                <svg class="chatbot-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+                    <path d="M738.3 287.6H285.7c-59 0-106.8 47.8-106.8 106.8v303.1c0 59 47.8 106.8 106.8 106.8h81.5v111.1c0 .7.8 1.1 1.4.7l166.9-110.6 41.8-.8h117.4l43.6-.4c59 0 106.8-47.8 106.8-106.8V394.5c0-59-47.8-106.9-106.8-106.9zM351.7 448.2c0-29.5 23.9-53.5 53.5-53.5s53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5-53.5-23.9-53.5-53.5zm157.9 267.1c-67.8 0-123.8-47.5-132.3-109h264.6c-8.6 61.5-64.5 109-132.3 109zm110-213.7c-29.5 0-53.5-23.9-53.5-53.5s23.9-53.5 53.5-53.5 53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5zM867.2 644.5V453.1h26.5c19.4 0 35.1 15.7 35.1 35.1v121.1c0 19.4-15.7 35.1-35.1 35.1h-26.5zM95.2 609.4V488.2c0-19.4 15.7-35.1 35.1-35.1h26.5v191.3h-26.5c-19.4 0-35.1-15.7-35.1-35.1zM561.5 149.6c0 23.4-15.6 43.3-36.9 49.7v44.9h-30v-44.9c-21.4-6.5-36.9-26.3-36.9-49.7 0-28.6 23.3-51.9 51.9-51.9s51.9 23.3 51.9 51.9z"></path>
+                </svg>
+                <h2 class="logo-text">بيان</h2>
+            </div>
+        </div>
+
+        <!--Chatbot Body-->
+        <div class="chat-body">
+            <div class="message bot-message">
+                <svg class="bot-avatar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+                    <path d="M738.3 287.6H285.7c-59 0-106.8 47.8-106.8 106.8v303.1c0 59 47.8 106.8 106.8 106.8h81.5v111.1c0 .7.8 1.1 1.4.7l166.9-110.6 41.8-.8h117.4l43.6-.4c59 0 106.8-47.8 106.8-106.8V394.5c0-59-47.8-106.9-106.8-106.9zM351.7 448.2c0-29.5 23.9-53.5 53.5-53.5s53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5-53.5-23.9-53.5-53.5zm157.9 267.1c-67.8 0-123.8-47.5-132.3-109h264.6c-8.6 61.5-64.5 109-132.3 109zm110-213.7c-29.5 0-53.5-23.9-53.5-53.5s23.9-53.5 53.5-53.5 53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5zM867.2 644.5V453.1h26.5c19.4 0 35.1 15.7 35.1 35.1v121.1c0 19.4-15.7 35.1-35.1 35.1h-26.5zM95.2 609.4V488.2c0-19.4 15.7-35.1 35.1-35.1h26.5v191.3h-26.5c-19.4 0-35.1-15.7-35.1-35.1zM561.5 149.6c0 23.4-15.6 43.3-36.9 49.7v44.9h-30v-44.9c-21.4-6.5-36.9-26.3-36.9-49.7 0-28.6 23.3-51.9 51.9-51.9s51.9 23.3 51.9 51.9z"></path>
+                </svg>
+                <div class="message-text">مرحبًا ! كيف يمكنني مساعدتك اليوم؟</div>
+            </div>
+        </div>
+
+        <!-- Fixed Text Area -->
+        <div class="chat-footer">
+            <form action="#" class="chat-form">
+                <textarea placeholder="اكتب رسالتك هنا..." class="message-input" required></textarea>
+                <div class="chat-controls">
+                    <button type="button" id="emoji-picker" class="material-symbols-outlined">sentiment_satisfied</button>
+                    <div class="file-upload-wrapper">
+                        <input type="file" accept="image/*" id="file-input" hidden>
+                        <img src="#" alt="Upload preview">
+                        <button type="button" id="file-upload" class="material-symbols-rounded">attach_file</button>
+                        <button type="button" id="file-cancel" class="material-symbols-rounded">close</button>
+                    </div>
+                    <button type="submit" id="send-message" class="material-symbols-rounded">send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Linking emoji script-->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
+
+<script>
+    const chatBody = document.querySelector(".chat-body");
+    const messageInput = document.querySelector(".message-input");
+    const sendMessageButton = document.querySelector("#send-message");
+    const fileInput = document.querySelector("#file-input");
+    const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
+    const fileCancelButton = document.querySelector("#file-cancel");
+    const chatForm = document.querySelector(".chat-form");
+
+    // API KEYS 
+    const GEMINI_API_KEY = "AIzaSyADblQ-w3GIoiXYM2524zCg7RIPualWUOo"; 
+    const GROQ_API_KEY = "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";   
+    const CLOUDFLARE_ACCOUNT_ID = "77fd06a8b4dc57a9fcef5ba66a1a76f8";  
+    const CLOUDFLARE_API_TOKEN = "pKxOrLiYqREzlznBHPR9IHXRyC8-yo8NCAvCR_dU";  
+
+    // API URLs for different providers
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+    const CLOUDFLARE_API_URL = `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8`;
+
+    const userData = {
+        message: null,
+        file: {
+            data: null,
+            mime_type: null
+        }
+    }
+
+    const chatHistory = [];
+    const intialInputHeight = messageInput.scrollHeight;
+
+    // Create message element with dynamic classes and return it
+    const createMessageElement = (content, ...classes) => {
+        const div = document.createElement("div");
+        div.classList.add("message", ...classes);
+        div.innerHTML = content;
+        return div;
+    }
+
+    // Function to clean and format the bot response
+    const formatBotResponse = (text) => {
+        // Replace *first*, *second*, etc. with • bullet points
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, "$1"); // Remove bold markers
+        
+        // Replace numbered lists with proper formatting
+        formattedText = formattedText.replace(/\*(\s*)([0-9]+)(\s*)\*/g, "• "); // *1* -> •
+        formattedText = formattedText.replace(/\*(\s*)(first|second|third|fourth|fifth)(\s*)\*/gi, "• "); // *first* -> •
+        
+        // Replace any remaining * with • for bullet points
+        formattedText = formattedText.replace(/\*\s*(.+?)(?=\n|$)/g, "• $1");
+        
+        // Ensure proper line breaks
+        formattedText = formattedText.replace(/\n/g, '<br>');
+        
+        return formattedText;
+    }
+
+    // Track daily usage for each provider
+    const providerUsage = {
+        gemini: { used: 0, lastReset: Date.now(), limit: 1500 },
+        groq: { used: 0, lastReset: Date.now(), limit: 1000 },
+        cloudflare: { used: 0, lastReset: Date.now(), limit: 10000 }
+    };
+
+    // Check if a provider has quota left
+    function hasQuota(provider) {
+        const usage = providerUsage[provider];
+        const now = Date.now();
+        
+        // Reset if it's a new day (24 hours)
+        if (now - usage.lastReset > 24 * 60 * 60 * 1000) {
+            usage.used = 0;
+            usage.lastReset = now;
+        }
+        
+        return usage.used < usage.limit;
+    }
+
+    // Call Gemini API
+    async function callGemini(messages) {
+        // Convert messages to Gemini format
+        const geminiMessages = messages.map(msg => {
+            if (msg.role === 'system') {
+                return { role: 'user', parts: [{ text: msg.content }] };
+            }
+            return {
+                role: msg.role === 'assistant' ? 'model' : 'user',
+                parts: [{ text: msg.content }]
+            };
+        });
+
+        const response = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: geminiMessages,
+                system_instruction: {
+                    parts: [{
+                        text: "You are a helpful assistant. Keep answers concise unless the user asks for details. Always respond in the same language the user used."
+                    }]
+                },
+                generationConfig: {
+                    temperature: 0.7,
+                    maxOutputTokens: 800
+                }
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error?.message || 'Gemini API error');
+        }
+        
+        providerUsage.gemini.used++;
+        return data.candidates[0].content.parts[0].text;
+    }
+
+    // Call Groq API
+    async function callGroq(messages) {
+        const response = await fetch(GROQ_API_URL, {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${GROQ_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-versatile",
+                messages: messages,
+                temperature: 0.7,
+                max_tokens: 800
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error?.message || 'Groq API error');
+        }
+        
+        providerUsage.groq.used++;
+        return data.choices[0].message.content;
+    }
+
+    // Call Cloudflare API
+    async function callCloudflare(messages) {
+        // Format messages into a single prompt
+        const fullPrompt = messages
+            .map(msg => `${msg.role === 'system' ? 'System' : msg.role === 'assistant' ? 'Assistant' : 'User'}: ${msg.content}`)
+            .join('\n');
+
+        const response = await fetch(CLOUDFLARE_API_URL, {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${CLOUDFLARE_API_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                prompt: fullPrompt,
+                max_tokens: 800
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.errors?.[0]?.message || 'Cloudflare API error');
+        }
+        
+        providerUsage.cloudflare.used++;
+        return data.result.response;
+    }
+
+    // Generate bot response using multiple providers
+    const generateBotResponse = async (incomingMessagesDiv) => {
+        const messageElement = incomingMessagesDiv.querySelector(".message-text");
+
+        // Add user message to chat history (for all providers)
+        chatHistory.push({
+            role: "user",
+            content: userData.message
+        });
+
+        // Prepare messages with system instruction
+        const messagesWithSystem = [
+            { role: "system", content: "You are a helpful assistant. Respond directly and briefly. Keep answers concise unless the user asks for details. Always respond in the same language the user used." },
+            ...chatHistory
+        ];
+
+        try {
+            let response = null;
+            let usedProvider = null;
+
+            // Try providers in order: Gemini -> Groq -> Cloudflare
+            if (hasQuota('gemini') && GEMINI_API_KEY) {
+                try {
+                    response = await callGemini(messagesWithSystem);
+                    usedProvider = 'gemini';
+                } catch (error) {
+                    console.log("Gemini failed:", error.message);
+                }
+            }
+
+            if (!response && hasQuota('groq') && GROQ_API_KEY) {
+                try {
+                    response = await callGroq(messagesWithSystem);
+                    usedProvider = 'groq';
+                } catch (error) {
+                    console.log("Groq failed:", error.message);
+                }
+            }
+
+            if (!response && hasQuota('cloudflare') && CLOUDFLARE_ACCOUNT_ID && CLOUDFLARE_API_TOKEN) {
+                try {
+                    response = await callCloudflare(messagesWithSystem);
+                    usedProvider = 'cloudflare';
+                } catch (error) {
+                    console.log("Cloudflare failed:", error.message);
+                }
+            }
+
+            if (response) {
+                // Format and display the response
+                const formattedResponse = formatBotResponse(response);
+                messageElement.innerHTML = formattedResponse;
+                messageElement.style.color = "";
+                
+                // Add bot response to chat history
+                chatHistory.push({
+                    role: "assistant",
+                    content: response
+                });
+                
+                console.log(`✅ Used ${usedProvider} - Daily usage: Gemini ${providerUsage.gemini.used}/1500, Groq ${providerUsage.groq.used}/1000, Cloudflare ${providerUsage.cloudflare.used}/10000`);
+            } else {
+                // All providers failed or exhausted
+                messageElement.innerText = "عذراً، جميع مزودي الخدمة غير متاحين حالياً. الرجاء المحاولة لاحقاً.";
+                messageElement.style.color = "#d97706";
+            }
+            
+        } catch (error) {
+            console.log("Unexpected error:", error);
+            messageElement.innerText = "عذراً، حدث خطأ غير متوقع. الرجاء المحاولة مرة أخرى.";
+            messageElement.style.color = "#d97706";
+        } finally {
+            // Reset user's file data, remove thinking indicator and scroll
+            userData.file = {};
+            incomingMessagesDiv.classList.remove("thinking");
+            chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
+        }
+    }
+
+    // Handle outgoing user messages
+    const handleOutgoingMessage = (e) => {
+        e.preventDefault();
+        userData.message = messageInput.value.trim();
+        
+        // Don't send empty messages
+        if (!userData.message && !userData.file.data) return;
+        
+        messageInput.value = "";
+        fileUploadWrapper.classList.remove("file-uploaded");
+        messageInput.dispatchEvent(new Event("input"));
+
+        // Create and display user message
+        const messageContent = `<div class="message-text"></div>
+                        ${userData.file.data ? `<img src="data:${userData.file.mime_type};base64, 
+                        ${userData.file.data}" class="attachment" />` : ""}`;
+        const outgoingMessagesDiv = createMessageElement(messageContent, "user-message");
+        outgoingMessagesDiv.querySelector(".message-text").innerText = userData.message;
+        chatBody.appendChild(outgoingMessagesDiv);
+        chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
+
+        // Simulate bot response with thinking indicator after a delay
+        setTimeout(() => {
+            const messageContent = `
+                <svg class="bot-avatar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+                    <path d="M738.3 287.6H285.7c-59 0-106.8 47.8-106.8 106.8v303.1c0 59 47.8 106.8 106.8 106.8h81.5v111.1c0 .7.8 1.1 1.4.7l166.9-110.6 41.8-.8h117.4l43.6-.4c59 0 106.8-47.8 106.8-106.8V394.5c0-59-47.8-106.9-106.8-106.9zM351.7 448.2c0-29.5 23.9-53.5 53.5-53.5s53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5-53.5-23.9-53.5-53.5zm157.9 267.1c-67.8 0-123.8-47.5-132.3-109h264.6c-8.6 61.5-64.5 109-132.3 109zm110-213.7c-29.5 0-53.5-23.9-53.5-53.5s23.9-53.5 53.5-53.5 53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5zM867.2 644.5V453.1h26.5c19.4 0 35.1 15.7 35.1 35.1v121.1c0 19.4-15.7 35.1-35.1 35.1h-26.5zM95.2 609.4V488.2c0-19.4 15.7-35.1 35.1-35.1h26.5v191.3h-26.5c-19.4 0-35.1-15.7-35.1-35.1zM561.5 149.6c0 23.4-15.6 43.3-36.9 49.7v44.9h-30v-44.9c-21.4-6.5-36.9-26.3-36.9-49.7 0-28.6 23.3-51.9 51.9-51.9s51.9 23.3 51.9 51.9z"></path>
+                </svg>
+                <div class="message-text">
+                    <div class="thinking-indicator">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            `;
+            const incomingMessagesDiv = createMessageElement(messageContent, "bot-message", "thinking");
+            chatBody.appendChild(incomingMessagesDiv);
+            chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
+            generateBotResponse(incomingMessagesDiv);
+        }, 600);
+    }
+
+    // Handle Enter key press for sending messages
+    messageInput.addEventListener("keydown", (e) => {
+        const userMessage = e.target.value.trim();
+        
+        // Check if Enter is pressed without Shift key
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault(); // Prevent new line
+            
+            // Only send if there's a message
+            if (userMessage) {
+                handleOutgoingMessage(e);
+            }
+        }
+    });
+
+    // Adjust input field height dynamically
+    messageInput.addEventListener("input", () => {
+        messageInput.style.height = "auto";
+        messageInput.style.height = messageInput.scrollHeight + "px";
+    });
+
+    // Handle file input change and preview the selected file
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            fileUploadWrapper.querySelector("img").src = e.target.result;
+            fileUploadWrapper.classList.add("file-uploaded");
+            const base64string = e.target.result.split(",")[1];
+
+            // Store file data in userData
+            userData.file = {
+                data: base64string,
+                mime_type: file.type
+            }
+
+            fileInput.value = "";
+        }
+
+        reader.readAsDataURL(file);
+    });
+
+    // Cancel File Upload
+    fileCancelButton.addEventListener("click", () => {
+        userData.file = {};
+        fileUploadWrapper.classList.remove("file-uploaded");
+    });
+
+    // Initialize Emoji Picker and Handle Emoji selection
+    const picker = new EmojiMart.Picker({
+        theme: "light",
+        skinTonePosition: "none",
+        previewPosition: "none",
+        onEmojiSelect: (emoji) => {
+            const { selectionStart: start, selectionEnd: end } = messageInput;
+            messageInput.setRangeText(emoji.native, start, end, "end");
+            messageInput.focus();
+        },
+        onClickOutside: (e) => {
+            if (e.target.id === "emoji-picker") {
+                document.body.classList.toggle("show-emoji-picker");
+            } else {
+                document.body.classList.remove("show-emoji-picker");
+            }
+        }
+    });
+
+    document.querySelector(".chat-form").appendChild(picker);
+
+    // Event listeners
+    sendMessageButton.addEventListener("click", (e) => handleOutgoingMessage(e));
+
+    // Fix file upload button listener
+    const fileUploadButton = document.querySelector("#file-upload");
+    if (fileUploadButton) {
+        fileUploadButton.addEventListener("click", () => fileInput.click());
+    }
+
+    chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleOutgoingMessage(e);
+        return false;
+    });
+
+    // Show send button when there's text
+    messageInput.addEventListener("input", function() {
+        const sendButton = document.querySelector("#send-message");
+        sendButton.style.display = this.value.trim() ? "flex" : "none";
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مَسَار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #A0522D;
+            --accent: #D2691E;
+            --gold: #CD7F32;
+            --cream: #fef9f0;
+            --light: #faf0e6;
+            --light-brown: #faf0e6;
+            --text-dark: #2c1810;
+            --text-light: #5d3a1a;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --arabic-pattern: #f5e6d3;
+            --footer: #eecda7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Amiri', 'Scheherazade New', serif;
+            background: var(--cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        .arabic-bg {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(160, 82, 45, 0.08) 0%, transparent 50%),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M30,30 Q50,10 70,30 Q50,50 30,30Z" fill="%238B4513"/><path d="M40,50 Q50,40 60,50 Q50,60 40,50Z" fill="%23A0522D"/></svg>');
+            background-attachment: fixed;
+        }
+
+        .header {
+            margin-top: 70px;
+            text-align: center;
+            padding: 2.5rem 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .header::before {
+            content: 'اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ';
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 1rem;
+            opacity: 0.2;
+            color: white;
+            font-family: 'Amiri', serif;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .header .chapter-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--primary);
+            padding: 0.3rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .term-toggle-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.term-btn {
+    background: rgba(205, 127, 50, 0.15);  /* gold with opacity */
+    border: 2px solid rgba(205, 127, 50, 0.3);
+    color: white;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.term-btn:hover {
+    background: rgba(205, 127, 50, 0.25);
+    border-color: rgba(205, 127, 50, 0.5);
+    transform: translateY(-2px);
+}
+
+.term-btn.active {
+    background: var(--gold);  /* #CD7F32 */
+    color: var(--primary);    /* #8B4513 */
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(205, 127, 50, 0.5);
+}
+
+/* Notification styling*/
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--gold);
+    color: var(--light-brown);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+        .progress-info {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem;
+            margin-top: 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(205, 127, 50, 0.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 30px;
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn.active {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(205, 127, 50, 0.3);
+        }
+
+        .nav-btn:hover:not(.active) {
+            border-color: var(--gold);
+            color: var(--primary);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            margin-bottom: 50px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #lessons-section {
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .section-title i {
+            color: var(--gold);
+            margin-left: 0.5rem;
+        }
+
+        /* تصميم بطاقات الأقسام */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(205, 127, 50, 0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+
+        .category-title {
+            color: var(--primary);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-count {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .category-count i {
+            color: var(--gold);
+            margin-left: 0.3rem;
+        }
+
+        /* تصميم صفحة دروس القسم */
+        .category-lessons-page {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(205, 127, 50, 0.2);
+            position: relative;
+        }
+
+        .back-to-categories {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--light-brown);
+            color: var(--primary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-categories:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .category-page-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-brown);
+        }
+
+        .category-page-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+
+        .category-page-title {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .lesson-card {
+            background: linear-gradient(135deg, #ffffff 0%, #faf0e6 100%);
+            border-radius: 15px;
+            padding: 1.8rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(205, 127, 50, 0.3);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+        }
+
+        .lesson-card.completed {
+            background: linear-gradient(135deg, #f0fff0 0%, #ffffff 100%);
+            border-color: var(--success);
+        }
+
+        .lesson-card.completed::before {
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: var(--gold);
+        }
+
+        .lesson-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .lesson-number {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(205, 127, 50, 0.3);
+        }
+
+        .lesson-card.completed .lesson-number {
+            background: linear-gradient(135deg, var(--success), var(--secondary));
+        }
+
+        .lesson-title {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.3rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-desc {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .lesson-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .video-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+        }
+
+        .video-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(139, 69, 19, 0.4);
+        }
+
+        .video-btn.second {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+        }
+
+        .video-btn.second:hover {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+        }
+
+        .pdf-btn {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            box-shadow: 0 4px 12px rgba(160, 82, 45, 0.3);
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(160, 82, 45, 0.4);
+        }
+
+        /* تصميم الملفات الشاملة */
+        .master-files-section {
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0 2rem;
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .master-files-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .master-files-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .master-files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .master-file-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .master-file-card:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .master-file-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin: 0 auto 1rem;
+        }
+
+        .master-file-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .master-file-desc {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+
+
+        @media (max-width: 768px) {
+
+            .header {
+                margin-top: 60px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+    .nav-container {
+        position: relative !important; /* Changed from sticky to relative */
+        top: auto !important;
+        padding: 0.5rem 0;
+        z-index: 100;
+    
+    }
+
+    .nav-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 0 1rem;
+    }
+
+    .nav-btn {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        flex: 0 1 auto;
+        min-width: 110px;
+    }
+
+        .term-toggle-container {
+        gap: 5px;
+        margin: 15px 0;
+    }
+    
+    .term-btn {
+        padding: 6px 15px !important;
+        font-size: 0.9rem !important;
+    }
+
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lesson-actions {
+                flex-direction: column;
+            }
+            
+            .category-page-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .master-files-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body class="arabic-bg">
+
+    <!--Main  Header -->
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Header -->
+    <header class="header">
+        <h1>اللغة العربية</h1>
+        <p class="subtitle">الصف الحادي عشر</p>
+
+        <div class="term-toggle-container">
+        <i class="fas fa-feather"></i>
+        <button class="term-btn" data-term-btn="1">الفصل الأول</button>
+        <button class="term-btn" data-term-btn="2">الفصل الثاني</button>
+        <i class="fas fa-feather"></i>
+    </div>
+        <div class="progress-info">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span>تقدمك في المادة</span>
+                <span id="progress-percentage">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p style="font-size: 0.9rem; opacity: 0.9;">أكمل دروسك لتزيد تقدمك</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-container">
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showSection('lessons')">
+                <i class="fas fa-book-open"></i>
+                الدروس
+            </button>
+            <button class="nav-btn" onclick="showSection('files')">
+                <i class="fas fa-folder-open"></i>
+                الملفات الشاملة
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- صفحة الأقسام الرئيسية -->
+        <section id="categories-section" class="content-section" style="display: block;">
+            <h2 class="section-title">
+                <i class="fas fa-sitemap"></i>
+                أقسام اللغة العربية
+            </h2>
+            <div class="categories-grid" id="categories-container">
+                <!-- سيتم ملؤها بالـ JavaScript -->
+            </div>
+
+        </section>
+
+        <!-- قسم دروس القسم -->
+        <section id="category-lessons-section" class="content-section">
+            <!-- سيتم ملؤها بالـ JavaScript -->
+        </section>
+
+        <!-- قسم الملفات الشاملة -->
+        <section id="files-section" class="content-section">
+            <h2 class="section-title">
+                <i class="fas fa-folder-open"></i>
+                الملفات الشاملة
+            </h2>
+            <div class="memorization-page">
+                <div class="master-files-section" style="margin-top: 0;">
+                    <div class="master-files-grid" id="master-files-container">
+                        <!-- سيتم ملؤها بالـ JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+<!--Main script-->
+    <script>
+
+        // تصنيفات الدروس
+        const categories1 = [
+            { 
+                id: "balagha", 
+                title: "البلاغة", 
+                icon: "fa-feather", 
+                desc: "علم البيان والبديع والمعاني",
+                count: 0
+            },
+            { 
+                id: "nahw", 
+                title: "النحو والصرف", 
+                icon: "fa-pen-fancy", 
+                desc: "قواعد اللغة العربية",
+                count: 0
+            },
+            { 
+                id: "adab", 
+                title: "الأدب والنصوص", 
+                icon: "fa-book", 
+                desc: "نصوص أدبية وتراثية",
+                count: 0
+            },
+            { 
+                id: "shir", 
+                title: "الشعر والعروض", 
+                icon: "fa-music", 
+                desc: "بحور الشعر وقواعد العروض",
+                count: 0
+            }
+        ];
+
+        // قائمة الدروس مع التصنيفات (مع ملفات PDF) - محولة من الفصل الأول
+        const term1 = [
+            // البلاغة
+            { id: "1", category: "balagha", title: "التشبيه مفهومه وأركانه", desc: "تعريف التشبيه وأركانه الأساسية", videos: ["YcX9PkL8ftQ", "gcr1F5UIVdQ"], pdf: "pdfs/arb/التشبيه.pdf" },
+            { id: "2", category: "balagha", title: "أقسام التشبيه", desc: "أنواع التشبيه المختلفة", videos: ["l1HKe7LXZoc", "L8uyWL3d7v8"], pdf: "pdfs/arb/التشبيه.pdf" },
+            { id: "3", category: "balagha", title: "التشبيه التمثيلي", desc: "التشبيه بالصورة التمثيلية", videos: ["ldN7WQvOsvI"], pdf: "pdfs/arb/التشبيه-التمثيلي.pdf" },
+            { id: "4", category: "balagha", title: "التشبيه الضمني", desc: "التشبيه غير المباشر", videos: ["UqWabGBo6kc"], pdf: "pdfs/arb/التشبيه-الضمني.pdf" },
+            { id: "5", category: "balagha", title: "التشبيه المقلوب", desc: "قلب المشبه والمشبه به", videos: ["wz6eI8FxJFA"], pdf: "pdfs/arb/التشبيه-المقلوب.pdf" },
+            { id: "6", category: "balagha", title: "الحقيقة والمجاز", desc: "الفرق بين الحقيقة والمجاز", videos: ["EtHgYGsWX24", "faUTDwkBcSs"], pdf: "pdfs/arb/ملخص-وتدريبات-الحقيقة-والمجاز-بلاغة.pdf" },
+            
+            // النحو والصرف
+            { id: "7", category: "nahw", title: "اسم الفاعل", desc: "صياغة وإعراب اسم الفاعل", videos: ["huCpRAYDeLU", "zSXfXD-TUr0", "Y8OXP76GZwU"], pdf: "pdfs/arb/عمل-اسم-الفاعل.pdf" },
+            { id: "8", category: "nahw", title: "صيغ المبالغة", desc: "أنواع صيغ المبالغة واستخداماتها", videos: ["3rhynbcoiPQ", "YKMkoqAdYLc"], pdf: "pdfs/arb/صيغ-المبالغة.pdf" },
+            { id: "9", category: "nahw", title: "عمل اسم الفاعل", desc: "شروط عمل اسم الفاعل وإعرابه", videos: ["d2Gd0z1_dLo", "zSXfXD-TUr0"], pdf: "pdfs/arb/عمل-اسم-الفاعل.pdf" },
+            { id: "10", category: "nahw", title: "اسم المفعول", desc: "صياغة وإعراب اسم المفعول", videos: ["14hA9ewYGtk", "iPGuo25TfLA"], pdf: "pdfs/arb/اسم-المفعول.pdf" },
+            { id: "11", category: "nahw", title: "عمل اسم المفعول", desc: "شروط عمل اسم المفعول وإعرابه", videos: ["FO9Wi2gPum4", "iPGuo25TfLA"], pdf: "pdfs/arb/اسم-المفعول.pdf" },
+            { id: "12", category: "nahw", title: "الصفة المشبهة", desc: "صياغة وإعراب الصفة المشبهة", videos: ["qDvqE80e-A0", "7JeFquIIso0"], pdf: "pdfs/arb/ملخص-عمل-الصفة-المشبهة.pdf" },
+            { id: "13", category: "nahw", title: "عمل الصفة المشبهة", desc: "شروط عمل الصفة المشبهة وإعرابها", videos: ["_3BdpEw-dRg", "7A5C2mAqDrw"], pdf: "pdfs/arb/ملخص-عمل-الصفة-المشبهة.pdf" },
+            { id: "14", category: "nahw", title: "اسم التفضيل", desc: "صياغة وإعراب اسم التفضيل", videos: ["D5_aw_7WmVk", "pl5BGnN-Cdc"], pdf:"pdfs/arb/ملخص-اسم-التفضيل.pdf" },
+            { id: "15", category: "nahw", title: "عمل اسم التفضيل", desc: "شروط عمل اسم التفضيل وإعرابه", videos: ["pl5BGnN-Cdc", "Tzxm1S2RVkY"], pdf: "pdfs/arb/ملخص-اسم-التفضيل.pdf" },
+            
+            // الأدب والنصوص
+            { id: "16", category: "adab", title: "خصائص الشعر الجاهلي", desc: "دراسة خصائص الشعر في العصر الجاهلي", videos: ["BcMaEAXmXtw"], pdf: "pdfs/arb/خصائص-الشعر-الجاهلي.pdf" },
+            { id: "17", category: "adab", title: "معلقة طرفة", desc: "شرح وتحليل معلقة طرفة بن العبد", videos: ["r23mf4N2egY", "ma94FjjRnSs"], pdf: "pdfs/arb/معلقة-طرفة.pdf" },
+            { id: "18", category: "adab", title: "خصائص النثر القرآني", desc: "دراسة خصائص النثر في القرآن الكريم", videos: ["CAjKzGuS_1k"], pdf: "pdfs/arb/خصائص-النثر-القرآني.pdf" },
+            { id: "19", category: "adab", title: "سورة يوسف", desc: "تحليل أساليب سورة يوسف", videos: ["x9cNnbMn1FM", "xr0TTypnVrY"], pdf: "pdfs/arb/سورة-يوسف.pdf" },
+            { id: "20", category: "adab", title: "خصائص الغزل الحضري", desc: "دراسة خصائص الغزل في العصر الحضري", videos: ["c3zMzMTQfF4"], pdf: "pdfs/arb/خصائص-الغزل-الحضري.pdf" },
+            { id: "21", category: "adab", title: "عدمتك يا قلب - بشار بن برد", desc: "شرح قصيدة بشار بن برد", videos: ["C_6orxTWdww", "TaiayCiBWs0"], pdf: "pdfs/arb/عدمتك-يا-قلب.pdf" },
+            { id: "22", category: "adab", title: "الحكاية المثلية والنادرة", desc: "دراسة الحكايات المثلية والنوادر في التراث العربي", videos: ["jFBe66ePUzY"], pdf: "pdfs/arb/الحكاية-المثلية-والنادرة.pdf" },       
+            { id: "23", category: "adab", title: "مثل الغراب والأسود - ابن المقفع", desc: "تحليل الحكاية التراثية", videos: ["K8Hev54UeH4"], pdf: "pdfs/arb/مثل-الغراب-والأسود.pdf" },
+            { id: "24", category:"adab" , title:"قاضي البصرة - الجاحظ" , desc:"دراسة نص قاضي البصرة" , videos:["IeSsVbqKha8"] , pdf:"pdfs/arb/قاضي-البصرة.pdf"},
+            { id: "25", category:"adab" , title:"نشأة النقد عند العرب" , desc:"تطور النقد الأدبي عبر العصور" , videos:["_Lrrr7dUS6Q"] , pdf:"pdfs/arb/نشأة-النقد-عند-العرب.pdf"},
+            { id: "26", category: "adab", title: "طبقات فحول الشعراء", desc: "دراسة الكتاب النقدي", videos: ["RgiORHuv4_0"], pdf: "pdfs/arb/طبقات-فحول-الشعراء.pdf" },
+            { id: "27", category: "adab", title: "كتاب الشعر والشعراء", desc: "تحليل الكتاب النقدي", videos: ["1t4KQOwfUvk"], pdf: "pdfs/arb/كتاب-الشعر-والشعراء.pdf" },
+            { id: "28", category: "adab", title: "نهضة التعليم في عُمان", desc: "دراسة تطور التعليم في عمان", videos: ["txcYkD2Fxxs"], pdf: "pdfs/arb/نهضة-التعليم-في-عمان.pdf" },
+            { id: "29", category: "adab", title: "الحوار مع الآخر", desc: "دراسة قيم الحوار في الإسلام", videos: ["W0BOoHJ9cQ4"], pdf: "pdfs/arb/الحوار-مع-الآخر.pdf" },
+            { id: "30", category: "adab", title: "كتابة المقدمة", desc: "تعلم كتابة المقدمة للتعبير", videos: ["alUSP2L6vPY"], pdf: "pdfs/arb/كتابة-المقدمة.pdf" },
+            { id: "31", category: "adab", title: "كتابة الجوهر", desc: "تعلم كتابة جسم التعبير", videos: ["n1YJPLed3kE"], pdf: "pdfs/arb/كتابة-الجوهر.pdf" },
+            { id: "32", category: "adab", title: "كتابة الخاتمة", desc: "تعلم كتابة الخاتمة للتعبير", videos: ["fiCK76qbtvw"], pdf:"pdfs/arb/كتابة-الخاتمة.pdf" },
+            { id: "33", category:"adab" , title:"بين الأجيال" , desc:"دراسة العلاقات بين الأجيال" , videos:["qlNX_IHa4U0"] , pdf:"pdfs/arb/بين-الأجيال.pdf"},
+            
+            // الشعر والعروض
+            { id: "34", category: "shir", title: "البحر الطويل", desc: "دراسة بحر الطويل وتفعيلاته", videos: ["IU5C8DIUW0Y", "oDS562nw8k8"], pdf: "pdfs/arb/البحر-الطويل.pdf" },
+            { id: "35", category: "shir", title: "البحر البسيط", desc: "دراسة بحر البسيط وتفعيلاته", videos: ["vgCDXtbVm6M"], pdf: "pdfs/arb/البحر-البسيط.pdf" }
+        ];
+
+        // الملفات الشاملة (من الفصل الأول مع إضافة المزيد)
+        const masterFiles1 = [
+            { name: "ملخص-المؤنس-كامل", desc: "ملخص كتاب المؤنس كامل", icon: "fa-book", path: "pdfs/arb/ملخص-المؤنس-كامل.pdf" },
+            { name: "ملخص-المؤنس-كامل-2", desc: "ملخص كتاب المؤنس كامل 2", icon: "fa-book-open", path: "pdfs/arb/ملخص-المؤنس-كامل-2.pdf" },
+            { name: "ملخص-النحو-والصرف", desc: "ملخص قواعد النحو والصرف", icon: "fa-pen-fancy", path: "pdfs/arb/ملخص-النحو-والصرف.pdf" },
+            { name: "ملخص-النحو-والصرف-2", desc: "ملخص قواعد النحو والصرف 2", icon: "fa-pen-fancy", path: "pdfs/arb/ملخص-النحو-والصرف-2.pdf" },
+            { name: "ملخص-المفيد-كامل", desc: "ملخص كتاب المفيد كامل", icon: "fa-book", path: "pdfs/arb/ملخص-المفيد-كامل.pdf" },
+            { name: "ملخص-العربي", desc: "ملخص اللغة العربية الشامل", icon: "fa-file-alt", path: "pdfs/arb/ملخص-العربي.pdf" },
+            { name: "كيف-تجيب-عن-اسئلة-النصوص", desc: "إرشادات لحل أسئلة النصوص", icon: "fa-question-circle", path: "pdfs/arb/كيف-تجيب-عن-اسئلة-النصوص.pdf" },
+            { name: "سلسلة-حصاد-المعرفة", desc: "سلسلة مراجعات شاملة", icon: "fa-star", path: "pdfs/arb/سلسلة-حصاد-المعرفة.pdf" },
+            { name: "اختبار1", desc: "اختبار الفصل الأول - نموذج 1", icon: "fa-file-signature", path: "pdfs/arb/اختبار1.pdf" },
+            { name: "اختبار2", desc: "اختبار الفصل الأول - نموذج 2", icon: "fa-file-signature", path: "pdfs/arb/اختبار2.pdf" },
+            { name: "اختبار3", desc: "اختبار الفصل الأول - نموذج 3", icon: "fa-file-signature", path: "pdfs/arb/اختبار3.pdf" }
+        ];
+
+
+        //2 تصنيفات الدروس
+        const categories2 = [
+            { 
+                id: "balagha", 
+                title: "البلاغة", 
+                icon: "fa-feather", 
+                desc: "علم البيان والبديع والمعاني",
+                count: 0
+            },
+            { 
+                id: "nahw", 
+                title: "النحو والصرف", 
+                icon: "fa-pen-fancy", 
+                desc: "قواعد اللغة العربية",
+                count: 0
+            },
+            { 
+                id: "adab", 
+                title: "الأدب والنقد", 
+                icon: "fa-book", 
+                desc: "مدارس أدبية ونقدية",
+                count: 0
+            },
+            { 
+                id: "shir", 
+                title: "الشعر والعروض", 
+                icon: "fa-music", 
+                desc: "قصائد وبحور شعرية",
+                count: 0
+            }
+        ];
+
+        // 2 قائمة الدروس مع التصنيفات (مع ملفات PDF)
+        const term2 = [
+            // البلاغة
+            { id: "1", category: "balagha", title: "الاستعارة المكنية والتصريحية", desc: "الاستعارة وأنواعها", videos: ["79Mc3SHDCbs", "sIWIvA2v47o"], pdf: "pdfs/arb/الاستعاره-المكنيه-والتصريحيه.pdf" },
+            { id: "2", category: "balagha", title: "الاستعارة التمثيلية", desc: "الاستعارة التمثيلية", videos: ["79Mc3SHDCbs"], pdf: "pdfs/arb/الاستعاره-التمثيليه.pdf" },
+            { id: "3", category: "balagha", title: "الكناية", desc: "الكناية وأنواعها", videos: ["VTmWpoaGnhA"], pdf: "pdfs/arb/الكناية.pdf" },
+            { id: "4", category: "balagha", title: "المجاز المرسل", desc: "المجاز المرسل وعلاقاته", videos: ["_zlM_tXPRuo"], pdf: "pdfs/arb/المجاز-المرسل.pdf" },
+            
+            // النحو والصرف
+            { id: "5", category: "nahw", title: "اسم الآلة", desc: "أوزان اسم الآلة", videos: ["AMId-cQIyz0"], pdf: "pdfs/arb/اسم-الاله.pdf" },
+            { id: "6", category: "nahw", title: "اسم الزمان والمكان", desc: "صياغة اسم الزمان والمكان", videos: ["WfnGGBQC5l0"], pdf: "pdfs/arb/اسم-الزمان-والمكان.pdf" },
+            { id: "7", category: "nahw", title: "الجمل التي لا محل لها من الإعراب", desc: "المواضع الإعرابية", videos: ["iW3kuC0IVJw"], pdf: "pdfs/arb/الجمل-التي-لا-محل-لها-من-الاعراب.pdf" },
+            { id: "8", category: "nahw", title: "الجمل التي لها محل من الإعراب", desc: "المواضع الإعرابية", videos: ["h43zUqm9UFg"], pdf: "pdfs/arb/الجمل-التي-لها-محل-من-الاعراب.pdf" },
+            { id: "9", category: "nahw", title: "جمع التكسير", desc: "أنواع جمع التكسير", videos: ["4tmJsjKwmDA"], pdf: "pdfs/arb/جمع-التكسير.pdf" },
+            { id: "10", category: "nahw", title: "كم الخبرية والاستفهامية", desc: "الفرق بينهما", videos: ["h0plxLq-3EU"], pdf: "pdfs/arb/كم-الخبريه-والاستفهاميه.pdf" },
+            
+            // الأدب والنقد
+            { id: "11", category: "adab", title: "الأدب المهجري", desc: "مدرسة المهجر", videos: ["CfsU00rHTrA"], pdf: "pdfs/arb/الادب-المهجري.pdf" },
+            { id: "12", category: "adab", title: "الديوان للعقاد والمازني", desc: "مدرسة الديوان", videos: ["EJiMpaRGzMg"], pdf: "pdfs/arb/الديوان-للعقاد-والمازني.pdf" },
+            { id: "13", category: "adab", title: "بين العواصف والرابطة", desc: "الرابطة القلمية", videos: ["nrbllZ-5Ts8"], pdf: "pdfs/arb/بين-العواصف-والرابطه.pdf" },
+            { id: "14", category: "adab", title: "جماعة الديوان والمقاومة", desc: "أدب المقاومة", videos: ["b7VrIUtsXXM"], pdf: "pdfs/arb/جماعة-الديوان-والمقاومه.pdf" },
+            { id: "15", category: "adab", title: "حركات التجديد", desc: "التجديد في الشعر", videos: ["TVKOlchS9HA"], pdf: "pdfs/arb/حركات-التجديد.pdf" },
+            { id: "16", category: "adab", title: "ديد في الشعر المعاصر", desc: "مدرسة الديوان", videos: ["5vJrr1UKirg"], pdf: "pdfs/arb/حركات-التجديد-في-الشعر-المعاصر.pdf" },
+            { id: "17", category: "adab", title: "مدرسة الإحياء", desc: "مدرسة البعث والإحياء", videos: ["ZQ_-E0meoeA"], pdf: "pdfs/arb/مدرسة-الاحياء.pdf" },
+            { id: "18", category: "adab", title: "الفصحى والعامية", desc: "قضية اللغة", videos: ["_r9RsfRLFIM"], pdf: "pdfs/arb/الفصحى-والعاميه.pdf" },
+            { id: "19", category: "adab", title: "الوسيلة الأدبية", desc: "مقدمة في الأدب", videos: ["5mqvg20-f2Q"], pdf: "pdfs/arb/الوسيلة-الادبيه.pdf" },
+            
+            // الشعر والعروض
+            { id: "20", category: "shir", title: "الشعر الحر بين العصرية والتراث", desc: "الشعر الحر", videos: ["7y1YZhdyTho"], pdf: "pdfs/arb/الشعر-الحر-بين-العصرية-والتراث.pdf" },
+            { id: "21", category: "shir", title: "الغموض في الشعر", desc: "الغموض والإبهام", videos: ["nKHmAWlEbhI"], pdf: "pdfs/arb/الغموض-في-الشعر.pdf" },
+            { id: "22", category: "shir", title: "أندلسية أحمد شوقي", desc: "قصيدة أندلسية", videos: ["fYY_-Z9AozA", "E9WwiFGiu1g"], pdf: "pdfs/arb/اندلسيه-احمد-شوقي.pdf" },
+            { id: "23", category: "shir", title: "بحر الكامل", desc: "البحر الكامل", videos: ["tlixlK6zaTM"], pdf: "pdfs/arb/بحر-الكامل.pdf" },
+            { id: "24", category: "shir", title: "بحر المتقارب", desc: "البحر المتقارب", videos: ["COc24-5SZR0"], pdf: "pdfs/arb/بحر-المتقارب.pdf" },
+            { id: "25", category: "shir", title: "قصيدة البنفسجية الطموح", desc: "شرح القصيدة", videos: ["GL3YKKOnrvw"], pdf: "pdfs/arb/قصيدة-البنفسجية-الطموح.pdf" },
+            { id: "26", category: "shir", title: "قصيدة المساء", desc: "شرح القصيدة", videos: ["Sq1rNYcfZXE"], pdf: "pdfs/arb/قصيدة-المساء.pdf" },
+            { id: "27", category: "shir", title: "قصيدة رسالة من المنفى", desc: "شرح القصيدة", videos: ["boMmpziBKnE"], pdf: "pdfs/arb/قصيدة-رسالة-من-المنفى.pdf" },
+            { id: "28", category: "shir", title: "قصيدة كل نفيس في الممات يهون", desc: "شرح القصيدة", videos: ["jngJNz4ftj4"], pdf: "pdfs/arb/قصيدة-كل-نفيس-في-الممات-يهون.pdf" },
+            { id: "29", category: "shir", title: "قصيدة نداء الحياة", desc: "شرح القصيدة", videos: ["hqycol0xc1U"], pdf: "pdfs/arb/قصيدة-نداء-الحياة.pdf" }
+        ];
+
+        //2 الملفات الشاملة
+        const masterFiles2 = [
+            { name: "كتاب-المفيد", desc: "الكتاب الأساسي", icon: "fa-book", path: "pdfs/arb/كتاب-المفيد.pdf" },
+            { name: "كتاب-المؤنس", desc: "الكتاب المساعد", icon: "fa-book-open", path: "pdfs/arb/كتاب-المؤنس.pdf" },
+            { name: "دليل-المعلم", desc: "إرشادات وحلول", icon: "fa-chalkboard-teacher", path: "pdfs/arb/دليل-المعلم.pdf" },
+            { name: "ملخص-النحو-الصرف", desc: "قواعد النحو", icon: "fa-pen-fancy", path: "pdfs/arb/ملخص-النحو-الصرف.pdf" },
+            { name: "ملخص-النحو-والبلاغه", desc: "نحو وبلاغة", icon: "fa-feather", path: "pdfs/arb/ملخص-النحو-والبلاغه.pdf" },
+            { name: "ملخص-البلاغة", desc: "علوم البلاغة", icon: "fa-feather-alt", path: "pdfs/arb/ملخص-البلاغة.pdf" },
+            { name: "ملخص-كتاب-المفيد", desc: "تلخيص المفيد", icon: "fa-file-alt", path: "pdfs/arb/ملخص-كتاب-المفيد.pdf" },
+            { name: "ملخص-كتاب-المؤنس", desc: "تلخيص المؤنس", icon: "fa-file-alt", path: "pdfs/arb/ملخص-كتاب-المؤنس.pdf" },
+            { name: "المحفوظات", desc: "نصوص الحفظ", icon: "fa-mosque", path: "pdfs/arb/المحفوظات.pdf" },
+            { name: "تجميع-اختبار-قصير1", desc: "أسئلة اختبار 1", icon: "fa-question-circle", path: "pdfs/arb/تجميع-اختبار-قصير1.pdf" },
+            { name: "اختبار-قصير1", desc: "اختبار قصير 1", icon: "fa-file-signature", path: "pdfs/arb/اختبار-قصير1.pdf" },
+            { name: "اختبار-قصير2", desc: "اختبار قصير 2", icon: "fa-file-signature", path: "pdfs/arb/اختبار-قصير2.pdf" },
+            { name: "اهم-اسئلة-النقد", desc: "أسئلة نقدية", icon: "fa-star", path: "pdfs/arb/اهم-اسئلة-النقد.pdf" },
+            { name: "امتحان-اجابه", desc: "امتحان مع الإجابة", icon: "fa-check-double", path: "pdfs/arb/امتحان-اجابه.pdf" }
+        ];
+
+
+let currentTerm = '1'; // '1' for term1, '2' for term2
+let currentCategoryId = null;
+
+// Get term buttons
+const termButtons = document.querySelectorAll('.term-btn');
+
+// Get data based on current term
+function getCurrentCategories() {
+    return currentTerm === '1' ? categories1 : categories2;
+}
+
+function getCurrentLessons() {
+    return currentTerm === '1' ? term1 : term2;
+}
+
+function getCurrentMasterFiles() {
+    return currentTerm === '1' ? masterFiles1 : masterFiles2;
+}
+
+
+// تهيئة الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    // Load saved term preference
+    const savedTerm = localStorage.getItem('selectedTerm');
+    if (savedTerm) {
+        currentTerm = savedTerm;
+    }
+    
+    // Set active button based on saved term
+    termButtons.forEach(btn => {
+        const btnTerm = btn.getAttribute('data-term-btn');
+        if (btnTerm === currentTerm) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    updateCategoriesCount();
+    renderCategories();
+    renderMasterFiles();
+    loadSavedProgress();
+    updateProgress();
+    
+    // Term button functionality - UPDATED VERSION
+    termButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const term = this.getAttribute('data-term-btn');
+            
+            // Update active state
+            termButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update current term
+            currentTerm = term;
+            
+            // Save to localStorage
+            localStorage.setItem('selectedTerm', term);
+            
+            // Clear the category lessons section content immediately
+            document.getElementById('category-lessons-section').innerHTML = '';
+            
+            // Refresh the content first
+            refreshContent();
+            
+            // Then ensure we're showing the correct section based on active nav button
+            const activeNavBtn = document.querySelector('.nav-btn.active');
+            if (activeNavBtn) {
+                const onclickAttr = activeNavBtn.getAttribute('onclick');
+                if (onclickAttr) {
+                    const match = onclickAttr.match(/'([^']+)'/);
+                    if (match) {
+                        const section = match[1];
+                        if (section === 'lessons') {
+                            showCategoriesPage();
+                        } else {
+                            document.getElementById('categories-section').style.display = 'none';
+                            document.getElementById('category-lessons-section').style.display = 'none';
+                            document.getElementById(section + '-section').style.display = 'block';
+                        }
+                    } else {
+                        showCategoriesPage();
+                    }
+                } else {
+                    showCategoriesPage();
+                }
+            } else {
+                // Default to lessons section
+                showCategoriesPage();
+            }
+            
+            // Show notification
+            showNotification(`تم التبديل إلى الفصل ${term === '1' ? 'الأول' : 'الثاني'}`);
+        });
+    });
+});
+
+// Refresh all content when term changes
+function refreshContent() {
+    // Clear the category lessons section content
+    const lessonsSection = document.getElementById('category-lessons-section');
+    lessonsSection.innerHTML = '';
+    lessonsSection.style.display = 'none';
+    
+    // Update categories count with new lessons data
+    const currentCategories = getCurrentCategories();
+    const currentLessons = getCurrentLessons();
+    
+    currentCategories.forEach(cat => {
+        cat.count = currentLessons.filter(lesson => lesson.category === cat.id).length;
+    });
+    
+    // Re-render everything
+    renderCategories();
+    renderMasterFiles();
+    
+    // Make sure categories section is visible
+    document.getElementById('categories-section').style.display = 'block';
+    currentCategoryId = null; // Reset current category
+    
+    // Update progress
+    updateProgress();
+}
+// Update categories count
+function updateCategoriesCount() {
+    const currentCategories = getCurrentCategories();
+    const currentLessons = getCurrentLessons();
+    
+    currentCategories.forEach(cat => {
+        cat.count = currentLessons.filter(lesson => lesson.category === cat.id).length;
+    });
+}
+
+// Render categories
+function renderCategories() {
+    const container = document.getElementById('categories-container');
+    container.innerHTML = '';
+    
+    const currentCategories = getCurrentCategories();
+    
+    currentCategories.forEach(cat => {
+        const catCard = document.createElement('div');
+        catCard.className = 'category-card';
+        catCard.onclick = () => showCategoryLessons(cat.id);
+        
+        catCard.innerHTML = `
+            <div class="category-icon">
+                <i class="fas ${cat.icon}"></i>
+            </div>
+            <h3 class="category-title">${cat.title}</h3>
+            <p class="category-count">
+                <i class="fas fa-book-open"></i>
+                ${cat.count} درس
+            </p>
+            <p>${cat.desc}</p>
+        `;
+        
+        container.appendChild(catCard);
+    });
+}
+
+function showCategoryLessons(categoryId) {
+    currentCategoryId = categoryId;
+    const currentCategories = getCurrentCategories();
+    const currentLessons = getCurrentLessons();
+    
+    const category = currentCategories.find(c => c.id === categoryId);
+    const categoryLessons = currentLessons.filter(lesson => lesson.category === categoryId);
+    
+    const lessonsSection = document.getElementById('category-lessons-section');
+    
+    lessonsSection.innerHTML = `
+        <div class="category-lessons-page">
+            <button class="back-to-categories" onclick="showCategoriesPage()">
+                <i class="fas fa-arrow-right"></i>
+                العودة للأقسام
+            </button>
+            
+            <div class="category-page-header">
+                <div class="category-page-icon">
+                    <i class="fas ${category.icon}"></i>
+                </div>
+                <div>
+                    <h2 class="category-page-title">${category.title}</h2>
+                    <p style="color: var(--text-light);">${category.desc}</p>
+                </div>
+            </div>
+            
+            <div class="lessons-grid" id="lessons-grid-${categoryId}"></div>
+        </div>
+    `;
+    
+    // Hide categories section and show lessons section
+    document.getElementById('categories-section').style.display = 'none';
+    lessonsSection.style.display = 'block';
+    
+    // Display lessons
+    renderCategoryLessons(categoryId, categoryLessons);
+}
+
+function renderCategoryLessons(categoryId, lessons) {
+    const container = document.getElementById(`lessons-grid-${categoryId}`);
+    container.innerHTML = '';
+    
+    lessons.forEach((lesson, index) => {
+        // Check if all videos watched
+        let allWatched = true;
+        lesson.videos.forEach(videoId => {
+            if (localStorage.getItem(`watched_${videoId}`) !== 'true') {
+                allWatched = false;
+            }
+        });
+        
+        const isCompleted = allWatched;
+        
+        const lessonCard = document.createElement('div');
+        lessonCard.className = `lesson-card ${isCompleted ? 'completed' : ''}`;
+        
+        // Build video buttons
+        let videoButtons = '';
+        if (lesson.videos.length === 1) {
+            videoButtons = `
+                <button class="action-btn video-btn" onclick="openVideo('${lesson.videos[0]}', '${categoryId}')">
+                    <i class="fas fa-play"></i>
+                    فيديو
+                </button>
+            `;
+        } else {
+            videoButtons = lesson.videos.map((videoId, idx) => `
+                <button class="action-btn video-btn ${idx === 1 ? 'second' : ''}" onclick="openVideo('${videoId}', '${categoryId}')">
+                    <i class="fas fa-play"></i>
+                    فيديو ${idx + 1}
+                </button>
+            `).join('');
+        }
+        
+        lessonCard.innerHTML = `
+            <div class="lesson-header">
+                <div class="lesson-number">${index + 1}</div>
+                <div>
+                    <div class="lesson-title">${lesson.title}</div>
+                    <div class="lesson-desc">${lesson.desc}</div>
+                </div>
+            </div>
+            <div class="lesson-actions">
+                ${videoButtons}
+                <button class="action-btn pdf-btn" onclick="openPDF('${lesson.pdf}')">
+                    <i class="fas fa-file-pdf"></i>
+                    ملف الدرس
+                </button>
+            </div>
+        `;
+        
+        container.appendChild(lessonCard);
+    });
+}
+
+// Return to categories page
+function showCategoriesPage() {
+    document.getElementById('categories-section').style.display = 'block';
+    document.getElementById('category-lessons-section').style.display = 'none';
+    currentCategoryId = null; // Reset current category when returning to categories
+    updateProgress();
+}
+
+// Render master files
+function renderMasterFiles() {
+    const currentMasterFiles = getCurrentMasterFiles();
+    
+    // Render in main files section
+    const masterContainer = document.getElementById('master-files-container');
+    if (masterContainer) {
+        masterContainer.innerHTML = currentMasterFiles.map(file => `
+            <div class="master-file-card" onclick="openPDF('${file.path}')">
+                <div class="master-file-icon">
+                    <i class="fas ${file.icon}"></i>
+                </div>
+                <div class="master-file-name">${file.name}</div>
+                <div class="master-file-desc">${file.desc}</div>
+            </div>
+        `).join('');
+    }
+    
+    // Render in categories page
+    const categoriesMaster = document.getElementById('master-files-categories');
+    if (categoriesMaster) {
+        categoriesMaster.innerHTML = `
+            <div class="master-files-section">
+                <h3 class="master-files-title">
+                    <i class="fas fa-folder-open"></i>
+                    الملفات الشاملة
+                </h3>
+                <div class="master-files-grid">
+                    ${currentMasterFiles.slice(0, 8).map(file => `
+                        <div class="master-file-card" onclick="openPDF('${file.path}')">
+                            <div class="master-file-icon">
+                                <i class="fas ${file.icon}"></i>
+                            </div>
+                            <div class="master-file-name">${file.name}</div>
+                            <div class="master-file-desc">${file.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Open video
+function openVideo(videoId, categoryId) {
+    const cleanVideoId = videoId.split('?')[0].split('&')[0];
+    window.open(`https://www.youtube.com/watch?v=${cleanVideoId}`, '_blank');
+    
+    localStorage.setItem(`watched_${cleanVideoId}`, 'true');
+    
+    if (categoryId) {
+        const categoryLessons = getCurrentLessons().filter(lesson => lesson.category === categoryId);
+        renderCategoryLessons(categoryId, categoryLessons);
+    }
+    
+    updateProgress();
+    showNotification('تم تسجيل مشاهدة الفيديو');
+}
+
+// Open PDF
+function openPDF(pdfPath) {
+    window.open(pdfPath, '_blank');
+    showNotification('تم فتح الملف بنجاح');
+}
+
+// Update progress
+function updateProgress() {
+    const currentLessons = getCurrentLessons();
+    
+    let totalVideos = 0;
+    let watchedVideos = 0;
+    
+    currentLessons.forEach(lesson => {
+        totalVideos += lesson.videos.length;
+        lesson.videos.forEach(videoId => {
+            if (localStorage.getItem(`watched_${videoId}`) === 'true') {
+                watchedVideos++;
+            }
+        });
+    });
+    
+    const progressPercentage = totalVideos > 0 ? Math.round((watchedVideos / totalVideos) * 100) : 0;
+    
+    document.getElementById('progress-percentage').textContent = `${progressPercentage}%`;
+    document.getElementById('progress-fill').style.width = `${progressPercentage}%`;
+}
+
+// Load saved progress
+function loadSavedProgress() {
+    // No need to load anything here
+}
+
+// Show notification - Islamic page style
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: var(--gold);
+        color: var(--light-brown);
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideUp 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 2000);
+}
+
+// Add the animation keyframes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+`;
+document.head.appendChild(style);
+// Show section (for nav buttons)
+function showSection(section) {
+    document.querySelectorAll('.content-section').forEach(sec => {
+        sec.style.display = 'none';
+    });
+    
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    if (section === 'lessons') {
+        showCategoriesPage();
+    } else {
+        document.getElementById(section + '-section').style.display = 'block';
+    }
+    
+    event.target.classList.add('active');
+}
+ 
+  </script>
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+    <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+  width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 23px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<!--Mobile Script-->
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+
+</body>
+</html>

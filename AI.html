@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>َ مَسَار </title>
+    <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marhey:wght@300&family=Mynerve&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/581e5f415a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --light-gray: #e9ecef;
+            --medium-gray: #adb5bd;
+            --dark: #212529;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --footer: #cee2e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(67, 97, 238, 0.1) 0%, rgba(245, 247, 250, 0) 70%);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(67, 97, 238, 0.3);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(67, 97, 238, 0.5), 0 0 30px rgba(58, 12, 163, 0.3);
+            }
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            right: 0;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+        
+        /* About AI Section */
+        .about-ai {
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        .about-visual {
+            flex: 1;
+            position: relative;
+            height: 400px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .neural-network {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .node {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(67, 97, 238, 0.5);
+        }
+        
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: rgba(67, 97, 238, 0.3);
+            transform-origin: 100% 0;
+        }
+        
+        /* Uses Section */
+        .uses {
+            background-color: var(--light-gray);
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+            box-shadow: var(--shadow);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card i {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Dangers Section */
+        .dangers {
+            background-color: var(--light);
+        }
+        
+        .warning-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .warning-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border-right: 5px solid var(--accent);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .warning-card:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 10px 25px rgba(247, 37, 133, 0.1);
+        }
+        
+        .warning-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Pros and Cons Section */
+        .pros-cons {
+            background-color: var(--light-gray);
+        }
+        
+        .comparison {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .pros, .cons {
+            flex: 1;
+            padding: 30px;
+            border-radius: 15px;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+        }
+        
+        .pros {
+            border-top: 5px solid var(--primary);
+        }
+        
+        .cons {
+            border-top: 5px solid var(--accent);
+        }
+        
+        .pros h3, .cons h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+        
+        .pros h3 {
+            color: var(--primary);
+        }
+        
+        .cons h3 {
+            color: var(--accent);
+        }
+        
+        .pros ul, .cons ul {
+            list-style-type: none;
+        }
+        
+        .pros li, .cons li {
+            margin-bottom: 15px;
+            padding-right: 30px;
+            position: relative;
+        }
+        
+        .pros li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .cons li::before {
+            content: '⚠';
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* How to Use Section */
+        .how-to-use {
+            background-color: var(--light);
+        }
+        
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .step:hover {
+            transform: translateX(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        /* Links Section */
+        .links {
+            background-color: var(--light-gray);
+            text-align: center;
+        }
+        
+        .platforms {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .platform {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .platform:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .platform i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .platform h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .platform a {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .platform a:hover {
+            color: var(--accent);
+        }
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .platforms {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .comparison {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .platforms {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            section {
+                padding: 70px 0;
+            }
+            
+            .platforms {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cards-container, .warning-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+    <div class="main-header-container">
+        <div class="main-header-content">
+            <a href="index.html" class="main-logo">
+                <img src="pdfs/logo.png" alt="Logo">
+            </a>
+            
+            <div class="main-search-bar">
+                <input type="text" placeholder="ابحث...">
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+
+                   <!-- Other Subjects dropdown -->
+                    <li class="main-dropdown">  
+                        <a href="subjects.html">المواد الأساسية<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="arabic.html">اللغة العربية</a></li>
+                            <li><a href="english.html">اللغة الإنجليزية</a></li>
+                            <li><a href="islamic.html">التربية الإسلامية</a></li>
+                            <li><a href="socials.html">الدراسات الإجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Math dropdown -->
+                    <li class="main-dropdown">
+                        <a href="math.html">الرياضيات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="basic.html">الرياضيات الأساسية</a></li>
+                            <li><a href="advanced.html">الرياضيات المتقدمة</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Science -->
+                    <li class="main-dropdown">
+                        <a href="science.html">العلوم<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="physics.html">الفيزياء</a></li>                            
+                            <li><a href="chemistry.html">الكيمياء</a></li>
+                            <li><a href="biology.html">الأحياء</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Courses dropdown -->
+                    <li class="main-dropdown">
+                        <a href="courses.html">الدورات<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="code.html">البرمجة</a></li>
+                            <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                            <li><a href="life.html">المهارات الحياتية</a></li>
+                            <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Contact Us dropdown -->
+                    <li class="main-dropdown">
+                        <a>اتصل بنا<span class="material-icons main-arrow">keyboard_arrow_down</span></a>
+                        <ul class="main-dropdown-menu">
+                            <li><a href="links.html">الروابط</a></li>
+                            <li><a href="updates.html">التحديثات</a></li>
+                            <li><a href="contact.html">تواصل معنا</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="main-home-menu">
+                <a href="index.html">الرئيسية</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-elements" id="floatingElements"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>الذكاء الاصطناعي</h1>
+                <p>افتح المستقبل مع الذكاء الاصطناعي المتقدم</p>
+                <p>أتقن التكنولوجيا التي تعيد تشكيل عالمنا</p>
+                <a href="#about" class="btn">ابدأ رحلتك في الذكاء الاصطناعي</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About AI Section -->
+    <section id="about" class="about-ai">
+        <div class="container">
+            <h2 class="section-title">ما هو الذكاء الاصطناعي؟</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>يشير الذكاء الاصطناعي (AI) إلى محاكاة الذكاء البشري في الآلات المبرمجة للتفكير والتعلم وحل المشكلات مثل البشر. يمكن لهذه الأنظمة أداء مهام تتطلب عادةً ذكاءً بشريًا، مثل الإدراك البصري والتعرف على الكلام واتخاذ القرارات وترجمة اللغات.</p>
+                    <p>يضم الذكاء الاصطناعي الحديث مجالات فرعية مختلفة، بما في ذلك التعلم الآلي والتعلم العميق ومعالجة اللغة الطبيعية ورؤية الكمبيوتر والروبوتات. من السيارات ذاتية القيادة إلى التوصيات المخصصة، يقوم الذكاء الاصطناعي بتحويل الصناعات وإعادة تشكيل حياتنا اليومية.</p>
+                    <p>يقدم التقدم السريع لتقنيات الذكاء الاصطناعي فرصًا غير مسبوقة وتحديات كبيرة يجب علينا التعامل معها بعناية ومسؤولية.</p>
+                </div>
+                <div class="about-visual">
+                    <div class="neural-network" id="neuralNetwork"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Uses of AI Section -->
+    <section class="uses">
+        <div class="container">
+            <h2 class="section-title">تطبيقات الذكاء الاصطناعي</h2>
+            <div class="cards-container">
+                <div class="card">
+                    <i class="fas fa-robot"></i>
+                    <h3>الأتمتة والروبوتات</h3>
+                    <p>يقوم الذكاء الاصطناعي بتشغيل أنظمة الأتمتة الذكية والروبوتات المتقدمة التي يمكنها أداء مهام معقدة في الصناعات التحويلية واللوجستية وقطاع الخدمات.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-stethoscope"></i>
+                    <h3>الرعاية الصحية</h3>
+                    <p>من التشخيص إلى اكتشاف الأدوية، يقوم الذكاء الاصطناعي بإحداث ثورة في الرعاية الصحية مع التحليلات التنبؤية وتحليل التصوير الطبي وخطط العلاج المخصصة.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>التمويل والتداول</h3>
+                    <p>تحلل خوارزميات الذكاء الاصطناعي اتجاهات السوق، وتكتشف الاحتيال، وتؤتمت التداول، وتقدم نصائح مالية مخصصة للمستثمرين.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-car"></i>
+                    <h3>المركبات ذاتية القيادة</h3>
+                    <p>تستخدم السيارات ذاتية القيادة الذكاء الاصطناعي للإدراك واتخاذ القرارات والملاحة، مما قد يحول أنظمة النقل في جميع أنحاء العالم.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>التجارة الإلكترونية والتوصيات</h3>
+                    <p>يقوم الذكاء الاصطناعي بتشغيل تجارب التسوق المخصصة ومحركات التوصية واستراتيجيات التسعير الديناميكية لبائعي التجزئة عبر الإنترنت.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>التعليم</h3>
+                    <p>تستخدم منصات التعلم التكيفية الذكاء الاصطناعي لتخصيص المحتوى التعليمي وتقديم ملاحظات مخصصة للطلاب.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dangers of AI Section -->
+    <section class="dangers">
+        <div class="container">
+            <h2 class="section-title">المخاطر والتحديات المحتملة</h2>
+            <div class="warning-cards">
+                <div class="warning-card">
+                    <h3><i class="fas fa-exclamation-triangle"></i> فقدان الوظائف</h3>
+                    <p>يمكن أن تؤدي الأتمتة عبر الذكاء الاصطناعي إلى إزاحة الملايين من العمال، خاصة في الوظائف القائمة على الروتين، مما يتطلب إعادة تدريب كبيرة للقوى العاملة والتكيف الاقتصادي.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-shield-alt"></i> مخاوف الخصوصية</h3>
+                    <p>غالبًا ما تتطلب أنظمة الذكاء الاصطناعي كميات هائلة من البيانات، مما يثير مخاوف جدية حول جمع البيانات والمراقبة والخصوصية الشخصية.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-balance-scale"></i> التحيز والتمييز</h3>
+                    <p>يمكن لأنظمة الذكاء الاصطناعي إدامة وتضخيم التحيزات المجتمعية الحالية إذا تم تدريبها على بيانات متحيزة، مما يؤدي إلى نتائج تمييزية في التوظيف والإقراض وإنفاذ القانون.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-user-secret"></i> التهديدات الأمنية</h3>
+                    <p>يمكن أن يؤدي الاستخدام الخبيث للذكاء الاصطناعي إلى تمكين الهجمات الإلكترونية المتطورة والأسلحة المستقلة وحملات التضليل القوية.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-brain"></i> نقص الشفافية</h3>
+                    <p>تجعل الطبيعة "الصندوق الأسود" لبعض أنظمة الذكاء الاصطناعي من الصعب فهم كيفية اتخاذها للقرارات، مما يخلق تحديات للمساءلة.</p>
+                </div>
+                <div class="warning-card">
+                    <h3><i class="fas fa-cogs"></i> الاعتماد والتحكم</h3>
+                    <p>يمكن أن يؤدي الاعتماد المفرط على أنظمة الذكاء الاصطناعي إلى فقدان المهارات البشرية وإمكانية تصرف الأنظمة بطرق غير متوقعة beyond السيطرة البشرية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pros and Cons Section -->
+    <section class="pros-cons">
+        <div class="container">
+            <h2 class="section-title">إيجابيات وسلبيات الذكاء الاصطناعي</h2>
+            <div class="comparison">
+                <div class="pros">
+                    <h3>المزايا</h3>
+                    <ul>
+                        <li>زيادة الكفاءة والإنتاجية عبر الصناعات</li>
+                        <li>القدرة على معلة وتحليل كميات هائلة من البيانات</li>
+                        <li>التشغيل 24/7 دون تعب أو قيود بشرية</li>
+                        <li>دقة محسنة في المهام المتكررة والتعرف على الأنماط</li>
+                        <li>إمكانية حل التحديات العالمية المعقدة</li>
+                        <li>تخصيص الخدمات والمنتجات</li>
+                        <li>أتمتة المهام الخطيرة أو المملة</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h3>العيوب</h3>
+                    <ul>
+                        <li>ارتفاع تكاليف التنفيذ والصيانة</li>
+                        <li>إمكانية فقدان الوظائف على نطاق واسع</li>
+                        <li>نقص الإبداع والذكاء العاطفي</li>
+                        <li>مخاوف أخلاقية بشأن اتخاذ القرارات</li>
+                        <li>نقاط الضعف الأمنية وإمكانية سوء الاستخدام</li>
+                        <li>الاعتماد على جودة وكمية البيانات</li>
+                        <li>صعوبة شرح قرارات الذكاء الاصطناعي (مشكلة الصندوق الأسود)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use AI Section -->
+    <section class="how-to-use">
+        <div class="container">
+            <h2 class="section-title">كيف تبدأ مع الذكاء الاصطناعي</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>تعلم الأساسيات</h3>
+                        <p>ابدأ بفهم المفاهيم الأساسية مثل التعلم الآلي والشبكات العصبية وعلوم البيانات. تعرف على لغات البرمجة مثل Python التي تستخدم على نطاق واسع في تطوير الذكاء الاصطناعي.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>اختر تخصصك</h3>
+                        <p>قرر أي مجال من مجالات الذكاء الاصطناعي يهمك أكثر: رؤية الكمبيوتر، معالجة اللغة الطبيعية، الروبوتات، أو مجال فرعي آخر. كل منها يتطلب مهارات وقواعد معرفية مختلفة.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>أتقن الأدوات والإطارات الرئيسية</h3>
+                        <p>احصل على خبرة عملية مع أطر الذكاء الاصطناعي الشائعة مثل TensorFlow وPyTorch وKeras. تعلم استخدام مكتبات تحليل البيانات وخدمات الذكاء الاصطناعي السحابية.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>اعمل على مشاريع عملية</h3>
+                        <p>طبق معرفتك من خلال بناء مشاريع الذكاء الاصطناعي. ابدأ بتنفيذات بسيطة وتدرج لمعالجة مشاكل أكثر تعقيدًا. شارك في مسابقات Kaggle لاختبار مهاراتك.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>ابقَ محدثًا وأخلاقيًا</h3>
+                        <p>يتطور الذكاء الاصطناعي بسرعة، لذا فإن التعلم المستمر أمر ضروري. أيضًا، طور فهمًا قويًا لأخلاقيات الذكاء الاصطناعي لضمان التطوير والنشر المسؤول لأنظمة الذكاء الاصطناعي.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section -->
+    <section class="links">
+        <div class="container">
+            <h2 class="section-title">موارد التعلم</h2>
+            <p>استكشف هذه المنصات لبدء أو تطوير رحلتك في الذكاء الاصطناعي</p>
+            <div class="platforms">
+                <div class="platform">
+                    <i class="fab fa-google"></i>
+                    <h3>Google AI</h3>
+                    <p>دورات مجانية وأوراق بحثية وأدوات من أحد رواد صناعة الذكاء الاصطناعي.</p>
+                    <a href="https://ai.google/" target="_blank">استكشف الموارد</a>
+                </div>
+                <div class="platform">
+                    <i class="fab fa-microsoft"></i>
+                    <h3>Microsoft AI</h3>
+                    <p>مسارات تعلم شاملة<br> وشهادات لمطوري الذكاء الاصطناعي.</p>
+                    <a href="https://copilot.microsoft.com/" target="_blank">ابدأ التعلم</a>
+                </div>
+                <div class="platform">
+                    <i class="fab fa-python"></i>
+                    <h3>Academy.hsoub</h3>
+                    <p>التعلم العملي العميق للمبرمجين مع دورات مجانية ومكتبة.</p>
+                    <a href="https://academy.hsoub.com/artificial-intelligence/" target="_blank">زر المنصة</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-university"></i>
+                    <h3>Coursera</h3>
+                    <p>تخصصات الذكاء الاصطناعي والتعلم الآلي من أفضل الجامعات.</p>
+                    <a href="https://www.coursera.org/learn/ai-for-everyone-ar" target="_blank">تصفح الدورات</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>SkillsBuild</h3>
+                    <p>مسابقات الذكاء الاصطناعي العملية ومجموعات البيانات للخبرة العملية.</p>
+                    <a href="https://skillsbuild.org/ar/students/course-catalog/artificial-intelligence" target="_blank">انضم إلى المسابقات</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-book"></i>
+                    <h3>Maaraf</h3>
+                    <p>مقالات ودروس ورؤى من مجتمع الذكاء الاصطناعي وعلوم البيانات.</p>
+                    <a href="https://www.m3aarf.com/certified/cat/83/%D8%AF%D9%88%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1-%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A-AI" target="_blank">اقرأ المقالات</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-brain"></i>
+                    <h3>Edraak</h3>
+                    <p>نانودرجات في الذكاء الاصطناعي مع مشاريع عملية وتوجيه من الخبراء.</p>
+                    <a href="https://www.edraak.org/programs/course/arin-vt3_2018/" target="_blank">استعرض البرامج</a>
+                </div>
+                <div class="platform">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>GOAIE</h3>
+                    <p>تحسين مهارات الكتابة والقراءة للطلاب باستخدام تقنيات الذكاء الاصطناعي.</p>
+                    <a href="https://goaie.abegs.org/" target="_blank">اكتشف الدورات</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+ <!-- Footer -->
+    <footer class="main-footer">
+        <div class="header-nav-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                <path opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                <path d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+            </svg>		
+        </div>
+         
+        <div class="main-footer-container">
+            <div class="main-footer-content">
+                <!-- Contact Column - Now first on the right -->
+                <div class="main-footer-column main-footer-contact-column">
+                    <div class="main-footer-logo">
+                        <!-- Replace with your actual logo -->
+                        <img src="pdfs/logo.png" alt="شعار مَسَار" class="main-footer-logo-img">
+                    </div>
+                    <h4>تواصل</h4>
+                    <div class="main-social-links">
+                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <!-- Other columns in reverse order -->
+                <div class="main-footer-column">
+                     <h4>الأدوات التعليمية</h4>                   
+                    <ul class="main-footer-links">
+                        <li><a href="#" id="chatbot-text-link">بيان</a></li>                      
+                        <li><a href="links.html">الروابط</a></li>
+                        <li><a href="updates.html">التحديثات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="subjects.html">المواد الأساسية</a></li>                  
+                        <li><a href="index.html">الصفحة الرئيسية</a></li>                  
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                    <h4>المواد</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="science.html">العلوم</a></li>
+                        <li><a href="math.html">الرياضيات</a></li>
+                        <li><a href="arabic.html">اللغة العربية</a></li>
+                        <li><a href="english.html">اللغة الإنجليزية</a></li>                       
+                        <li><a href="islamic.html">التربية الإسلامية</a></li>
+                        <li><a href="socials.html">الدراسات الاجتماعية</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-footer-column">
+                     <h4>الدورات</h4>
+                    <ul class="main-footer-links">
+                        <li><a href="code.html">البرمجة</a></li>
+                        <li><a href="AI.html">الذكاء الاصطناعي</a></li>
+                        <li><a href="life.html">المهارات الحياتية</a></li>
+                        <li><a href="skills.html">المهارات الاجتماعية</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="main-footer-bottom">
+                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+            </div>
+        </div>
+    </footer>
+
+<!-- Chatbot -->
+<iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
+<button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
+    <style>
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+/* Mobile Responsive Styles - Add to your existing CSS */
+@media screen and (max-width: 768px) {
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+}
+
+/* Optional: Prevent body scroll when chat is open on mobile */
+body:has(.chatbot-frame.active) {
+  overflow: hidden;
+}
+</style>
+<script>
+const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
+const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
+
+chatbotToggle.addEventListener("click", () => {
+  chatbotFrame.classList.toggle("active"); // show/hide iframe
+
+  // Change icon based on state
+  if(chatbotFrame.classList.contains("active")) {
+    chatbotToggle.innerHTML = "✕"; // X icon when open
+    // Wait until iframe loads its content
+    chatbotFrame.onload = () => {
+      try {
+        const iframeDoc = chatbotFrame.contentDocument || chatbotFrame.contentWindow.document;
+        const internalButton = iframeDoc.querySelector("#chatbot-toggler"); // original chatbot button inside iframe
+        if (internalButton) internalButton.click(); // simulate click
+      } catch (err) {
+        console.log("Could not trigger internal button:", err);
+      }
+    };
+  } else {
+    chatbotToggle.innerHTML = "💬"; // Message icon when closed
+  }
+});
+// Footer chatbot text link
+const chatbotTextLink = document.getElementById("chatbot-text-link");
+
+if (chatbotTextLink) {
+  chatbotTextLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    chatbotToggle.click(); // reuse existing toggle logic
+  });
+}
+</script>
+
+<!-- Floating Elements and Neural Network Visualization Script -->
+    <script>
+        // Create floating elements for hero section
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingContainer = document.getElementById('floatingElements');
+            const numElements = 15;
+            
+            for (let i = 0; i < numElements; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                // Random size
+                const size = Math.random() * 40 + 10;
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                
+                // Random position
+                element.style.right = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay and duration
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                element.style.animationDuration = `${15 + Math.random() * 10}s`;
+                
+                floatingContainer.appendChild(element);
+            }
+            
+            // Create neural network visualization
+            createNeuralNetwork();
+        });
+        
+        function createNeuralNetwork() {
+            const container = document.getElementById('neuralNetwork');
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            
+            // Create nodes
+            const layers = 5;
+            const nodesPerLayer = 8;
+            
+            for (let layer = 0; layer < layers; layer++) {
+                for (let node = 0; node < nodesPerLayer; node++) {
+                    const nodeElement = document.createElement('div');
+                    nodeElement.classList.add('node');
+                    
+                    // Position nodes in layers
+                    const xPos = width - (layer + 1) * (width / (layers + 1));
+                    const yPos = (node + 1) * (height / (nodesPerLayer + 1));
+                    
+                    nodeElement.style.right = `${xPos}px`;
+                    nodeElement.style.top = `${yPos}px`;
+                    
+                    // Random animation for nodes
+                    nodeElement.style.animation = `pulse 2s infinite ${Math.random() * 2}s`;
+                    
+                    container.appendChild(nodeElement);
+                    
+                    // Create connections to next layer
+                    if (layer < layers - 1) {
+                        for (let nextNode = 0; nextNode < nodesPerLayer; nextNode++) {
+                            const nextXPos = width - (layer + 2) * (width / (layers + 1));
+                            const nextYPos = (nextNode + 1) * (height / (nodesPerLayer + 1));
+                            
+                            const connection = document.createElement('div');
+                            connection.classList.add('connection');
+                            
+                            // Calculate length and angle
+                            const length = Math.sqrt(Math.pow(nextXPos - xPos, 2) + Math.pow(nextYPos - yPos, 2));
+                            const angle = Math.atan2(nextYPos - yPos, xPos - nextXPos) * 180 / Math.PI;
+                            
+                            connection.style.width = `${length}px`;
+                            connection.style.right = `${xPos}px`;
+                            connection.style.top = `${yPos}px`;
+                            connection.style.transform = `rotate(${angle}deg)`;
+                            
+                            // Random opacity for visual effect
+                            connection.style.opacity = Math.random() * 0.3 + 0.1;
+                            
+                            container.appendChild(connection);
+                        }
+                    }
+                }
+            }
+            
+            // Add CSS for node pulsing animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { transform: scale(1); opacity: 0.7; }
+                    50% { transform: scale(1.2); opacity: 1; }
+                    100% { transform: scale(1); opacity: 0.7; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+    
+
+<script>
+// Mobile Menu and Footer Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Create mobile toggle button with gradient background
+    const mobileToggle = document.createElement('button');
+    mobileToggle.className = 'mobile-nav-toggle';
+    mobileToggle.innerHTML = '☰';
+    document.querySelector('.main-header-content').appendChild(mobileToggle);
+    
+    const mainNav = document.querySelector('.main-nav');
+    
+    // Toggle mobile menu
+    mobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        mainNav.classList.toggle('active');
+        mobileToggle.innerHTML = mainNav.classList.contains('active') ? '✕' : '☰';
+        
+        // Close all dropdowns when closing menu
+        if (!mainNav.classList.contains('active')) {
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle mobile dropdowns
+    const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
+    
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Only for mobile
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                
+                const currentDropdown = this.parentElement;
+                
+                // Check if current dropdown is active
+                const isActive = currentDropdown.classList.contains('active');
+                
+                // Close ALL dropdowns first
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+                
+                // If it wasn't active, open this one
+                if (!isActive) {
+                    currentDropdown.classList.add('active');
+                }
+                // If it was active, it stays closed (we already removed all classes)
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
+        }
+    });
+    
+    // Prevent clicks inside menu from closing it
+    if (mainNav) {
+        mainNav.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // Footer Accordion for Mobile
+    function setupFooterAccordion() {
+        const footerColumns = document.querySelectorAll('.main-footer-column');
+        
+        if (window.innerWidth <= 768) {
+            footerColumns.forEach((column, index) => {
+                const heading = column.querySelector('h4');
+                const links = column.querySelector('.main-footer-links');
+                
+                if (heading && links) {
+                    // Add chevron icon
+                    if (!heading.querySelector('i')) {
+                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                    }
+                    
+                    // Store links HTML
+                    const linksHTML = links.innerHTML;
+                    
+                    // Create new accordion structure
+                    const accordionContent = document.createElement('div');
+                    accordionContent.className = 'footer-accordion-content';
+                    accordionContent.innerHTML = linksHTML;
+                    
+                    // Replace old links with accordion
+                    links.remove();
+                    column.appendChild(accordionContent);
+                    
+                    // Set first column open by default
+                    if (index === 0) {
+                        column.classList.add('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                    }
+                    
+                    // Add click handler
+                    heading.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Close other columns
+                        footerColumns.forEach(col => {
+                            if (col !== column) {
+                                col.classList.remove('active');
+                                const otherArrow = col.querySelector('h4 i');
+                                if (otherArrow) otherArrow.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current
+                        column.classList.toggle('active');
+                        const arrow = heading.querySelector('i');
+                        if (arrow) {
+                            arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                        }
+                    });
+                }
+            });
+        } else {
+            // Reset for desktop
+            footerColumns.forEach(column => {
+                const heading = column.querySelector('h4');
+                const accordionContent = column.querySelector('.footer-accordion-content');
+                
+                if (accordionContent) {
+                    // Restore original structure
+                    const links = document.createElement('ul');
+                    links.className = 'main-footer-links';
+                    links.innerHTML = accordionContent.innerHTML;
+                    accordionContent.remove();
+                    column.appendChild(links);
+                    
+                    // Remove arrow
+                    const arrow = heading.querySelector('i');
+                    if (arrow) arrow.remove();
+                }
+            });
+        }
+    }
+    
+    // Initial setup
+    setupFooterAccordion();
+    
+    // Reset on resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mainNav.classList.remove('active');
+            mobileToggle.innerHTML = '☰';
+            
+            // Close ALL dropdowns
+            document.querySelectorAll('.main-dropdown').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+        
+        // Re-setup footer accordion on resize
+        setupFooterAccordion();
+    });
+    
+    // Header scroll effect
+    const header = document.querySelector('.main-header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            header.classList.remove('scrolled');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
+            header.classList.add('scrolled');
+        } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
+            header.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+</script>
+
+
+</body>
+</html>
