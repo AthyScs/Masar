@@ -615,9 +615,11 @@
                 <img src="pdfs/logo.png" alt="Logo">
             </a>
             
-            <div class="main-search-bar">
-                <input type="text" placeholder="ابحث...">
-            </div>
+        <div class="main-search-bar">
+           <input type="text" id="searchInput" placeholder="ابحث...">
+           <div id="searchResults" class="search-results-dropdown"></div>
+        </div>
+        <script src="searchbar.js"></script>
             
             <nav class="main-nav">
                 <ul>
@@ -861,6 +863,7 @@
                         <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <button class="mobile-video-btn" onclick="openVideoModal()"><i class="fas fa-play"></i></button>
                     </div>
                 </div>
 
@@ -901,7 +904,7 @@
             </div>
             
             <div class="main-footer-bottom">
-                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+                <p> مَسَار ٢٠٢٦ | جميع الحقوق محفوظة ©</p>
             </div>
         </div>
     </footer>
@@ -1000,18 +1003,34 @@ if (chatbotTextLink) {
 </script>
 
 <!-- JavaScript to handle form submission and show success message -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
- document.getElementById('contactForm').addEventListener('submit', function(e) {
-e.preventDefault();
-// في التطبيق الحقيقي، هنا سيتم إرسال البيانات إلى الخادم
-// نحن فقط نعرض رسالة النجاح للمستخدم
- document.getElementById('successMessage').style.display = 'block';      
-// إعادة تعيين النموذج
-setTimeout(function() {
-document.getElementById('contactForm').reset();
-document.getElementById('successMessage').style.display = 'none';
-}, 5000);
-});
+    emailjs.init('wUd_QDHZ8UF74lmXl');
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const params = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        emailjs.send('service_pymm2k3', 'template_eqh1ssc', params)
+            .then(() => {
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('contactForm').reset();
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            })
+            .catch(() => {
+                alert('حدث خطأ، يرجى المحاولة مرة أخرى');
+            });
+    });
 </script>
 
 <script>

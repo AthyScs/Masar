@@ -399,15 +399,14 @@
     const chatForm = document.querySelector(".chat-form");
 
     // API KEYS 
-    const GEMINI_API_KEY = "AIzaSyADblQ-w3GIoiXYM2524zCg7RIPualWUOo"; 
-    const GROQ_API_KEY = "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";   
-    const CLOUDFLARE_ACCOUNT_ID = "77fd06a8b4dc57a9fcef5ba66a1a76f8";  
-    const CLOUDFLARE_API_TOKEN = "pKxOrLiYqREzlznBHPR9IHXRyC8-yo8NCAvCR_dU";  
+    const GEMINI_API_KEY = "AIzaSyCw47FJR1u8mD1pokYNzrFZ0QYvW8z0504"; 
+    const GROQ_API_KEY = "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";   
+    const OPENROUTER_API_KEY = "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";  
 
     // API URLs for different providers
-    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
-    const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
-    const CLOUDFLARE_API_URL = `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8`;
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
     const userData = {
         message: null,
@@ -447,11 +446,11 @@
     }
 
     // Track daily usage for each provider
-    const providerUsage = {
-        gemini: { used: 0, lastReset: Date.now(), limit: 1500 },
-        groq: { used: 0, lastReset: Date.now(), limit: 1000 },
-        cloudflare: { used: 0, lastReset: Date.now(), limit: 10000 }
-    };
+const providerUsage = {
+    gemini:     { used: 0, lastReset: Date.now(), limit: 1500 },
+    groq:       { used: 0, lastReset: Date.now(), limit: 14400 },
+    openrouter: { used: 0, lastReset: Date.now(), limit: 10000 }
+};
 
     // Check if a provider has quota left
     function hasQuota(provider) {
@@ -533,35 +532,26 @@
         return data.choices[0].message.content;
     }
 
-    // Call Cloudflare API
-    async function callCloudflare(messages) {
-        // Format messages into a single prompt
-        const fullPrompt = messages
-            .map(msg => `${msg.role === 'system' ? 'System' : msg.role === 'assistant' ? 'Assistant' : 'User'}: ${msg.content}`)
-            .join('\n');
-
-        const response = await fetch(CLOUDFLARE_API_URL, {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${CLOUDFLARE_API_TOKEN}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                prompt: fullPrompt,
-                max_tokens: 800
-            })
-        });
-
-        const data = await response.json();
-        
-        if (!response.ok) {
-            throw new Error(data.errors?.[0]?.message || 'Cloudflare API error');
-        }
-        
-        providerUsage.cloudflare.used++;
-        return data.result.response;
-    }
-
+    // Call OpenRouter API
+async function callOpenRouter(messages) {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://masar-study-platform.netlify.app'
+        },
+        body: JSON.stringify({
+            model: "meta-llama/llama-3.3-70b-instruct:free",
+            messages: messages,
+            max_tokens: 800
+        })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || 'OpenRouter error');
+    providerUsage.openrouter.used++;
+    return data.choices[0].message.content;
+}
     // Generate bot response using multiple providers
     const generateBotResponse = async (incomingMessagesDiv) => {
         const messageElement = incomingMessagesDiv.querySelector(".message-text");
@@ -582,7 +572,7 @@
             let response = null;
             let usedProvider = null;
 
-            // Try providers in order: Gemini -> Groq -> Cloudflare
+            // Try providers in order: Gemini -> Groq -> OpenRouter
             if (hasQuota('gemini') && GEMINI_API_KEY) {
                 try {
                     response = await callGemini(messagesWithSystem);
@@ -601,14 +591,14 @@
                 }
             }
 
-            if (!response && hasQuota('cloudflare') && CLOUDFLARE_ACCOUNT_ID && CLOUDFLARE_API_TOKEN) {
-                try {
-                    response = await callCloudflare(messagesWithSystem);
-                    usedProvider = 'cloudflare';
-                } catch (error) {
-                    console.log("Cloudflare failed:", error.message);
-                }
-            }
+if (!response && hasQuota('openrouter') && OPENROUTER_API_KEY) {
+    try {
+        response = await callOpenRouter(messagesWithSystem);
+        usedProvider = 'openrouter';
+    } catch (error) {
+        console.log("OpenRouter failed:", error.message);
+    }
+}
 
             if (response) {
                 // Format and display the response
@@ -622,7 +612,7 @@
                     content: response
                 });
                 
-                console.log(`✅ Used ${usedProvider} - Daily usage: Gemini ${providerUsage.gemini.used}/1500, Groq ${providerUsage.groq.used}/1000, Cloudflare ${providerUsage.cloudflare.used}/10000`);
+                console.log(`✅ Used ${usedProvider} - Daily usage: Gemini ${providerUsage.gemini.used}/1500, Groq ${providerUsage.groq.used}/1000, OpenRouter ${providerUsage.openrouter.used}/10000`);
             } else {
                 // All providers failed or exhausted
                 messageElement.innerText = "عذراً، جميع مزودي الخدمة غير متاحين حالياً. الرجاء المحاولة لاحقاً.";

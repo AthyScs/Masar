@@ -253,9 +253,11 @@
                 <img src="pdfs/logo.png" alt="Logo">
             </a>
             
-            <div class="main-search-bar">
-                <input type="text" placeholder="ابحث...">
-            </div>
+        <div class="main-search-bar">
+           <input type="text" id="searchInput" placeholder="ابحث...">
+           <div id="searchResults" class="search-results-dropdown"></div>
+        </div>
+        <script src="searchbar.js"></script>
             
             <nav class="main-nav">
                 <ul>
@@ -543,6 +545,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <button class="mobile-video-btn" onclick="openVideoModal()"><i class="fas fa-play"></i></button>
                     </div>
                 </div>
 
@@ -583,7 +586,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             
             <div class="main-footer-bottom">
-                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+                <p> مَسَار ٢٠٢٦ | جميع الحقوق محفوظة ©</p>
             </div>
         </div>
     </footer>

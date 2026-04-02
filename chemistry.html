@@ -980,9 +980,11 @@ body {
                 <img src="pdfs/logo.png" alt="Logo">
             </a>
             
-            <div class="main-search-bar">
-                <input type="text" placeholder="ابحث...">
-            </div>
+        <div class="main-search-bar">
+           <input type="text" id="searchInput" placeholder="ابحث...">
+           <div id="searchResults" class="search-results-dropdown"></div>
+        </div>
+        <script src="searchbar.js"></script>
             
             <nav class="main-nav">
                 <ul>
@@ -1824,7 +1826,8 @@ if (lesson.videos && lesson.videos.length > 0) {
         const videoWrapper = document.createElement('div');
         videoWrapper.style.cssText = `
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
+            height: 350px;
             background: rgba(255,255,255,0.8);
             border-radius: 12px;
             padding: 12px;
@@ -1833,7 +1836,7 @@ if (lesson.videos && lesson.videos.length > 0) {
         
         videoWrapper.innerHTML = `
             <h4 style="text-align: center; margin-bottom: 8px; color: var(--primary); font-size: 1rem;">فيديو الشرح</h4>
-            <iframe class="video-iframe" src="${lesson.videos[0]}" style="width: 100%; height: 250px; border: none; border-radius: 8px;" allowfullscreen></iframe>
+            <iframe class="video-iframe" src="${lesson.videos[0]}" style="width: 100%; height: 300px; border: none; border-radius: 8px;" allowfullscreen></iframe>
         `;
         
         videoContainer_div.appendChild(videoWrapper);
@@ -2021,8 +2024,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-
-
 document.body.setAttribute('data-current-term', currentTerm);
 
 termButtons.forEach(btn => {
@@ -2063,6 +2064,7 @@ termButtons.forEach(btn => {
                         <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <button class="mobile-video-btn" onclick="openVideoModal()"><i class="fas fa-play"></i></button>
                     </div>
                 </div>
 
@@ -2103,7 +2105,7 @@ termButtons.forEach(btn => {
             </div>
             
             <div class="main-footer-bottom">
-                <p> مَسَار ٢٠٢٥ | جميع الحقوق محفوظة ©</p>
+                <p> مَسَار ٢٠٢٦ | جميع الحقوق محفوظة ©</p>
             </div>
         </div>
     </footer>
