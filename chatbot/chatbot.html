@@ -508,7 +508,7 @@ async function callOpenRouter(messages) {
 
         // Prepare messages with system instruction
         const messagesWithSystem = [
-            { role: "system", content: "You are a helpful assistant. Respond directly and briefly. Keep answers concise unless the user asks for details. Always respond in the same language the user used." },
+            { role: "system", content: "You are a helpful assistant. Be brief and funny. Keep answers concise unless the user asks for details. Always respond in the same language the user used. If asked for your name in english say Bayan, if asked in arabic say بيان, and with your purpose" },
             ...chatHistory
         ];
 
@@ -711,6 +711,7 @@ if (!response && hasQuota('openrouter')) {
     });
 
 </script>
+
 
 </body>
 </html>

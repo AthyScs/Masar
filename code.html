@@ -1444,5 +1444,109 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- Timer + Stopwatch Widget-->
+<div class="ms-widget">
+  <!-- Floating Button -->
+  <button class="ms-fab" id="timerFabBtn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
+      <circle cx="12" cy="13" r="8"/>
+      <path d="M12 9v4l2.5 2.5"/>
+      <path d="M9 3h6M12 3v2"/>
+    </svg>
+  </button>
+
+  <!-- Popup Container -->
+  <div class="ms-popup" id="timerPopup">
+    <div class="ms-header">
+      <span>⏱ مؤقت مَسَار</span>
+      <button class="ms-close" id="closePopupBtn">✕</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="ms-tabs">
+      <button class="ms-tab active" data-tab="timer">⏲ مؤقت</button>
+      <button class="ms-tab" data-tab="stopwatch">⚡ ساعة إيقاف</button>
+    </div>
+
+    <!-- TIMER PANEL -->
+    <div class="ms-panel active" id="timerPanel">
+      <div class="ms-ring" id="timerRingClick">
+        <svg viewBox="0 0 130 130">
+          <circle class="ms-ring-bg" cx="65" cy="65" r="55"/>
+          <circle class="ms-ring-progress" id="timerRing" cx="65" cy="65" r="55"/>
+        </svg>
+        <div class="ms-time-text">
+          <div class="ms-digits" id="timerDisplay">25:00</div>
+        </div>
+      </div>
+
+      <!-- ✨ NEW sleek time adjuster ✨ -->
+      <div class="ms-time-picker">
+        <div class="ms-picker-unit">
+          <div class="ms-picker-label">د</div>
+          <div class="ms-picker-controls">
+            <button class="ms-picker-btn" id="minDec">−</button>
+            <span class="ms-picker-value" id="minVal">25</span>
+            <button class="ms-picker-btn" id="minInc">+</button>
+          </div>
+        </div>
+        <div class="ms-picker-unit">
+          <div class="ms-picker-label">ث</div>
+          <div class="ms-picker-controls">
+            <button class="ms-picker-btn" id="secDec">−</button>
+            <span class="ms-picker-value" id="secVal">00</span>
+            <button class="ms-picker-btn" id="secInc">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ms-actions">
+        <button class="ms-btn ms-btn-primary" id="timerStartBtn">▶ ابدأ</button>
+        <button class="ms-btn ms-btn-secondary" id="timerResetBtn">⟳ إعادة</button>
+      </div>
+      <div class="ms-quote" id="quoteBox">🌸 {رَبِّ زِدْنِى عِلْمًا} 🌸</div>
+    </div>
+
+    <!-- STOPWATCH PANEL -->
+    <div class="ms-panel" id="stopwatchPanel">
+      <div class="ms-ring">
+        <svg viewBox="0 0 130 130">
+          <circle class="ms-ring-bg" cx="65" cy="65" r="55"/>
+          <circle class="ms-ring-progress" id="swRing" cx="65" cy="65" r="55"/>
+        </svg>
+        <div class="ms-time-text">
+          <div class="ms-digits ms-stop-digits" id="swDisplay">00:00.0</div>
+        </div>
+      </div>
+
+      <div class="ms-laps" id="lapsList">
+        <div class="ms-empty-laps">✨ لا توجد لفّات بعد</div>
+      </div>
+
+      <div class="ms-actions">
+        <button class="ms-btn ms-btn-primary" id="swStartBtn">▶ ابدأ</button>
+        <button class="ms-btn ms-btn-secondary" id="swLapBtn">📋 لفة</button>
+        <button class="ms-btn ms-btn-secondary" id="swResetBtn">⟳</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="msToast" class="ms-toast" style="display: none;">
+  <div class="ms-toast-icon">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="13" r="8"/>
+      <path d="M12 9v4l2.5 2.5"/>
+      <path d="M9 3h6M12 3v2"/>
+    </svg>
+  </div>
+  <div class="ms-toast-content">
+    <div class="ms-toast-title">مؤقت مَسَار</div>
+    <div class="ms-toast-msg">✨ انتهت الجلسة! أحسنت ✨</div>
+  </div>
+  <button class="ms-toast-close" id="toastCloseBtn">✕</button>
+</div>
+<script src="timer.js"></script>
+
+
 </body>
 </html>
