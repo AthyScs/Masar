@@ -2604,12 +2604,20 @@ document.addEventListener('DOMContentLoaded', function() {
           <circle class="ms-ring-progress" id="timerRing" cx="65" cy="65" r="55"/>
         </svg>
         <div class="ms-time-text">
-          <div class="ms-digits" id="timerDisplay">25:00</div>
+          <div class="ms-digits" id="timerDisplay">00:25:00</div>
         </div>
       </div>
 
-      <!-- ✨ NEW sleek time adjuster ✨ -->
+      <!-- Time picker with hours -->
       <div class="ms-time-picker">
+        <div class="ms-picker-unit">
+          <div class="ms-picker-label">س</div>
+          <div class="ms-picker-controls">
+            <button class="ms-picker-btn" id="hourDec">−</button>
+            <span class="ms-picker-value" id="hourVal">00</span>
+            <button class="ms-picker-btn" id="hourInc">+</button>
+          </div>
+        </div>
         <div class="ms-picker-unit">
           <div class="ms-picker-label">د</div>
           <div class="ms-picker-controls">
@@ -2643,7 +2651,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <circle class="ms-ring-progress" id="swRing" cx="65" cy="65" r="55"/>
         </svg>
         <div class="ms-time-text">
-          <div class="ms-digits ms-stop-digits" id="swDisplay">00:00.0</div>
+          <div class="ms-digits ms-stop-digits" id="swDisplay">00:00:00</div>
         </div>
       </div>
 
