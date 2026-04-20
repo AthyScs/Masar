@@ -934,10 +934,10 @@ body:not(.scrolled) .main-header {
 /* Floating Button */
 .ms-fab {
   position: fixed;
-  bottom: 78px;
-  right: 20px;
-  width: 52px;
-  height: 52px;
+  bottom: 83px;
+  right: 21.7px;
+  width: 47px;
+  height: 47px;
   border-radius: 50%;
   background: var(--primary, #6c5ce7);
   border: none;
@@ -945,7 +945,7 @@ body:not(.scrolled) .main-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px rgba(72, 61, 138, 0.35);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.726);
   transition: all 0.25s ease;
   z-index: 999;
   backdrop-filter: blur(2px);
@@ -1338,6 +1338,39 @@ body:not(.scrolled) .main-header {
   color: #333;
 }
 
+.chatbot-frame {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 400px;
+  height: 512px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
+  display: none;
+  z-index: 99999;
+}
+
+.chatbot-frame.active {
+  display: block;
+}
+
+.chatbot-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--secondary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
 /* Mobile Responsive Styles */
 @media screen and (max-width: 768px) {
 
@@ -1537,13 +1570,12 @@ body:not(.scrolled) .main-header {
     }
 
 /* ========== MOBILE PHONE RESPONSIVE FIXES ========== */
-@media screen and (max-width: 768px) {
   /* Move timer button ABOVE chatbot button */
   .ms-fab {
     bottom: 80px !important;
     right: 20px !important;
-    width: 48px;
-    height: 48px;
+    width: 45px;
+    height: 45px;
   }
   
   /* Chatbot button stays at bottom */
@@ -1642,7 +1674,6 @@ body:not(.scrolled) .main-header {
   .ms-toast-msg {
     font-size: 10px;
   }
-}
 
     /* Footer Mobile Accordion - Clean Design */
     .main-footer-content {
@@ -1812,4 +1843,48 @@ body:not(.scrolled) .main-header {
     .main-footer .header-nav-shape svg {
         height: 80px;
     }
+
+  .chatbot-frame {
+    width: calc(100% - 40px);
+    height: 500px;
+    right: 20px;
+    left: 20px;
+    bottom: 80px;
+  }
+  
+  .chatbot-toggle-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 23px;
+  }
+
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e8e8e8 !important;
+    border-radius: 10px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scroll) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 5px var(--scroll) !important;
+    transition: box-shadow 0.2s ease !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 10px var(--scroll) !important;
+}
+
+::-webkit-scrollbar-corner {
+    background: #e8e8e8 !important;
+}
+
+::-webkit-scrollbar-button {
+    display: none !important;
 }

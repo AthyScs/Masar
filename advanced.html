@@ -15,7 +15,8 @@
 :root {
     --primary: #0a7c73;    
     --secondary: #63cea5;      
-    --accent-light: #3db382; 
+    --accent: #3db382; 
+    --scroll: #4ceeb8;
     --bg-light: linear-gradient(135deg, #f5f7fa 0%, #e9f4eb 100%);
     --card-light: #ffffff;
     --light: #f8faf9;
@@ -100,7 +101,7 @@
         }
 
         .semester-btn.active {
-            background: var(--accent-light);
+            background: var(--accent);
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(92, 231, 145, 0.4);
@@ -134,7 +135,7 @@
         }
 
         .category-btn.active {
-            background: var(--accent-light);
+            background: var(--accent);
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(92, 231, 145, 0.4);
@@ -176,7 +177,7 @@
         }
 
         .back-btn {
-            background: var(--accent-light);
+            background: var(--accent);
             color: white;
             border: none;
             padding: 10px 25px;
@@ -238,7 +239,7 @@
         }
 
         .pdf-sidebar:hover {
-            border-color: var(--accent-light);
+            border-color: var(--accent);
             transform: translateY(-5px);
         }
 
@@ -250,7 +251,7 @@
         }
 
         .pdf-header h3 {
-            color: var(--accent-light);
+            color: var(--accent);
             font-size: 1.4rem;
             display: flex;
             align-items: center;
@@ -309,7 +310,7 @@
         }
 
         .video-sidebar:hover {
-            border-color: var(--accent-light);
+            border-color: var(--accent);
             transform: translateY(-5px);
         }
 
@@ -318,7 +319,7 @@
         }
 
         .video-header h3 {
-            color: var(--accent-light);
+            color: var(--accent);
             font-size: 1.4rem;
             display: flex;
             align-items: center;
@@ -384,7 +385,7 @@
         }
 
         .video-item.active {
-            background: linear-gradient(135deg, var(--primary), var(--accent-light));
+            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
             box-shadow: 0 4px 15px rgba(92, 231, 145, 0.4);
         }
@@ -404,7 +405,7 @@
 
         .video-item.active .video-number {
             background: white;
-            color: var(--accent-light);
+            color: var(--accent);
         }
 
         .video-title {
@@ -460,7 +461,7 @@
         .math-card:hover, .unit-card:hover, .lesson-card:hover, .test-card:hover, .video-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            border-color: var(--accent-light);
+            border-color: var(--accent);
         }
 
         .math-card:hover::before, .unit-card:hover::before, .lesson-card:hover::before, .test-card:hover::before, .video-card:hover::before {
@@ -605,7 +606,7 @@
         }
 
         .breadcrumb span {
-            color: var(--accent-light);
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -1082,63 +1083,6 @@
   <!-- Chatbot -->
     <iframe src="chatbot/chatbot.html" class="chatbot-frame"></iframe>
     <button id="chatbot-toggle" class="chatbot-toggle-btn">💬</button>
-    <style>
-.chatbot-frame {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 400px;
-  height: 512px;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 50%, transparent);
-  display: none;
-  z-index: 99999;
-}
-
-.chatbot-frame.active {
-  display: block;
-}
-
-.chatbot-toggle-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--secondary);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 22px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-
-/* Mobile Responsive Styles - Add to your existing CSS */
-@media screen and (max-width: 768px) {
-  .chatbot-frame {
-    width: calc(100% - 40px);
-    height: 500px;
-    right: 20px;
-    left: 20px;
-    bottom: 80px;
-  }
-  
-  .chatbot-toggle-btn {
-    width: 56px;
-    height: 56px;
-    font-size: 24px;
-  }
-}
-
-/* Optional: Prevent body scroll when chat is open on mobile */
-body:has(.chatbot-frame.active) {
-  overflow: hidden;
-}
-
-</style>
 <script>
 const chatbotToggle = document.getElementById("chatbot-toggle"); // your main button
 const chatbotFrame = document.querySelector(".chatbot-frame");  // iframe
