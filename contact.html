@@ -695,10 +695,10 @@
             <div class="contact-info">
                 <div class="info-section">
                     <h2>معلومات التواصل</h2>
-                    
+                    <br>
+
 <div class="info-item">
     <i class="fas fa-map-marker-alt info-main-icon"></i>
-
     <div class="info-text">
         <h3>العنوان</h3>
 
@@ -715,24 +715,24 @@
         </p>
     </div>
 </div>
-
-
+<br>
                     <div class="info-item">
                         <i class="fas fa-phone"></i>
                         <div class="info-text">
                             <h3>الهاتف</h3>
-                            <p>5186 9278 968+</p>
+                            <p>5186 7828 968+</p>
+                            <p>7703 9278 968+</p>
                         </div>
                     </div>
-                    
+                    <br>
                     <div class="info-item">
                         <i class="fas fa-envelope"></i>
                         <div class="info-text">
                             <h3>البريد الإلكتروني</h3>
-                            <p>masarplatform@gmail.com</p>
+                            <p>masarstudyplatform@gmail.com</p>
                         </div>
                     </div>
-                    
+                    <br>
                     <div class="info-item">
                         <i class="fas fa-clock"></i>
                         <div class="info-text">
@@ -740,16 +740,6 @@
                             <p>الأحد - الخميس: 8 ص - 5 م</p>
                             <p>الجمعة - السبت: مغلق</p>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="social-section">
-                    <h3>تابعنا على</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
             </div>
@@ -815,11 +805,6 @@
                     <h3 class="creator-name">أفراح محمد فهد</h3>
                     <p class="creator-role">المصممة والمطورة</p>
                     <p class="creator-desc">مصممة-مطورة تركز على تحويل الأفكار <br> إلى ميزات عملية وتجربة استخدام سلسة.</p>
-                    <div class="creator-social">
-                        <a href="https://wa.me/96878285186"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://www.instagram.com/bint._fahad"><i class="fab fa-instagram"></i></a>
-                        <a href="https://discord.com/invite/aHQnqsp4"><i class="fab fa-discord"></i></a>
-                    </div>
                 </div>
                 
                 <div class="creator-card">
@@ -828,12 +813,7 @@
 </div>
                     <h3 class="creator-name">رقية قاسم الشامي</h3>
                     <p class="creator-role">المصممة والمطورة</p>
-                    <p class="creator-desc">مطورة ومصممة ذات خبرة في البرمجة والتصميم،<br> تسعى لجعل الدراسة أسهل وأكثر تنظيماً.</p>
-                    <div class="creator-social">
-                        <a href="https://wa.me/96892787703"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://www.instagram.com/eartye_qasim"><i class="fab fa-instagram"></i></a>
-                        <a href="https://discord.com/invite/roca8550"><i class="fab fa-discord"></i></a>
-                    </div>
+                    <p class="creator-desc">مطوّرة-مصممة تجمع بين التقنية والإبداع<br> تسعى لجعل الدراسة أسهل وأكثر تنظيماً.</p>
                 </div>
             </div>
         </div>
@@ -860,10 +840,10 @@
                     </div>
                     <h4>تواصل</h4>
                     <div class="main-social-links">
-                        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://wa.me/" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a><i class="fab fa-instagram"></i></a>
+                        <a><i class="fab fa-facebook-f"></i></a>
+                        <a><i class="fab fa-whatsapp"></i></a>
+                        <a><i class="fab fa-twitter"></i></a>
                         <button class="mobile-video-btn" onclick="openVideoModal()"><i class="fas fa-play"></i></button>
                     </div>
                 </div>
@@ -965,7 +945,7 @@ if (chatbotTextLink) {
             message: document.getElementById('message').value
         };
 
-        emailjs.send('service_pymm2k3', 'template_eqh1ssc', params)
+        emailjs.send('service_masar', 'template_masar', params)
             .then(() => {
                 document.getElementById('successMessage').style.display = 'block';
                 document.getElementById('contactForm').reset();
