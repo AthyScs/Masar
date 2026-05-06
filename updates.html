@@ -632,7 +632,7 @@ if (chatbotTextLink) {
 </script>
 
 <script>
-// Mobile Menu and Footer Functionality
+// Mobile & Tablet Menu and Footer Functionality
 document.addEventListener('DOMContentLoaded', function() {
     
     // Create mobile toggle button with gradient background
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const mainNav = document.querySelector('.main-nav');
     
-    // Toggle mobile menu
+    // Toggle mobile/tablet menu
     mobileToggle.addEventListener('click', function(e) {
         e.stopPropagation();
         mainNav.classList.toggle('active');
@@ -657,13 +657,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Handle mobile dropdowns
+    // Handle mobile/tablet dropdowns
     const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
     
     dropdownLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            // Only for mobile
-            if (window.innerWidth <= 768) {
+            // For mobile and tablets (up to 1200px)
+            if (window.innerWidth <= 1024) {
                 e.preventDefault();
                 
                 const currentDropdown = this.parentElement;
@@ -687,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
             if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
                 mainNav.classList.remove('active');
                 mobileToggle.innerHTML = '☰';
@@ -707,43 +707,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Footer Accordion for Mobile
+    // Footer Accordion for Mobile & Tablets
     function setupFooterAccordion() {
         const footerColumns = document.querySelectorAll('.main-footer-column');
         
-        if (window.innerWidth <= 768) {
+        // Apply accordion for screens 1200px and below
+        if (window.innerWidth <= 1024) {
             footerColumns.forEach((column, index) => {
                 const heading = column.querySelector('h4');
                 const links = column.querySelector('.main-footer-links');
                 
                 if (heading && links) {
-                    // Add chevron icon
+                    // Add chevron icon if not already added
                     if (!heading.querySelector('i')) {
-                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                        heading.innerHTML += ' <i class="footer-arrow" style="font-style: normal; transition: transform 0.3s ease;">▼</i>';
                     }
                     
                     // Store links HTML
                     const linksHTML = links.innerHTML;
                     
-                    // Create new accordion structure
-                    const accordionContent = document.createElement('div');
-                    accordionContent.className = 'footer-accordion-content';
-                    accordionContent.innerHTML = linksHTML;
+                    // Check if accordion content already exists
+                    let accordionContent = column.querySelector('.footer-accordion-content');
                     
-                    // Replace old links with accordion
-                    links.remove();
-                    column.appendChild(accordionContent);
+                    if (!accordionContent) {
+                        // Create new accordion structure
+                        accordionContent = document.createElement('div');
+                        accordionContent.className = 'footer-accordion-content';
+                        accordionContent.innerHTML = linksHTML;
+                        
+                        // Replace old links with accordion
+                        links.remove();
+                        column.appendChild(accordionContent);
+                    }
                     
                     // Set first column open by default
-                    if (index === 0) {
+                    if (index === 0 && !column.classList.contains('active')) {
                         column.classList.add('active');
                         const arrow = heading.querySelector('i');
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
                     }
                     
-                    // Add click handler
-                    heading.addEventListener('click', function(e) {
+                    // Remove existing click listener to avoid duplicates
+                    const newHeading = heading.cloneNode(true);
+                    heading.parentNode.replaceChild(newHeading, heading);
+                    
+                    // Add click handler to new heading
+                    newHeading.addEventListener('click', function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
                         
                         // Close other columns
                         footerColumns.forEach(col => {
@@ -756,7 +767,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Toggle current
                         column.classList.toggle('active');
-                        const arrow = heading.querySelector('i');
+                        const arrow = column.querySelector('h4 i');
                         if (arrow) {
                             arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
                         }
@@ -764,7 +775,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         } else {
-            // Reset for desktop
+            // Reset for desktop (larger than 1200px)
             footerColumns.forEach(column => {
                 const heading = column.querySelector('h4');
                 const accordionContent = column.querySelector('.footer-accordion-content');
@@ -781,6 +792,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     const arrow = heading.querySelector('i');
                     if (arrow) arrow.remove();
                 }
+                
+                // Remove active class and reset arrow rotation
+                column.classList.remove('active');
             });
         }
     }
@@ -788,20 +802,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial setup
     setupFooterAccordion();
     
-    // Reset on resize
+    // Handle orientation change and resize
+    let resizeTimer;
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            mainNav.classList.remove('active');
-            mobileToggle.innerHTML = '☰';
+        // Debounce resize event
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 1024) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
             
-            // Close ALL dropdowns
-            document.querySelectorAll('.main-dropdown').forEach(drop => {
-                drop.classList.remove('active');
-            });
-        }
-        
-        // Re-setup footer accordion on resize
-        setupFooterAccordion();
+            // Re-setup footer accordion on resize
+            setupFooterAccordion();
+        }, 250);
+    });
+    
+    // Handle orientation change specifically
+    window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+            setupFooterAccordion();
+            
+            // Close mobile menu on orientation change
+            if (window.innerWidth > 1024) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+            }
+        }, 100);
     });
     
     // Header scroll effect
@@ -824,8 +856,32 @@ document.addEventListener('DOMContentLoaded', function() {
         
         lastScroll = currentScroll;
     });
+    
+    // Additional fix for iPad Pro portrait mode detection
+    function checkIPadProPortrait() {
+        const isIPad = /iPad|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document;
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        const width = window.innerWidth;
+        
+        // iPad Pro portrait has 1200px width
+        if (isIPad && isPortrait && width >= 1024 && width <= 1024) {
+            // Force tablet behavior
+            if (window.innerWidth <= 1024) {
+                setupFooterAccordion();
+            }
+        }
+    }
+    
+    // Check for iPad Pro portrait
+    checkIPadProPortrait();
+    
+    // Also check on resize for iPad Pro orientation changes
+    window.addEventListener('resize', function() {
+        checkIPadProPortrait();
+    });
 });
 </script>
+
 
 <!-- Timer + Stopwatch Widget-->
 <div class="ms-widget">

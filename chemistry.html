@@ -546,6 +546,70 @@ body {
     opacity: 0.8;
 }
 
+/* PDF Action Icon Buttons */
+.pdf-action-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.action-icon-btn {
+    background: rgba(211, 84, 0, 0.1);
+    border: 1px solid rgba(211, 84, 0, 0.3);
+    color: var(--primary);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.action-icon-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    .action-icon-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}
+
+.download-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    z-index: 10000;
+    animation: fadeInUp 0.3s ease;
+    white-space: nowrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
 /* Exam Section */
 .exam-section {
     padding: 80px 0;
@@ -701,7 +765,7 @@ body {
 }
 
 /* Mobile fixes for chemistry homepage */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     /* Hide orbits and nucleus on mobile */
     .orbit,
     .nucleus {
@@ -923,6 +987,10 @@ body {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(110, 63, 161, 0.4);
     }
+
+    .pdf-action-icons {
+    display: none !important;
+}
 
     /* Success message for download */
     .download-message {
@@ -1164,14 +1232,23 @@ body {
 <!-- UNIVERSAL OVERLAY - FOR BOTH LESSONS AND EXAMS -->
 <div class="overlay" id="universalOverlay">
     <div class="overlay-content">
-        <div class="overlay-header">
-            <h3 class="overlay-title" id="overlayTitle">عنوان المحتوى</h3>
-            <div class="overlay-controls">
-                <button class="close-overlay-btn" id="closeOverlayBtn">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
+<div class="overlay-header">
+    <h3 class="overlay-title" id="overlayTitle">عنوان المحتوى</h3>
+    <div class="overlay-controls">
+        <!-- PDF Action Buttons - only visible for PDF tab -->
+        <div class="pdf-action-icons" id="pdfActionIcons" style="display: none; gap: 10px; margin-left: 15px;">
+            <button onclick="downloadCurrentPDF()" class="action-icon-btn" title="تحميل PDF">
+                <i class="fas fa-download"></i>
+            </button>
+            <button onclick="openPDFInNewTab()" class="action-icon-btn" title="فتح في نافذة جديدة">
+                <i class="fas fa-external-link-alt"></i>
+            </button>
         </div>
+        <button class="close-overlay-btn" id="closeOverlayBtn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
         
         <!-- Tabs for lessons (hidden for exams) -->
         <div class="overlay-tabs" id="overlayTabs">
@@ -1802,101 +1879,125 @@ function loadLessons(unitId) {
 // Show universal overlay for lessons
 function showLessonOverlay(lesson) {
     overlayTitle.textContent = lesson.title;
-    overlayTabs.style.display = 'flex'; // Show tabs for lessons
+    overlayTabs.style.display = 'flex';
+    window.currentPdfUrl = lesson.pdf;
     
-    // Set PDF content
-    pdfIframe.src = lesson.pdf;
-    pdfPlaceholder.style.display = 'flex';
-    pdfIframe.style.display = 'none';
+    const isMobile = window.innerWidth <= 767;
+    const hasPdf = lesson.pdf && lesson.pdf.trim() !== '';
     
-// Set video content - REPLACE WITH THIS
-if (lesson.videos && lesson.videos.length > 0) {
-    const videoContainer_div = document.createElement('div');
-    
-    if (lesson.videos.length === 1) {
-        // Single video - center and medium size
-        videoContainer_div.style.cssText = `
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            height: 100%;
-            width: 100%;
+    if (isMobile && hasPdf) {
+        // Mobile: Show buttons in placeholder
+        pdfPlaceholder.innerHTML = `
+            <div class="placeholder-content">
+                <div class="placeholder-icon">📄</div>
+                <div class="placeholder-text" style="margin-bottom: 25px;">اختر طريقة لعرض الملف</div>
+                <div class="mobile-pdf-actions">
+                    <button class="mobile-pdf-btn open" onclick="window.open('${lesson.pdf}', '_blank'); showDownloadMessage('تم فتح الملف في علامة تبويب جديدة');">
+                        <i class="fas fa-external-link-alt"></i>
+                        فتح الملف
+                    </button>
+                    <button class="mobile-pdf-btn download" onclick="downloadPDF('${lesson.pdf}')">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </button>
+                </div>
+            </div>
         `;
-        
-        const videoWrapper = document.createElement('div');
-        videoWrapper.style.cssText = `
-            width: 100%;
-            max-width: 700px;
-            height: 350px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            padding: 12px;
-            border: 1px solid rgba(211,84,0,0.2);
-        `;
-        
-        videoWrapper.innerHTML = `
-            <h4 style="text-align: center; margin-bottom: 8px; color: var(--primary); font-size: 1rem;">فيديو الشرح</h4>
-            <iframe class="video-iframe" src="${lesson.videos[0]}" style="width: 100%; height: 300px; border: none; border-radius: 8px;" allowfullscreen></iframe>
-        `;
-        
-        videoContainer_div.appendChild(videoWrapper);
-        
+        pdfIframe.style.display = 'none';
+        pdfPlaceholder.style.display = 'flex';
     } else {
-        // Multiple videos - start as row (wraps to next line if needed)
-        videoContainer_div.style.cssText = `
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            height: 100%;
-            width: 100%;
-            overflow-y: auto;
-            align-content: flex-start;
+        // Desktop or no PDF: Show iframe or message
+        pdfPlaceholder.innerHTML = `
+            <div class="placeholder-content">
+                <div class="placeholder-icon">📄</div>
+                <div class="placeholder-text">جاري تحميل ملف PDF...</div>
+            </div>
         `;
+        pdfIframe.style.display = 'block';
+        pdfPlaceholder.style.display = 'flex';
+        if (hasPdf) {
+            pdfIframe.src = lesson.pdf;
+        }
+    }
+    
+    // Set video content
+    if (lesson.videos && lesson.videos.length > 0) {
+        const videoContainer_div = document.createElement('div');
         
-        lesson.videos.forEach((videoUrl, index) => {
-            const videoCard = document.createElement('div');
-            videoCard.style.cssText = `
-                width: 300px;
+        if (lesson.videos.length === 1) {
+            videoContainer_div.style.cssText = `
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                height: 100%;
+                width: 100%;
+            `;
+            const videoWrapper = document.createElement('div');
+            videoWrapper.style.cssText = `
+                width: 100%;
+                max-width: 700px;
+                height: 350px;
                 background: rgba(255,255,255,0.8);
                 border-radius: 12px;
                 padding: 12px;
                 border: 1px solid rgba(211,84,0,0.2);
-                flex-shrink: 0;
             `;
-            
-            videoCard.innerHTML = `
-                <h4 style="text-align: center; margin-bottom: 8px; color: var(--primary); font-size: 1rem;">الجزء ${index + 1}</h4>
-                <iframe class="video-iframe" src="${videoUrl}" style="width: 100%; height: 170px; border: none; border-radius: 8px;" allowfullscreen></iframe>
+            videoWrapper.innerHTML = `
+                <h4 style="text-align: center; margin-bottom: 8px; color: var(--primary); font-size: 1rem;">فيديو الشرح</h4>
+                <iframe class="video-iframe" src="${lesson.videos[0]}" style="width: 100%; height: 300px; border: none; border-radius: 8px;" allowfullscreen></iframe>
             `;
-            
-            videoContainer_div.appendChild(videoCard);
-        });
-    }
-    
-    videoContainer.innerHTML = '';
-    videoContainer.appendChild(videoContainer_div);
-    
-} else {
-    videoContainer.innerHTML = `
-        <div class="overlay-placeholder">
-            <div class="placeholder-content">
-                <div class="placeholder-icon">🎥</div>
-                <div class="placeholder-text">لا توجد فيديوهات متاحة</div>
+            videoContainer_div.appendChild(videoWrapper);
+        } else {
+            videoContainer_div.style.cssText = `
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                padding: 20px;
+                height: 100%;
+                width: 100%;
+                overflow-y: auto;
+                align-content: flex-start;
+            `;
+            lesson.videos.forEach((videoUrl, index) => {
+                const videoCard = document.createElement('div');
+                videoCard.style.cssText = `
+                    width: 300px;
+                    background: rgba(255,255,255,0.8);
+                    border-radius: 12px;
+                    padding: 12px;
+                    border: 1px solid rgba(211,84,0,0.2);
+                    flex-shrink: 0;
+                `;
+                videoCard.innerHTML = `
+                    <h4 style="text-align: center; margin-bottom: 8px; color: var(--primary); font-size: 1rem;">الجزء ${index + 1}</h4>
+                    <iframe class="video-iframe" src="${videoUrl}" style="width: 100%; height: 170px; border: none; border-radius: 8px;" allowfullscreen></iframe>
+                `;
+                videoContainer_div.appendChild(videoCard);
+            });
+        }
+        videoContainer.innerHTML = '';
+        videoContainer.appendChild(videoContainer_div);
+    } else {
+        videoContainer.innerHTML = `
+            <div class="overlay-placeholder">
+                <div class="placeholder-content">
+                    <div class="placeholder-icon">🎥</div>
+                    <div class="placeholder-text">لا توجد فيديوهات متاحة</div>
+                </div>
             </div>
-        </div>
-    `;
-}
+        `;
+    }
     
     // Reset to PDF tab
     overlayTabsElements.forEach(tab => tab.classList.remove('active'));
     tabContents.forEach(content => content.classList.remove('active'));
     overlayTabsElements[0].classList.add('active');
     tabContents[0].classList.add('active');
-    
+
+    updatePdfActionButtons();
     universalOverlay.classList.add('active');
 }
 // Show universal overlay for exams
@@ -1906,19 +2007,50 @@ function showExamOverlay(pdfUrl, title) {
         window.open('https://drive.google.com/drive/folders/1--uhH21RbRhPozGNlkWltJXDhvgu1qpn?usp=drive_link', '_blank');
         return;
     }
-
-        if (pdfUrl === "pdfs/ch/chl2.pdf") {
+    if (pdfUrl === "pdfs/ch/chl2.pdf") {
         window.open('https://drive.google.com/drive/folders/1ZGmh4sbbdBSY_zenC4guZr6_1a471c6F?usp=drive_link', '_blank');
         return;
     }
     
     overlayTitle.textContent = title;
-    overlayTabs.style.display = 'none'; // Hide tabs for exams
+    overlayTabs.style.display = 'none';
+    window.currentPdfUrl = pdfUrl;
     
-    // Show only PDF content
-    pdfIframe.src = pdfUrl;
-    pdfPlaceholder.style.display = 'flex';
-    pdfIframe.style.display = 'none';
+    // Check if mobile
+    const isMobile = window.innerWidth <= 767;
+    
+    if (isMobile) {
+        // Mobile: Show buttons in placeholder, hide iframe
+        pdfPlaceholder.innerHTML = `
+            <div class="placeholder-content">
+                <div class="placeholder-icon">📄</div>
+                <div class="placeholder-text" style="margin-bottom: 25px;">اختر طريقة لعرض الملف</div>
+                <div class="mobile-pdf-actions">
+                    <button class="mobile-pdf-btn open" onclick="window.open('${pdfUrl}', '_blank'); showDownloadMessage('تم فتح الملف في علامة تبويب جديدة');">
+                        <i class="fas fa-external-link-alt"></i>
+                        فتح الملف
+                    </button>
+                    <button class="mobile-pdf-btn download" onclick="downloadPDF('${pdfUrl}')">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </button>
+                </div>
+            </div>
+        `;
+        pdfIframe.style.display = 'none';
+        pdfPlaceholder.style.display = 'flex';
+    } else {
+        // Desktop: Show iframe
+        pdfPlaceholder.innerHTML = `
+            <div class="placeholder-content">
+                <div class="placeholder-icon">📄</div>
+                <div class="placeholder-text">جاري تحميل ملف PDF...</div>
+            </div>
+        `;
+        pdfIframe.style.display = 'block';
+        pdfPlaceholder.style.display = 'flex';
+        pdfIframe.src = pdfUrl;
+    }
     
     // Ensure PDF tab is active
     overlayTabsElements.forEach(tab => tab.classList.remove('active'));
@@ -1926,9 +2058,9 @@ function showExamOverlay(pdfUrl, title) {
     overlayTabsElements[0].classList.add('active');
     tabContents[0].classList.add('active');
     
+    updatePdfActionButtons();
     universalOverlay.classList.add('active');
 }
-
 // PDF iframe events
 pdfIframe.onload = function() {
     pdfPlaceholder.style.display = 'none';
@@ -1946,6 +2078,67 @@ pdfIframe.onerror = function() {
         </div>
     `;
 };
+
+function downloadPDF(pdfUrl) {
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = '';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showDownloadMessage('جاري تحميل الملف...');
+}
+
+function showDownloadMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'download-message';
+    msg.textContent = text;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
+}
+
+// PDF Action Functions
+function downloadCurrentPDF() {
+    if (window.currentPdfUrl) {
+        const link = document.createElement('a');
+        link.href = window.currentPdfUrl;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        const msg = document.createElement('div');
+        msg.className = 'download-message';
+        msg.textContent = 'جاري تحميل الملف...';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 2000);
+    }
+}
+
+function openPDFInNewTab() {
+    if (window.currentPdfUrl) {
+        window.open(window.currentPdfUrl, '_blank');
+        
+        const msg = document.createElement('div');
+        msg.className = 'download-message';
+        msg.textContent = 'تم فتح الملف في علامة تبويب جديدة';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 2000);
+    }
+}
+
+function updatePdfActionButtons() {
+    const pdfActionIcons = document.getElementById('pdfActionIcons');
+    const activeTab = document.querySelector('.overlay-tab.active');
+    
+    if (pdfActionIcons) {
+        if (activeTab && activeTab.getAttribute('data-tab') === 'pdf' && window.currentPdfUrl) {
+            pdfActionIcons.style.display = 'flex';
+        } else {
+            pdfActionIcons.style.display = 'none';
+        }
+    }
+}
 
 // Event Listeners
 electrons.forEach(electron => {
@@ -1966,21 +2159,28 @@ backButtons.forEach(button => {
 closeOverlayBtn.addEventListener('click', () => {
     universalOverlay.classList.remove('active');
     pdfIframe.src = '';
+    window.currentPdfUrl = null;
+    document.getElementById('pdfActionIcons').style.display = 'none';
 });
 
-// Tab switching
+// Tab switching with PDF button visibility
+function handleTabClick() {
+    const tabId = this.getAttribute('data-tab');
+    
+    overlayTabsElements.forEach(t => t.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    this.classList.add('active');
+    document.getElementById(tabId + 'TabContent').classList.add('active');
+    
+    // Update PDF buttons visibility
+    updatePdfActionButtons();
+}
+
 overlayTabsElements.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const tabId = tab.getAttribute('data-tab');
-        
-        overlayTabsElements.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        
-        tab.classList.add('active');
-        document.getElementById(tabId + 'TabContent').classList.add('active');
-    });
+    tab.removeEventListener('click', handleTabClick);
+    tab.addEventListener('click', handleTabClick);
 });
-
 // Exam buttons
 examButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -2153,7 +2353,7 @@ if (chatbotTextLink) {
 
 <!--Mobile Script-->
 <script>
-// Mobile Menu and Footer Functionality
+// Mobile & Tablet Menu and Footer Functionality
 document.addEventListener('DOMContentLoaded', function() {
     
     // Create mobile toggle button with gradient background
@@ -2164,7 +2364,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const mainNav = document.querySelector('.main-nav');
     
-    // Toggle mobile menu
+    // Toggle mobile/tablet menu
     mobileToggle.addEventListener('click', function(e) {
         e.stopPropagation();
         mainNav.classList.toggle('active');
@@ -2178,13 +2378,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Handle mobile dropdowns
+    // Handle mobile/tablet dropdowns
     const dropdownLinks = document.querySelectorAll('.main-dropdown > a');
     
     dropdownLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            // Only for mobile
-            if (window.innerWidth <= 768) {
+            // For mobile and tablets (up to 1200px)
+            if (window.innerWidth <= 1024) {
                 e.preventDefault();
                 
                 const currentDropdown = this.parentElement;
@@ -2208,7 +2408,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
             if (!e.target.closest('.main-nav') && !e.target.closest('.mobile-nav-toggle')) {
                 mainNav.classList.remove('active');
                 mobileToggle.innerHTML = '☰';
@@ -2228,43 +2428,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Footer Accordion for Mobile
+    // Footer Accordion for Mobile & Tablets
     function setupFooterAccordion() {
         const footerColumns = document.querySelectorAll('.main-footer-column');
         
-        if (window.innerWidth <= 768) {
+        // Apply accordion for screens 1200px and below
+        if (window.innerWidth <= 1024) {
             footerColumns.forEach((column, index) => {
                 const heading = column.querySelector('h4');
                 const links = column.querySelector('.main-footer-links');
                 
                 if (heading && links) {
-                    // Add chevron icon
+                    // Add chevron icon if not already added
                     if (!heading.querySelector('i')) {
-                        heading.innerHTML += ' <i class="footer-arrow">▼</i>';
+                        heading.innerHTML += ' <i class="footer-arrow" style="font-style: normal; transition: transform 0.3s ease;">▼</i>';
                     }
                     
                     // Store links HTML
                     const linksHTML = links.innerHTML;
                     
-                    // Create new accordion structure
-                    const accordionContent = document.createElement('div');
-                    accordionContent.className = 'footer-accordion-content';
-                    accordionContent.innerHTML = linksHTML;
+                    // Check if accordion content already exists
+                    let accordionContent = column.querySelector('.footer-accordion-content');
                     
-                    // Replace old links with accordion
-                    links.remove();
-                    column.appendChild(accordionContent);
+                    if (!accordionContent) {
+                        // Create new accordion structure
+                        accordionContent = document.createElement('div');
+                        accordionContent.className = 'footer-accordion-content';
+                        accordionContent.innerHTML = linksHTML;
+                        
+                        // Replace old links with accordion
+                        links.remove();
+                        column.appendChild(accordionContent);
+                    }
                     
                     // Set first column open by default
-                    if (index === 0) {
+                    if (index === 0 && !column.classList.contains('active')) {
                         column.classList.add('active');
                         const arrow = heading.querySelector('i');
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
                     }
                     
-                    // Add click handler
-                    heading.addEventListener('click', function(e) {
+                    // Remove existing click listener to avoid duplicates
+                    const newHeading = heading.cloneNode(true);
+                    heading.parentNode.replaceChild(newHeading, heading);
+                    
+                    // Add click handler to new heading
+                    newHeading.addEventListener('click', function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
                         
                         // Close other columns
                         footerColumns.forEach(col => {
@@ -2277,7 +2488,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Toggle current
                         column.classList.toggle('active');
-                        const arrow = heading.querySelector('i');
+                        const arrow = column.querySelector('h4 i');
                         if (arrow) {
                             arrow.style.transform = column.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
                         }
@@ -2285,7 +2496,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         } else {
-            // Reset for desktop
+            // Reset for desktop (larger than 1200px)
             footerColumns.forEach(column => {
                 const heading = column.querySelector('h4');
                 const accordionContent = column.querySelector('.footer-accordion-content');
@@ -2302,6 +2513,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     const arrow = heading.querySelector('i');
                     if (arrow) arrow.remove();
                 }
+                
+                // Remove active class and reset arrow rotation
+                column.classList.remove('active');
             });
         }
     }
@@ -2309,20 +2523,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial setup
     setupFooterAccordion();
     
-    // Reset on resize
+    // Handle orientation change and resize
+    let resizeTimer;
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            mainNav.classList.remove('active');
-            mobileToggle.innerHTML = '☰';
+        // Debounce resize event
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 1024) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+                
+                // Close ALL dropdowns
+                document.querySelectorAll('.main-dropdown').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }
             
-            // Close ALL dropdowns
-            document.querySelectorAll('.main-dropdown').forEach(drop => {
-                drop.classList.remove('active');
-            });
-        }
-        
-        // Re-setup footer accordion on resize
-        setupFooterAccordion();
+            // Re-setup footer accordion on resize
+            setupFooterAccordion();
+        }, 250);
+    });
+    
+    // Handle orientation change specifically
+    window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+            setupFooterAccordion();
+            
+            // Close mobile menu on orientation change
+            if (window.innerWidth > 1024) {
+                mainNav.classList.remove('active');
+                mobileToggle.innerHTML = '☰';
+            }
+        }, 100);
     });
     
     // Header scroll effect
@@ -2336,6 +2568,7 @@ document.addEventListener('DOMContentLoaded', function() {
             header.classList.remove('scrolled');
             return;
         }
+        
         if (currentScroll > lastScroll && !header.classList.contains('scrolled')) {
             header.classList.add('scrolled');
         } else if (currentScroll < lastScroll && header.classList.contains('scrolled')) {
@@ -2344,85 +2577,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         lastScroll = currentScroll;
     });
-});
-
-// Update the addMobilePDFButtons function to use the fixed functions
-function addMobilePDFButtons(pdfUrl) {
-    const pdfPlaceholder = document.getElementById('pdfPlaceholder');
-    if (!pdfPlaceholder) return;
-
-    pdfPlaceholder.innerHTML = `
-        <div class="placeholder-content">
-            <div class="placeholder-icon">📄</div>
-            <div class="placeholder-text" style="margin-bottom: 25px;">اختر طريقة لعرض الملف</div>
-            <div class="mobile-pdf-actions">
-                <button class="mobile-pdf-btn open" onclick="window.open('${pdfUrl}', '_blank'); showDownloadMessage('تم فتح الملف في علامة تبويب جديدة');">
-                    <i class="fas fa-external-link-alt"></i>
-                    فتح الملف
-                </button>
-                <button class="mobile-pdf-btn download" onclick="downloadPDF('${pdfUrl}')">
-                    <i class="fas fa-download"></i>
-                    تحميل الملف
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// Simple message function
-function showDownloadMessage(text) {
-    const msg = document.createElement('div');
-    msg.className = 'download-message';
-    msg.textContent = text;
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 2000);
-}
-
-// Watch for when PDF loads
-const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        if (mutation.attributeName === 'src') {
-            const pdfUrl = mutation.target.src;
-            if (pdfUrl && document.getElementById('universalOverlay').classList.contains('active')) {
-                if (window.innerWidth <= 768) {
-                    addMobilePDFButtons(pdfUrl);
-                }
+    
+    // Additional fix for iPad Pro portrait mode detection
+    function checkIPadProPortrait() {
+        const isIPad = /iPad|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document;
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        const width = window.innerWidth;
+        
+        // iPad Pro portrait has 1200px width
+        if (isIPad && isPortrait && width >= 1024 && width <= 1024) {
+            // Force tablet behavior
+            if (window.innerWidth <= 1024) {
+                setupFooterAccordion();
             }
         }
+    }
+    
+    // Check for iPad Pro portrait
+    checkIPadProPortrait();
+    
+    // Also check on resize for iPad Pro orientation changes
+    window.addEventListener('resize', function() {
+        checkIPadProPortrait();
     });
 });
-
-// Start observing
-if (document.getElementById('pdfIframe')) {
-    observer.observe(document.getElementById('pdfIframe'), { attributes: true });
-}
-
-
-
-// Fix the download function
-window.downloadPDF = function(pdfUrl, fileName) {
-    // Create a temporary anchor element
-    const link = document.createElement('a');
-    link.href = pdfUrl;
-    link.download = ''; // Empty string lets browser use original filename
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Show message
-    const msg = document.createElement('div');
-    msg.className = 'download-message';
-    msg.textContent = 'جاري تحميل الملف...';
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 2000);
-};
-
-// Fix the open function
-window.openPDF = function(pdfUrl) {
-    window.open(pdfUrl, '_blank');
-};
-
-
 </script>
 
 

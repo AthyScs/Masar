@@ -1,3 +1,40 @@
+// PDF Action Functions for English page
+let currentPdfUrl = null;
+
+function downloadCurrentPDF() {
+    if (currentPdfUrl) {
+        const link = document.createElement('a');
+        link.href = currentPdfUrl;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showMessage('جاري تحميل الملف...');
+    }
+}
+
+function openPDFInNewTab() {
+    if (currentPdfUrl) {
+        window.open(currentPdfUrl, '_blank');
+        showMessage('تم فتح الملف في علامة تبويب جديدة');
+    }
+}
+
+function showMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'download-message';
+    msg.textContent = text;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2000);
+}
+
+function updatePdfActionButtons() {
+    const pdfActionIcons = document.getElementById('pdfActionIcons');
+    if (pdfActionIcons) {
+        pdfActionIcons.style.display = currentPdfUrl ? 'flex' : 'none';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded - initializing...');
 
@@ -1050,40 +1087,116 @@ Addressing climate change requires global cooperation and commitment from govern
             switchTab(targetId);
         });
     });
-    
-    // ========== EXAM CARDS SYSTEM ==========
-    const examCards = document.querySelectorAll('.exam-card');
-    const closePdfOverlay = document.getElementById('close-overlay');
-    const pdfOverlay = document.getElementById('pdf-overlay');
+
+ // ========== EXAM CARDS SYSTEM ==========
+const examCards = document.querySelectorAll('.exam-card');
+const pdfOverlay = document.getElementById('pdf-overlay');
 const closePdfBtn = document.getElementById('close-overlay');
-const pdfIframe = document.querySelector('#pdf-overlay iframe');
 const pdfTitle = document.getElementById('pdf-title');
-    
-    // Check if exam cards exist
-    console.log('Exam cards found:', examCards.length);
-    
-    // Toggle popup on card click
-    examCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            if(e.target.classList.contains('pdf-btn') || e.target.closest('.pdf-btn')) return;
-            examCards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-        });
-    });
-    
-// Function to open PDF with title
+
+// Get the iframe inside the overlay
+const pdfIframe = document.querySelector('#pdf-overlay iframe');
+
+// Check if elements exist
+console.log('PDF elements found:', {
+    pdfOverlay: !!pdfOverlay,
+    closePdfBtn: !!closePdfBtn,
+    pdfTitle: !!pdfTitle,
+    pdfIframe: !!pdfIframe
+});
+
+// Function to open PDF with title (supports mobile buttons)
 function openPDF(pdfUrl, title) {
+    // Detect if it's a mobile phone (not iPad)
+    const isMobilePhone = window.innerWidth <= 767 && !navigator.userAgent.includes('iPad');
+    
+    console.log('Opening PDF:', pdfUrl, title, 'isMobilePhone:', isMobilePhone);
     pdfTitle.textContent = title || 'PDF Viewer';
-    pdfIframe.src = pdfUrl;
+    
+    // Store current PDF URL for buttons
+    currentPdfUrl = pdfUrl;
+    updatePdfActionButtons();
+    
+    // Remove existing mobile actions if any
+    const existingActions = document.querySelector('.mobile-pdf-actions');
+    if (existingActions) {
+        existingActions.remove();
+    }
+    
+    // Get the iframe
+    const pdfIframe = document.querySelector('#pdf-overlay iframe');
+    
+    if (isMobilePhone) {
+        // Mobile phones: Show buttons
+        if (pdfIframe) {
+            pdfIframe.style.display = 'none';
+            pdfIframe.src = '';
+        }
+        
+        // Create mobile action buttons
+        const actions = document.createElement('div');
+        actions.className = 'mobile-pdf-actions';
+        actions.innerHTML = `
+            <button class="mobile-pdf-btn open" onclick="window.open('${pdfUrl}', '_blank'); showDownloadMessage('تم فتح الملف في علامة تبويب جديدة');">
+                <i class="fas fa-external-link-alt"></i> فتح PDF
+            </button>
+            <button class="mobile-pdf-btn download" onclick="downloadPDF('${pdfUrl}')">
+                <i class="fas fa-download"></i> تحميل PDF
+            </button>
+        `;
+        const overlayContent = document.querySelector('#pdf-overlay .overlay-content');
+        overlayContent.appendChild(actions);
+    } else {
+        // iPads and Desktop: Show iframe
+        if (pdfIframe) {
+            pdfIframe.style.display = 'block';
+            pdfIframe.src = pdfUrl;
+        }
+    }
+    
     pdfOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    pdfOverlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// Download function for mobile
+function downloadPDF(pdfUrl) {
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = pdfUrl.split('/').pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Show download message
+    const msg = document.createElement('div');
+    msg.className = 'download-message';
+    msg.innerHTML = '<i class="fas fa-check-circle"></i> جاري التحميل...';
+    document.body.appendChild(msg);
+    setTimeout(() => {
+        if (msg) msg.remove();
+    }, 2000);
 }
 
 // Function to close PDF
 function closePDF() {
-    pdfOverlay.classList.remove('active');
-    pdfIframe.src = '';
-    document.body.style.overflow = ''; // Restore scrolling
+    if (pdfOverlay) {
+        pdfOverlay.classList.remove('active');
+        pdfOverlay.style.display = 'none';
+    }
+    if (pdfIframe) {
+        pdfIframe.src = '';
+        pdfIframe.style.display = 'block';
+    }
+    // Remove mobile actions if they exist
+    const actions = document.querySelector('.mobile-pdf-actions');
+    if (actions) {
+        actions.remove();
+    }
+    // Clear current PDF URL
+    currentPdfUrl = null;
+    updatePdfActionButtons();
+    document.body.style.overflow = '';
 }
 
 // Close button click
@@ -1092,34 +1205,55 @@ if (closePdfBtn) {
 }
 
 // Close on outside click
-pdfOverlay.addEventListener('click', function(e) {
-    if (e.target === pdfOverlay) {
-        closePDF();
-    }
-});
+if (pdfOverlay) {
+    pdfOverlay.addEventListener('click', function(e) {
+        if (e.target === pdfOverlay) {
+            closePDF();
+        }
+    });
+}
 
 // Close on Escape key
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && pdfOverlay.classList.contains('active')) {
+    if (e.key === 'Escape' && pdfOverlay && pdfOverlay.classList.contains('active')) {
         closePDF();
     }
 });
 
-// Update PDF buttons to use the new function
+// Toggle popup on exam card click
+examCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+        if(e.target.classList.contains('pdf-btn') || e.target.closest('.pdf-btn')) return;
+        examCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+    });
+});
+
+// PDF buttons handler
 const pdfButtons = document.querySelectorAll('.pdf-btn');
+console.log('PDF buttons found:', pdfButtons.length);
+
 pdfButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        const pdfUrl = btn.dataset.pdf;
+        const pdfUrl = btn.getAttribute('data-pdf');
         const title = btn.textContent.trim();
+        console.log('PDF button clicked:', pdfUrl, title);
+        
         if (pdfUrl) {
             openPDF(pdfUrl, title);
         } else {
             console.error('No PDF URL found for button:', btn);
+            alert('PDF file not available');
+        }
+        
+        // Close the popup after clicking
+        const parentCard = btn.closest('.exam-card');
+        if (parentCard) {
+            parentCard.classList.remove('active');
         }
     });
 });
-
     // ========== VOCABULARY OVERLAY SYSTEM ==========
     const vocabOverlay = document.getElementById('vocab-overlay');
     const vocabSteps = document.getElementById('vocab-steps');
